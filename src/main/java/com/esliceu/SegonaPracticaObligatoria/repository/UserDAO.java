@@ -1,5 +1,10 @@
 package com.esliceu.SegonaPracticaObligatoria.repository;
 
-public class UserDAO {
+import com.esliceu.SegonaPracticaObligatoria.model.USER;
+
+public interface UserDAO {
+    void save(USER user);
+
+    boolean comprobaSiUserExisteix(String username);
 
 }

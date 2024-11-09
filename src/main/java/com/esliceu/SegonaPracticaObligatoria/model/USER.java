@@ -1,10 +1,11 @@
 package com.esliceu.SegonaPracticaObligatoria.model;
 
-public class User {
+public class USER {
     String username;
     String name;
     int id;
     String password;
+
 
     public String getUsername() {
         return username;
