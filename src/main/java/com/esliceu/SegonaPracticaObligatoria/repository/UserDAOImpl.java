@@ -36,7 +36,6 @@ public class UserDAOImpl implements UserDAO {
                     password
             );
         } catch (Exception e) {
-            // Retorna null si no encuentra el usuario o si hay un error
             return null;
         }
     }
