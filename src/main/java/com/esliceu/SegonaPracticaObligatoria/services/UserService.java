@@ -27,4 +27,8 @@ public class UserService {
     private boolean userExists(String username) {
         return userDAO.comprobaSiUserExisteix(username);
     }
+
+    public USER checkUser(String username, String password) {
+       return userDAO.checkUserInDbUsingPasswAndUserName(username,password);
+    }
 }

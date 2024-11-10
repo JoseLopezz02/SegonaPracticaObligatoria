@@ -2,13 +2,15 @@ package com.esliceu.SegonaPracticaObligatoria.repository;
 
 import com.esliceu.SegonaPracticaObligatoria.model.USER;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class UserDAOImpl implements UserDAO{
+public class UserDAOImpl implements UserDAO {
     @Autowired
-  JdbcTemplate jdbcTemplate;
+    JdbcTemplate jdbcTemplate;
+
     @Override
     public void save(USER user) {
         jdbcTemplate.update("insert into USER (username,name,password) values (?,?,?)"
@@ -21,6 +23,22 @@ public class UserDAOImpl implements UserDAO{
                 "SELECT COUNT(*) FROM USER WHERE username = ?", Integer.class, username);
 
         return count != null && count > 0;
+    }
+
+    @Override
+    public USER checkUserInDbUsingPasswAndUserName(String username, String password) {
+        try {
+            String sql = "SELECT * FROM USER WHERE username = ? AND password = ?";
+            return jdbcTemplate.queryForObject(
+                    sql,
+                    new BeanPropertyRowMapper<>(USER.class),
+                    username,
+                    password
+            );
+        } catch (Exception e) {
+            // Retorna null si no encuentra el usuario o si hay un error
+            return null;
+        }
     }
 
 }

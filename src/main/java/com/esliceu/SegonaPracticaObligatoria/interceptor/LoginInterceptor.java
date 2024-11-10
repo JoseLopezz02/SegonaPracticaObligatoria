@@ -15,9 +15,8 @@ public class LoginInterceptor implements HandlerInterceptor {
         if (user == null){
             //L'usuari no ha fet login
             response.sendRedirect("/login");
-            return true;
+            return false;
         }
-        //L'usuari si ha fet login
         return true;
     }
 }

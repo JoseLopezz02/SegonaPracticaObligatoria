@@ -7,4 +7,5 @@ public interface UserDAO {
 
     boolean comprobaSiUserExisteix(String username);
 
+    USER checkUserInDbUsingPasswAndUserName(String username, String password);
 }
