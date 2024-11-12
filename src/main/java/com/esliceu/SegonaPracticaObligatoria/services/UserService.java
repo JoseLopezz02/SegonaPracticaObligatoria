@@ -11,6 +11,7 @@ public class UserService {
     UserDAO userDAO;
 
     public boolean addUser(String username, String name, String password) {
+        //Mirar en el servidor el largo de la contraseña
         if (userExists(username)){
             return false;
         }else {

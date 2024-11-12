@@ -19,10 +19,10 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public boolean comprobaSiUserExisteix(String username) {
-        Integer count = jdbcTemplate.queryForObject(
+        Integer aparicionesUser = jdbcTemplate.queryForObject(
                 "SELECT COUNT(*) FROM USER WHERE username = ?", Integer.class, username);
 
-        return count != null && count > 0;
+        return aparicionesUser != null && aparicionesUser > 0;
     }
 
     @Override
