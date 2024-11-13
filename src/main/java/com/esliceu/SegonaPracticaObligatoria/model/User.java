@@ -1,6 +1,6 @@
 package com.esliceu.SegonaPracticaObligatoria.model;
 
-public class USER {
+public class User {
     String username;
     String name;
     int id;

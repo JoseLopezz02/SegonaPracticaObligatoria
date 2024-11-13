@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jungle Maze Game - Start</title>
+    <link rel="stylesheet" href="/css/start.css">
+</head>
+<body>
+<div class="jungle-container">
+    <h1 class="title">Welcome to the Jungle Maze Game!</h1>
+    <p class="subtitle">Choose your adventure:</p>
+
+    <div class="map-selection">
+        <div class="map-option" onclick="selectMap('Map1')">
+            <div class="map-image" id="mazeForest"></div>
+            <p>Map 1 - The Dense Forest</p>
+        </div>
+        <div class="map-option" onclick="selectMap('Map2')">
+            <div class="map-image" id="mazeCave"></div>
+            <p>Map 2 - The Hidden Cave</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    function selectMap(map) {
+      alert(`You selected ${map}! Starting game...`);
+      // Aquí puedes redirigir a la página del juego correspondiente o iniciar la lógica de juego
+    }
+</script>
+</body>
+</html>

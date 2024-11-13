@@ -1,6 +1,6 @@
 package com.esliceu.SegonaPracticaObligatoria.repository;
 
-import com.esliceu.SegonaPracticaObligatoria.model.USER;
+import com.esliceu.SegonaPracticaObligatoria.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -12,26 +12,26 @@ public class UserDAOImpl implements UserDAO {
     JdbcTemplate jdbcTemplate;
 
     @Override
-    public void save(USER user) {
-        jdbcTemplate.update("insert into USER (username,name,password) values (?,?,?)"
+    public void save(User user) {
+        jdbcTemplate.update("insert into User (username,name,password) values (?,?,?)"
                 , user.getUsername(), user.getName(), user.getPassword());
     }
 
     @Override
     public boolean comprobaSiUserExisteix(String username) {
         Integer aparicionesUser = jdbcTemplate.queryForObject(
-                "SELECT COUNT(*) FROM USER WHERE username = ?", Integer.class, username);
+                "SELECT COUNT(*) FROM User WHERE username = ?", Integer.class, username);
 
         return aparicionesUser != null && aparicionesUser > 0;
     }
 
     @Override
-    public USER checkUserInDbUsingPasswAndUserName(String username, String password) {
+    public User checkUserInDbUsingPasswAndUserName(String username, String password) {
         try {
-            String sql = "SELECT * FROM USER WHERE username = ? AND password = ?";
+            String sql = "SELECT * FROM User WHERE username = ? AND password = ?";
             return jdbcTemplate.queryForObject(
                     sql,
-                    new BeanPropertyRowMapper<>(USER.class),
+                    new BeanPropertyRowMapper<>(User.class),
                     username,
                     password
             );

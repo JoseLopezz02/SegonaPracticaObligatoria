@@ -1,6 +1,5 @@
 package com.esliceu.SegonaPracticaObligatoria.controllers;
 
-import com.esliceu.SegonaPracticaObligatoria.model.USER;
 import com.esliceu.SegonaPracticaObligatoria.services.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class RegisterController {
     @Autowired
     UserService userService;
-
     @GetMapping("/register")
     public String getRegister(){
         return "register";

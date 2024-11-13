@@ -1,6 +1,6 @@
 package com.esliceu.SegonaPracticaObligatoria.services;
 
-import com.esliceu.SegonaPracticaObligatoria.model.USER;
+import com.esliceu.SegonaPracticaObligatoria.model.User;
 import com.esliceu.SegonaPracticaObligatoria.repository.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ public class UserService {
         if (userExists(username)){
             return false;
         }else {
-            USER user = new USER();
+            User user = new User();
             user.setUsername(username);
             user.setName(name);
             user.setPassword(password);
@@ -29,7 +29,7 @@ public class UserService {
         return userDAO.comprobaSiUserExisteix(username);
     }
 
-    public USER checkUser(String username, String password) {
+    public User checkUser(String username, String password) {
        return userDAO.checkUserInDbUsingPasswAndUserName(username,password);
     }
 }

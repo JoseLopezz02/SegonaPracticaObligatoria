@@ -1,6 +1,6 @@
 package com.esliceu.SegonaPracticaObligatoria.controllers;
 
-import com.esliceu.SegonaPracticaObligatoria.model.USER;
+import com.esliceu.SegonaPracticaObligatoria.model.User;
 import com.esliceu.SegonaPracticaObligatoria.services.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class LoginController{
 
     @PostMapping("/login")
     public String postLogin(HttpSession session, @RequestParam String username, @RequestParam String password, Model model) {
-        USER user = userService.checkUser(username, password);
+        User user = userService.checkUser(username, password);
 
         if (user != null) {
             session.setAttribute("username", username);
