@@ -18,6 +18,6 @@ public class SegonaPracticaObligatoriaApplication implements WebMvcConfigurer {
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(loginInterceptor).addPathPatterns("/private");
+		registry.addInterceptor(loginInterceptor).addPathPatterns("/start");
 	}
 }

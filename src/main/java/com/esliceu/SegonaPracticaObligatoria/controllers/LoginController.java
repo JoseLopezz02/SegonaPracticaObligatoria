@@ -25,7 +25,7 @@ public class LoginController{
 
         if (user != null) {
             session.setAttribute("username", username);
-            return "redirect:/private";
+            return "redirect:/start";
         } else {
             model.addAttribute("message", "El usuario y/o contraseña son incorrectos");
             return "login";

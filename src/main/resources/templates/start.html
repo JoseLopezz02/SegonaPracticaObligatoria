@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,24 +9,29 @@
 <body>
 <div class="jungle-container">
     <h1 class="title">Welcome to the Jungle Maze Game!</h1>
-    <p class="subtitle">Choose your adventure:</p>
+    <p class="subtitle">Choose your adventure <span th:text="${message}"></span>:</p>
 
     <div class="map-selection">
-        <div class="map-option" onclick="selectMap('Map1')">
+        <div class="map-option" onclick="selectMap('mazeForest')">
             <div class="map-image" id="mazeForest"></div>
             <p>Map 1 - The Dense Forest</p>
         </div>
-        <div class="map-option" onclick="selectMap('Map2')">
+        <div class="map-option" onclick="selectMap('mazeCave')">
             <div class="map-image" id="mazeCave"></div>
             <p>Map 2 - The Hidden Cave</p>
         </div>
     </div>
 </div>
 
+<!-- Formulario oculto para enviar el mapId seleccionado -->
+<form id="mapForm" action="/start" method="post">
+    <input type="hidden" name="mapid" id="mapid">
+</form>
+
 <script>
     function selectMap(map) {
-      alert(`You selected ${map}! Starting game...`);
-      // Aquí puedes redirigir a la página del juego correspondiente o iniciar la lógica de juego
+        document.getElementById("mapid").value = map; // Asegúrate de que el id sea 'mapid'
+        document.getElementById("mapForm").submit(); // Envía el formulario
     }
 </script>
 </body>
