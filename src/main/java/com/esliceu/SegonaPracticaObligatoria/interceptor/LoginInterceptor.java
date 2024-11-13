@@ -13,7 +13,6 @@ public class LoginInterceptor implements HandlerInterceptor {
         HttpSession session = request.getSession();
         String user = (String) session.getAttribute("username");
         if (user == null){
-            //L'usuari no ha fet login
             response.sendRedirect("/login");
             return false;
         }
