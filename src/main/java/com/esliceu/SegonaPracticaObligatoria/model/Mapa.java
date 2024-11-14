@@ -1,6 +1,6 @@
 package com.esliceu.SegonaPracticaObligatoria.model;
 
-public class Map {
+public class Mapa {
     int id;
     String name;
     Door door;
