@@ -1,6 +1,7 @@
 package com.esliceu.SegonaPracticaObligatoria.model;
 
 public class Coin {
-    int num;
     int value;
+    int mapaId;
+    int id;
 }
