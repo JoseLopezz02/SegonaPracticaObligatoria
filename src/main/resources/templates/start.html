@@ -12,26 +12,24 @@
     <p class="subtitle">Choose your adventure <span th:text="${message}"></span>:</p>
 
     <div class="map-selection">
-        <div class="map-option" onclick="selectMap('mazeForest')">
+        <div class="map-option" onclick="selectMap(1)">
             <div class="map-image" id="mazeForest"></div>
             <p>Map 1 - The Dense Forest</p>
         </div>
-        <div class="map-option" onclick="selectMap('mazeCave')">
+        <div class="map-option" onclick="selectMap(2)">
             <div class="map-image" id="mazeCave"></div>
             <p>Map 2 - The Hidden Cave</p>
         </div>
     </div>
 </div>
 
-<!-- Formulario oculto para enviar el mapId seleccionado -->
 <form id="mapForm" action="/start" method="post">
-    <input type="hidden" name="mapid" id="mapid">
+    <input type="hidden" name="mapId" id="mapId">
 </form>
-
 <script>
-    function selectMap(map) {
-        document.getElementById("mapid").value = map; // Asegúrate de que el id sea 'mapid'
-        document.getElementById("mapForm").submit(); // Envía el formulario
+    function selectMap(mapId) {
+        document.getElementById("mapId").value = mapId;
+        document.getElementById("mapForm").submit();
     }
 </script>
 </body>

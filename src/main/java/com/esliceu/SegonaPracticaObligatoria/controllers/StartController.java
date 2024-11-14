@@ -12,19 +12,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class StartController {
     @GetMapping("/start")
-    public String getPrivate(HttpSession session, Model model) {
+    public String getStart(HttpSession session, Model model) {
         String username = (String) session.getAttribute("username");
         model.addAttribute("message", username);
         return "start";
     }
     @PostMapping("/start")
-    public String postPrivate(@RequestParam String mapId, Model model){
+    public String postStart(@RequestParam String mapId, Model model){
         if ("mazeForest".equals(mapId)){
             model.addAttribute("mapType", "forest");
         }else {
             model.addAttribute("mapType", "cave");
         }
-
+        //Lanzar exception si el user cambia el nombre del mapa o el id del mapa
         return "gameCanvas";
     }
 }
