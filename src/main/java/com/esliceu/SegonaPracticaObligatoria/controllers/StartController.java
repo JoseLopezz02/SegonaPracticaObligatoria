@@ -18,13 +18,14 @@ public class StartController {
         return "start";
     }
     @PostMapping("/start")
-    public String postStart(@RequestParam String mapId, Model model){
+    public String postStart(@RequestParam String mapId, Model model,HttpSession session){
         if ("mazeForest".equals(mapId)){
             model.addAttribute("mapType", "forest");
         }else {
             model.addAttribute("mapType", "cave");
         }
+        session.setAttribute("mapId", mapId);
         //Lanzar exception si el user cambia el nombre del mapa o el id del mapa
-        return "gameCanvas";
+        return "redirect:/gameCanvas";
     }
 }

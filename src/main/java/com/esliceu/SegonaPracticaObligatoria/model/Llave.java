@@ -2,8 +2,48 @@ package com.esliceu.SegonaPracticaObligatoria.model;
 
 public class Llave {
     int id;
-    int level; // Nivel de la llave no todas las llaves pueden abrir las mismas puertas
+    int level;
     String nombre;
-    int precioMonedas; //Coste de la llave
+    int precioMonedas;
     int mapaId;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public int getPrecioMonedas() {
+        return precioMonedas;
+    }
+
+    public void setPrecioMonedas(int precioMonedas) {
+        this.precioMonedas = precioMonedas;
+    }
+
+    public int getMapaId() {
+        return mapaId;
+    }
+
+    public void setMapaId(int mapaId) {
+        this.mapaId = mapaId;
+    }
 }
