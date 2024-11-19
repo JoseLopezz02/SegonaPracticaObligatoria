@@ -5,7 +5,7 @@ public class Door {
     int habitacion1;
     int habitacion2;
     int id;
-    int llaveId;
+    Integer llaveId;
     int mapaId;
     int roomId;
 
@@ -41,11 +41,11 @@ public class Door {
         this.id = id;
     }
 
-    public int getLlaveId() {
+    public Integer getLlaveId() {
         return llaveId;
     }
 
-    public void setLlaveId(int llaveId) {
+    public void setLlaveId(Integer llaveId) {
         this.llaveId = llaveId;
     }
 

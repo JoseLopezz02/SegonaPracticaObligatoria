@@ -1,10 +1,13 @@
 package com.esliceu.SegonaPracticaObligatoria.model;
 
+import java.util.List;
+
 public class User {
     String username;
     String name;
     int id;
     String password;
+    //Hay que guardar el score del jugador, las llaves del mismo y las monedas
 
 
     public String getUsername() {

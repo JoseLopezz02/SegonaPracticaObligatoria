@@ -23,15 +23,12 @@ public class GameCanvasController {
             return "redirect:/start";
         }
         Mapa mapa = gameCanvasService.getMapa(mapId);
-        System.out.println("Nombre laberinto " + mapa.getName());
-        System.out.println("Estas son las puertas" + mapa.getDoors());
-        System.out.println("Estas son las Habitaciones" + mapa.getRooms());
-        System.out.println(mapa);
         if(mapa == null){
             model.addAttribute("error", "Mapa no encontrado.");
             return "start";
         }
         String mapaData = gameCanvasService.convertDataToString(mapa);
+        System.out.println(mapaData);
         model.addAttribute("mapaData", mapaData);
         return "gameCanvas";
     }

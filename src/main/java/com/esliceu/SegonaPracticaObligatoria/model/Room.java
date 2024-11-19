@@ -3,10 +3,10 @@ package com.esliceu.SegonaPracticaObligatoria.model;
 public class Room {
     int id;
     String name;
-    int norte;
-    int sur;
-    int este;
-    int oeste;
+    Integer norte;
+    Integer sur;
+    Integer este;
+    Integer oeste;
     int mapaId;
     int key;
     int coin;
@@ -27,35 +27,35 @@ public class Room {
         this.name = name;
     }
 
-    public int getNorte() {
+    public Integer getNorte() {
         return norte;
     }
 
-    public void setNorte(int norte) {
+    public void setNorte(Integer norte) {
         this.norte = norte;
     }
 
-    public int getSur() {
+    public Integer getSur() {
         return sur;
     }
 
-    public void setSur(int sur) {
-        this.sur = sur;
+    public void setSur(Integer sur) {
+        this.sur = sur;  // Aceptar Integer
     }
 
-    public int getEste() {
+    public Integer getEste() {
         return este;
     }
 
-    public void setEste(int este) {
+    public void setEste(Integer este) {
         this.este = este;
     }
 
-    public int getOeste() {
+    public Integer getOeste() {
         return oeste;
     }
 
-    public void setOeste(int oeste) {
+    public void setOeste(Integer oeste) {
         this.oeste = oeste;
     }
 
@@ -82,5 +82,4 @@ public class Room {
     public void setCoin(int coin) {
         this.coin = coin;
     }
-
 }
