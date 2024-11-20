@@ -1,7 +1,5 @@
 package com.esliceu.SegonaPracticaObligatoria.model;
 
-import java.util.List;
-
 public class Mapa {
     private int id;
     private String name;

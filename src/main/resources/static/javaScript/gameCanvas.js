@@ -1,90 +1,101 @@
 document.addEventListener('DOMContentLoaded', () => {
     const roomDataScript = document.getElementById('dataJson').textContent;
-    console.log("Contenido de la habitacion:", roomDataScript);  // Ver el contenido
+    console.log("Contenido de la habitación:", roomDataScript);
 
+    let roomData;
     try {
-        const roomData = JSON.parse(roomDataScript);
-        console.log("roomData recibido:", mapaData);
+        roomData = JSON.parse(roomDataScript);
+        console.log("roomData recibido:", roomData);
     } catch (e) {
         console.error("Error al parsear roomData:", e);
+        return;
     }
 
-    const rooms = Array.isArray(roomData.rooms) ? mapaData.rooms : [];
-    const doors = Array.isArray(mapaData.doors) ? mapaData.doors : [];
-    console.log("Rooms:", rooms);
-    console.log("Doors:", doors);
-
-    const playerPosition = { x: 0, y: 0 };
-
+    // Inicializar el canvas y las imágenes
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
     const images = {
         wall: new Image(),
         player: new Image(),
-        compass: new Image(),
+        door: new Image(),
     };
 
     images.wall.src = '/img/wall.webp';
-    images.player.src = '/img/player.webp';
-    images.compass.src = '/img/cross.webp';
+    images.player.src = '/img/char_yellow.png';
+    images.door.src = '/img/door.webp';
 
-    // Promesas para cargar las imágenes
-    Promise.all([
-        new Promise(resolve => images.wall.onload = resolve),
-        new Promise(resolve => images.player.onload = resolve),
-        new Promise(resolve => images.compass.onload = resolve),
-    ]).then(() => {
-        // Dibujar habitaciones y puertas solo si están definidos
-        if (rooms.length > 0) {
-            rooms.forEach((room, index) => {
-                const x = room.x || index; // Usar índice como coordenada por defecto
-                const y = room.y || index;
-                ctx.drawImage(images.wall, x * 50, y * 50, 50, 50);
-            });
-        } else {
-            console.error("Rooms está vacío o no es válido.");
-        }
+    const playerPosition = { x: 0, y: 0 };
 
-        if (doors.length > 0) {
-            doors.forEach((door, index) => {
-                const x = door.x || index; // Usar índice como coordenada por defecto
-                const y = door.y || index;
-                ctx.fillStyle = 'brown';
-                ctx.fillRect(x * 50, y * 50, 50, 50);
-            });
-        } else {
-            console.error("Doors está vacío o no es válido.");
-        }
-
-        // Dibujar jugador inicial
-        ctx.drawImage(images.player, playerPosition.x, playerPosition.y, 50, 50);
-    });
-
-    // Controlar el movimiento del jugador
-    document.addEventListener('keydown', (event) => {
-        if (event.key === 'ArrowUp') playerPosition.y -= 50;
-        if (event.key === 'ArrowDown') playerPosition.y += 50;
-        if (event.key === 'ArrowLeft') playerPosition.x -= 50;
-        if (event.key === 'ArrowRight') playerPosition.x += 50;
-
-        // Redibujar el canvas con la nueva posición del jugador
+    const drawRoom = () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        if (rooms.length > 0) {
-            rooms.forEach((room, index) => {
-                const x = room.x || index;
-                const y = room.y || index;
-                ctx.drawImage(images.wall, x * 50, y * 50, 50, 50);
-            });
-        }
+        // Dibujar las paredes (simples como fondo)
+        ctx.drawImage(images.wall, 0, 0, canvas.width, canvas.height);
 
-        if (doors.length > 0) {
-            doors.forEach((door, index) => {
-                const x = door.x || index;
-                const y = door.y || index;
-                ctx.fillStyle = 'brown';
-                ctx.fillRect(x * 50, y * 50, 50, 50);
-            });
-        }
+        roomData.doors.forEach((door) => {
+            let x = 0;
+            let y = 0;
+            // Colocar puertas en base a las coordenadas de la habitación
+            if (roomData.norte === door.id) {
+                x = canvas.width / 2 - 25;
+                y = 0;
+            } else if (roomData.sur === door.id) {
+                x = canvas.width / 2 - 25;
+                y = canvas.height - 50;
+            } else if (roomData.este === door.id) {
+                x = canvas.width - 50;
+                y = canvas.height / 2 - 25;
+            } else if (roomData.oeste === door.id) {
+                x = 0;
+                y = canvas.height / 2 - 25;
+            }
+            ctx.drawImage(images.door, x, y, 50, 50);
+        });
 
         ctx.drawImage(images.player, playerPosition.x, playerPosition.y, 50, 50);
+    };
+
+    // Cargar imágenes y dibujar por primera vez
+    Promise.all([
+        new Promise((resolve) => (images.wall.onload = resolve)),
+        new Promise((resolve) => (images.player.onload = resolve)),
+        new Promise((resolve) => (images.door.onload = resolve)),
+    ]).then(drawRoom);
+
+    const movePlayer = (direction) => {
+        switch (direction) {
+            case 'ArrowUp':
+                if (roomData.norte) playerPosition.y -= 50;
+                break;
+            case 'ArrowDown':
+                if (roomData.sur) playerPosition.y += 50;
+                break;
+            case 'ArrowLeft':
+                if (roomData.oeste) playerPosition.x -= 50;
+                break;
+            case 'ArrowRight':
+                if (roomData.este) playerPosition.x += 50;
+                break;
+        }
+        drawRoom();
+        fetchNextRoom(direction);
+    };
+
+   //Modificar este fetch para enviar bien la info al server
+    const fetchNextRoom = (direction) => {
+        const nextRoomId = roomData[direction.toLowerCase()];
+        if (!nextRoomId) return;
+
+        fetch(`/nav/${nextRoomId}`)
+            .then((response) => response.json())
+            .then((newRoomData) => {
+                roomData = newRoomData;
+                drawRoom();
+            })
+            .catch((err) => console.error("Error al cargar la nueva habitación:", err));
+    };
+
+    document.addEventListener('keydown', (event) => {
+        movePlayer(event.key);
     });
 });

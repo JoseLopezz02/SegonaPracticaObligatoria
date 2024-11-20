@@ -24,20 +24,18 @@ public class GameCanvasDAOImpl implements GameCanvasDAO{
 
         String sqlDoors = "SELECT * FROM Door WHERE (habitacion1 = ? OR habitacion2 = ?) AND mapaId = ?";
         List<Door> doors = jdbcTemplate.query(sqlDoors, new Object[]{currentRoomId, currentRoomId, mapId},
-                new RowMapper<Door>() { //Row mappers personalizado por problemas con boolean
-                    @Override
-                    public Door mapRow(ResultSet rs, int rowNum) throws SQLException {
-                        Door door = new Door();
-                        door.setId(rs.getInt("id"));
-                        door.setIsOpen(rs.getBoolean("isOpen"));
-                        door.setHabitacion1(rs.getInt("habitacion1"));
-                        door.setHabitacion2(rs.getInt("habitacion2"));
-                        door.setLlaveId(rs.getInt("llaveId"));
-                        door.setMapaId(rs.getInt("mapaId"));
-                        door.setRoomId(rs.getInt("roomId"));
+                (rs, rowNum) -> {
+                //RowMapper personalizado por errores con boolean al pasarlo de  la BD al Servidro
+                    Door door = new Door();
+                    door.setId(rs.getInt("id"));
+                    door.setIsOpen(rs.getBoolean("isOpen"));
+                    door.setHabitacion1(rs.getInt("habitacion1"));
+                    door.setHabitacion2(rs.getInt("habitacion2"));
+                    door.setLlaveId(rs.getInt("llaveId"));
+                    door.setMapaId(rs.getInt("mapaId"));
+                    door.setRoomId(rs.getInt("roomId"));
 
-                        return door;
-                    }
+                    return door;
                 });
         room.setDoors(doors);
 
