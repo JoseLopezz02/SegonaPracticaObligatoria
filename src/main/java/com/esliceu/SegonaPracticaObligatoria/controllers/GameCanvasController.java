@@ -1,6 +1,7 @@
 package com.esliceu.SegonaPracticaObligatoria.controllers;
 
 import com.esliceu.SegonaPracticaObligatoria.model.Mapa;
+import com.esliceu.SegonaPracticaObligatoria.model.Room;
 import com.esliceu.SegonaPracticaObligatoria.services.GameCanvasService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.servlet.http.HttpSession;
@@ -17,19 +18,25 @@ public class GameCanvasController {
     @GetMapping("/gameCanvas")
     public String getGameCanvas(HttpSession session, Model model) throws JsonProcessingException {
         String mapId = (String) session.getAttribute("mapId");
+        String currentRoomId = session.getAttribute("currentRoomId").toString();
+
         System.out.println("Este es el id" + mapId);
         if (mapId == null) {
             model.addAttribute("error", "No se ha seleccionado un mapa.");
             return "redirect:/start";
         }
-        Mapa mapa = gameCanvasService.getMapa(mapId);
-        if(mapa == null){
+        Room room = gameCanvasService.getRoom(mapId, currentRoomId);
+        if(room == null){
             model.addAttribute("error", "Mapa no encontrado.");
             return "start";
         }
-        String mapaData = gameCanvasService.convertDataToString(mapa);
-        System.out.println(mapaData);
-        model.addAttribute("mapaData", mapaData);
+
+
+
+
+        String roomData = gameCanvasService.convertDataToString(room);
+        System.out.println(roomData);
+        model.addAttribute("roomData", roomData);
         return "gameCanvas";
     }
 }

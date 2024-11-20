@@ -6,11 +6,6 @@ public class Mapa {
     private int id;
     private String name;
     private int idRoomInicial;
-    private List<Room> rooms;
-    private List<Door> doors;
-    private List<Llave> llaves;
-    private List<Coin> coins;
-
 
     public int getId() {
         return id;
@@ -34,37 +29,5 @@ public class Mapa {
 
     public void setIdRoomInicial(int idRoomInicial) {
         this.idRoomInicial = idRoomInicial;
-    }
-
-    public List<Room> getRooms() {
-        return rooms;
-    }
-
-    public void setRooms(List<Room> rooms) {
-        this.rooms = rooms;
-    }
-
-    public List<Door> getDoors() {
-        return doors;
-    }
-
-    public void setDoors(List<Door> doors) {
-        this.doors = doors;
-    }
-
-    public List<Llave> getLlaves() {
-        return llaves;
-    }
-
-    public void setLlaves(List<Llave> llaves) {
-        this.llaves = llaves;
-    }
-
-    public List<Coin> getCoins() {
-        return coins;
-    }
-
-    public void setCoins(List<Coin> coins) {
-        this.coins = coins;
     }
 }

@@ -1,15 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const mapaDataScript = document.getElementById('dataJson').textContent;
-    console.log("Contenido de mapaData:", mapaDataScript);  // Ver el contenido
+    const roomDataScript = document.getElementById('dataJson').textContent;
+    console.log("Contenido de la habitacion:", roomDataScript);  // Ver el contenido
 
     try {
-        const mapaData = JSON.parse(mapaDataScript);
-        console.log("mapaData recibido:", mapaData);
+        const roomData = JSON.parse(roomDataScript);
+        console.log("roomData recibido:", mapaData);
     } catch (e) {
-        console.error("Error al parsear mapaData:", e);
+        console.error("Error al parsear roomData:", e);
     }
 
-    const rooms = Array.isArray(mapaData.rooms) ? mapaData.rooms : [];
+    const rooms = Array.isArray(roomData.rooms) ? mapaData.rooms : [];
     const doors = Array.isArray(mapaData.doors) ? mapaData.doors : [];
     console.log("Rooms:", rooms);
     console.log("Doors:", doors);

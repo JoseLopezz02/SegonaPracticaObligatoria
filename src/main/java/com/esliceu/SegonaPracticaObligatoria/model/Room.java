@@ -1,5 +1,7 @@
 package com.esliceu.SegonaPracticaObligatoria.model;
 
+import java.util.List;
+
 public class Room {
     int id;
     String name;
@@ -10,6 +12,34 @@ public class Room {
     int mapaId;
     int key;
     int coin;
+
+    private List<Door> doors;
+    private List<Llave> llaves;
+    private List<Coin> coins;
+
+    public List<Door> getDoors() {
+        return doors;
+    }
+
+    public void setDoors(List<Door> doors) {
+        this.doors = doors;
+    }
+
+    public List<Llave> getLlaves() {
+        return llaves;
+    }
+
+    public void setLlaves(List<Llave> llaves) {
+        this.llaves = llaves;
+    }
+
+    public List<Coin> getCoins() {
+        return coins;
+    }
+
+    public void setCoins(List<Coin> coins) {
+        this.coins = coins;
+    }
 
     public int getId() {
         return id;
@@ -39,9 +69,7 @@ public class Room {
         return sur;
     }
 
-    public void setSur(Integer sur) {
-        this.sur = sur;  // Aceptar Integer
-    }
+    public void setSur(Integer sur) {this.sur = sur;}
 
     public Integer getEste() {
         return este;

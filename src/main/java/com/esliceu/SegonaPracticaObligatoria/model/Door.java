@@ -13,8 +13,8 @@ public class Door {
         return isOpen;
     }
 
-    public void setOpen(boolean open) {
-        isOpen = open;
+    public void setIsOpen(boolean isOpen) {
+        this.isOpen = isOpen;
     }
 
     public int getHabitacion1() {
