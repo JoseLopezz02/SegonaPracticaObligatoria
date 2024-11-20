@@ -1,6 +1,5 @@
 package com.esliceu.SegonaPracticaObligatoria.controllers;
 
-import com.esliceu.SegonaPracticaObligatoria.model.Mapa;
 import com.esliceu.SegonaPracticaObligatoria.model.Room;
 import com.esliceu.SegonaPracticaObligatoria.services.GameCanvasService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -9,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class GameCanvasController {
@@ -27,11 +25,9 @@ public class GameCanvasController {
         }
         Room room = gameCanvasService.getRoom(mapId, currentRoomId);
         if(room == null){
-            model.addAttribute("error", "Mapa no encontrado.");
+            model.addAttribute("error", "Habitacion no encontrado.");
             return "start";
         }
-
-
 
 
         String roomData = gameCanvasService.convertDataToString(room);

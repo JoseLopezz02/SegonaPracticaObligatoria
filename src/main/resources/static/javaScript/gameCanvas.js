@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Inicializar el canvas y las imágenes
-    const canvas = document.getElementById('gameCanvas');
+    const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
     const images = {
         wall: new Image(),
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     images.wall.src = '/img/wall.webp';
     images.player.src = '/img/char_yellow.png';
-    images.door.src = '/img/door.webp';
+    images.cross.src = '/img/cross.webp'
 
     const playerPosition = { x: 0, y: 0 };
 
