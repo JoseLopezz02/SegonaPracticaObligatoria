@@ -10,12 +10,12 @@ public class Room {
     Integer este;
     Integer oeste;
     int mapaId;
-    int key;
+    Integer keyId;
     int coin;
 
     private List<Door> doors;
     private List<Llave> llaves;
-    private List<Coin> coins;
+
 
     public List<Door> getDoors() {
         return doors;
@@ -31,14 +31,6 @@ public class Room {
 
     public void setLlaves(List<Llave> llaves) {
         this.llaves = llaves;
-    }
-
-    public List<Coin> getCoins() {
-        return coins;
-    }
-
-    public void setCoins(List<Coin> coins) {
-        this.coins = coins;
     }
 
     public int getId() {
@@ -95,12 +87,12 @@ public class Room {
         this.mapaId = mapaId;
     }
 
-    public int getKey() {
-        return key;
+    public Integer getKeyId() {
+        return keyId;
     }
 
-    public void setKey(int key) {
-        this.key = key;
+    public void setKeyId(Integer keyId) {
+        this.keyId = keyId;
     }
 
     public int getCoin() {

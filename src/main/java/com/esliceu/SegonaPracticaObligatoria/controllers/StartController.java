@@ -29,7 +29,7 @@ public class StartController {
             model.addAttribute("mapType", "cave");
         }
         session.setAttribute("mapId", mapId);
-        int idRoomInicial = gameCanvasService.getInitialRoomIdByMapId(mapId);
+        String idRoomInicial = gameCanvasService.getInitialRoomIdByMapId(mapId);
         session.setAttribute("currentRoomId", idRoomInicial);
 
         //Lanzar exception si el user cambia el nombre del mapa o el id del mapa

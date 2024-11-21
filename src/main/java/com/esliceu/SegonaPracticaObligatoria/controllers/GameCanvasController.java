@@ -18,7 +18,6 @@ public class GameCanvasController {
         String mapId = (String) session.getAttribute("mapId");
         String currentRoomId = session.getAttribute("currentRoomId").toString();
 
-        System.out.println("Este es el id" + mapId);
         if (mapId == null) {
             model.addAttribute("error", "No se ha seleccionado un mapa.");
             return "redirect:/start";
@@ -31,6 +30,7 @@ public class GameCanvasController {
 
 
         String roomData = gameCanvasService.convertDataToString(room);
+        System.out.println("Este es el id" + mapId);
         System.out.println(roomData);
         model.addAttribute("roomData", roomData);
         return "gameCanvas";

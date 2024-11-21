@@ -1,10 +1,9 @@
 package com.esliceu.SegonaPracticaObligatoria.repository;
 
-import com.esliceu.SegonaPracticaObligatoria.model.Mapa;
 import com.esliceu.SegonaPracticaObligatoria.model.Room;
 
-public interface GameCanvasDAO {
+public interface RoomDAO {
     Room get (String mapId, String currentRoomId);
-
-    int getInitialRoomId(String mapId);
+    String getInitialRoomId(String mapId);
+    Room getRoomByDirection(String map,String currentRoomId,String direction);
 }

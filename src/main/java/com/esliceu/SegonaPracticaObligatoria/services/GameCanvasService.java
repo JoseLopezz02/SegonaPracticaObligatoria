@@ -1,8 +1,7 @@
 package com.esliceu.SegonaPracticaObligatoria.services;
 
-import com.esliceu.SegonaPracticaObligatoria.model.Mapa;
 import com.esliceu.SegonaPracticaObligatoria.model.Room;
-import com.esliceu.SegonaPracticaObligatoria.repository.GameCanvasDAO;
+import com.esliceu.SegonaPracticaObligatoria.repository.RoomDAO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +10,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class GameCanvasService {
     @Autowired
-    GameCanvasDAO gameCanvasDAO;
+    RoomDAO roomDAO;
 
     public Room getRoom(String mapId, String currentRoomId) {
-        return gameCanvasDAO.get(mapId, currentRoomId);
+        return roomDAO.get(mapId, currentRoomId);
     }
 
     public String convertDataToString(Room room) throws JsonProcessingException {
@@ -22,7 +21,14 @@ public class GameCanvasService {
        return objectMapper.writeValueAsString(room);
     }
 
-    public int getInitialRoomIdByMapId(String mapId) {
-        return gameCanvasDAO.getInitialRoomId(mapId);
+    public String  getInitialRoomIdByMapId(String mapId) {
+        return roomDAO.getInitialRoomId(mapId);
+    }
+
+    public Room roomNavegacion(String mapId, String currentRoomId, String direction) {
+      Room targetRoom = roomDAO.getRoomByDirection(mapId,currentRoomId,direction);
+      if (targetRoom == null) throw new IllegalArgumentException(
+              "No puedes atravesar la pared");
+      return targetRoom;
     }
 }

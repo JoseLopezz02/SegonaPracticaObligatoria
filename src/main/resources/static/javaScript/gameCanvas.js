@@ -53,7 +53,8 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        fetch(`/nav/${doorId}`)
+        // Realizar la solicitud al servidor
+        fetch(`/nav?direction=${direction}`)
             .then((response) => response.json())
             .then((newRoomData) => {
                 roomData = newRoomData;

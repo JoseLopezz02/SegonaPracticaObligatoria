@@ -7,6 +7,7 @@ public class User {
     String name;
     int id;
     String password;
+    int idHabitacionActual;
     //Hay que guardar el score del jugador, las llaves del mismo y las monedas
 
 
