@@ -28,3 +28,8 @@
             background-color: #354e26; /* Verde oscuro para simular selva */
             box-shadow: inset 0 0 20px #1c2a13;
         }
+
+        .compass-container {
+            text-align: center;
+            margin-top: 10px;
+        }

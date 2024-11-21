@@ -1,8 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const roomDataScript = document.getElementById('dataJson').textContent;
-    console.log("Contenido de la habitación:", roomDataScript);
-
     let roomData;
+
     try {
         roomData = JSON.parse(roomDataScript);
         console.log("roomData recibido:", roomData);
@@ -11,82 +10,50 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    // Inicializar el canvas y las imágenes
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
-    const images = {
-        wall: new Image(),
-        player: new Image(),
-        door: new Image(),
-    };
-
-    images.wall.src = '/img/wall.webp';
-    images.player.src = '/img/char_yellow.png';
-    images.cross.src = '/img/cross.webp'
-
-    const playerPosition = { x: 0, y: 0 };
+    const compass = document.getElementById('compass');
 
     const drawRoom = () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        // Dibujar las paredes (simples como fondo)
-        ctx.drawImage(images.wall, 0, 0, canvas.width, canvas.height);
+        // Dibujar las paredes
+        ctx.fillStyle = '#000';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        roomData.doors.forEach((door) => {
-            let x = 0;
-            let y = 0;
-            // Colocar puertas en base a las coordenadas de la habitación
-            if (roomData.norte === door.id) {
-                x = canvas.width / 2 - 25;
-                y = 0;
-            } else if (roomData.sur === door.id) {
-                x = canvas.width / 2 - 25;
-                y = canvas.height - 50;
-            } else if (roomData.este === door.id) {
-                x = canvas.width - 50;
-                y = canvas.height / 2 - 25;
-            } else if (roomData.oeste === door.id) {
-                x = 0;
-                y = canvas.height / 2 - 25;
-            }
-            ctx.drawImage(images.door, x, y, 50, 50);
-        });
-
-        ctx.drawImage(images.player, playerPosition.x, playerPosition.y, 50, 50);
-    };
-
-    // Cargar imágenes y dibujar por primera vez
-    Promise.all([
-        new Promise((resolve) => (images.wall.onload = resolve)),
-        new Promise((resolve) => (images.player.onload = resolve)),
-        new Promise((resolve) => (images.door.onload = resolve)),
-    ]).then(drawRoom);
-
-    const movePlayer = (direction) => {
-        switch (direction) {
-            case 'ArrowUp':
-                if (roomData.norte) playerPosition.y -= 50;
-                break;
-            case 'ArrowDown':
-                if (roomData.sur) playerPosition.y += 50;
-                break;
-            case 'ArrowLeft':
-                if (roomData.oeste) playerPosition.x -= 50;
-                break;
-            case 'ArrowRight':
-                if (roomData.este) playerPosition.x += 50;
-                break;
+        // Dibujar las puertas
+        if (roomData.norte !== null) {
+            ctx.fillStyle = roomData.doors.find(d => d.id === roomData.norte)?.open ? '#FFF' : '#F00';
+            ctx.fillRect(canvas.width / 2 - 25, 0, 50, 10); // Puerta al norte
         }
-        drawRoom();
-        fetchNextRoom(direction);
+        if (roomData.sur !== null) {
+            ctx.fillStyle = roomData.doors.find(d => d.id === roomData.sur)?.open ? '#FFF' : '#F00';
+            ctx.fillRect(canvas.width / 2 - 25, canvas.height - 10, 50, 10); // Puerta al sur
+        }
+        if (roomData.este !== null) {
+            ctx.fillStyle = roomData.doors.find(d => d.id === roomData.este)?.open ? '#FFF' : '#F00';
+            ctx.fillRect(canvas.width - 10, canvas.height / 2 - 25, 10, 50); // Puerta al este
+        }
+        if (roomData.oeste !== null) {
+            ctx.fillStyle = roomData.doors.find(d => d.id === roomData.oeste)?.open ? '#FFF' : '#F00';
+            ctx.fillRect(0, canvas.height / 2 - 25, 10, 50); // Puerta al oeste
+        }
     };
 
-   //Modificar este fetch para enviar bien la info al server
     const fetchNextRoom = (direction) => {
-        const nextRoomId = roomData[direction.toLowerCase()];
-        if (!nextRoomId) return;
+        const doorId = roomData[direction.toLowerCase()];
+        if (!doorId) {
+            alert("No puedes atravesar la pared.");
+            return;
+        }
 
-        fetch(`/nav/${nextRoomId}`)
+        const door = roomData.doors.find(d => d.id === doorId);
+        if (!door.open) {
+            alert("La puerta está cerrada.");
+            return;
+        }
+
+        fetch(`/nav/${doorId}`)
             .then((response) => response.json())
             .then((newRoomData) => {
                 roomData = newRoomData;
@@ -95,7 +62,26 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch((err) => console.error("Error al cargar la nueva habitación:", err));
     };
 
-    document.addEventListener('keydown', (event) => {
-        movePlayer(event.key);
+    compass.addEventListener('click', (event) => {
+        const compassRect = compass.getBoundingClientRect();
+        const x = event.clientX - compassRect.left;
+        const y = event.clientY - compassRect.top;
+
+        // Determinar la dirección según el clic
+        const centerX = compassRect.width / 2;
+        const centerY = compassRect.height / 2;
+        const angle = Math.atan2(y - centerY, x - centerX);
+
+        if (angle > -Math.PI / 4 && angle <= Math.PI / 4) {
+            fetchNextRoom('este'); // Este
+        } else if (angle > Math.PI / 4 && angle <= 3 * Math.PI / 4) {
+            fetchNextRoom('sur'); // Sur
+        } else if (angle > -3 * Math.PI / 4 && angle <= -Math.PI / 4) {
+            fetchNextRoom('norte'); // Norte
+        } else {
+            fetchNextRoom('oeste'); // Oeste
+        }
     });
+
+    drawRoom();
 });
