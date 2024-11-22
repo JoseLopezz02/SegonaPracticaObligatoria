@@ -22,8 +22,11 @@ public class NavegationController {
         try {
             Room futureCurrentRoom = gameCanvasService.roomNavegacion(mapId, currentRoomId, direction);
             session.setAttribute("currentRoomId", String.valueOf(futureCurrentRoom.getId()));
-
             String roomData = gameCanvasService.convertDataToString(futureCurrentRoom);
+
+            System.out.println(futureCurrentRoom.getId());
+            System.out.println("Esta es la futura room data" + roomData);
+
             model.addAttribute("roomData", roomData);
             return "gameCanvas";
         } catch (IllegalArgumentException | JsonProcessingException e) {

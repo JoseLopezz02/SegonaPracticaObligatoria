@@ -26,9 +26,12 @@ public class GameCanvasService {
     }
 
     public Room roomNavegacion(String mapId, String currentRoomId, String direction) {
-      Room targetRoom = roomDAO.getRoomByDirection(mapId,currentRoomId,direction);
-      if (targetRoom == null) throw new IllegalArgumentException(
-              "No puedes atravesar la pared");
-      return targetRoom;
+        Room targetRoom = roomDAO.getRoomByDirection(mapId, currentRoomId, direction);
+        System.out.println("Voy a la direccion : " + direction);
+        if (targetRoom == null) {
+            throw new IllegalArgumentException("No puedes atravesar la pared.");
+        }
+        return targetRoom;
     }
+
 }

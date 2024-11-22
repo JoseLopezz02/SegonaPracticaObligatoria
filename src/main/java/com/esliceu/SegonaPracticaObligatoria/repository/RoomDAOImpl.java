@@ -49,18 +49,47 @@ public class RoomDAOImpl implements RoomDAO {
     }
 
     public Room getRoomByDirection(String mapId, String currentRoomId, String direction) {
-        String sql = "SELECT * FROM Room WHERE id = (" +
+        String sql = "SELECT r.* FROM Room r " +
+                "WHERE r.id = (" +
                 "  SELECT CASE " +
-                "    WHEN ? = 'norte' THEN norte " +
-                "    WHEN ? = 'sur' THEN sur " +
-                "    WHEN ? = 'este' THEN este " +
-                "    WHEN ? = 'oeste' THEN oeste " +
+                "    WHEN d.habitacion1 = ? THEN d.habitacion2 " +
+                "    WHEN d.habitacion2 = ? THEN d.habitacion1 " +
+                "    ELSE NULL " +
                 "  END " +
-                "  FROM Room WHERE id = ? AND mapaId = ?" +
+                "  FROM Door d " +
+                "  WHERE d.id = (" +
+                "    SELECT " + direction + " " +
+                "    FROM Room " +
+                "    WHERE id = ? AND mapaId = ?" +
+                "  )" +
                 ")";
-        //EL error esta aqui
-        return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Room.class),
-                direction, direction, direction, currentRoomId, mapId);
-    }
+        try {
+            Room targetRoom = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Room.class),
+                    currentRoomId, currentRoomId, currentRoomId, mapId);
+            String sqlDoors = "SELECT * FROM Door WHERE (habitacion1 = ? OR habitacion2 = ?) AND mapaId = ?";
+            List<Door> doors = jdbcTemplate.query(sqlDoors, new Object[]{targetRoom.getId(), targetRoom.getId(), mapId},
+                    (rs, rowNum) -> {
+                        Door door = new Door();
+                        door.setId(rs.getInt("id"));
+                        door.setIsOpen(rs.getBoolean("isOpen"));
+                        door.setHabitacion1(rs.getInt("habitacion1"));
+                        door.setHabitacion2(rs.getInt("habitacion2"));
+                        door.setLlaveId(rs.getInt("llaveId"));
+                        door.setMapaId(rs.getInt("mapaId"));
+                        door.setRoomId(rs.getInt("roomId"));
+                        return door;
+                    });
+            targetRoom.setDoors(doors);
 
+
+            String sqlLlaves = "SELECT * FROM Llave WHERE id IN (SELECT keyId FROM Room WHERE id = ? AND mapaId = ?)";
+            List<Llave> llaves = jdbcTemplate.query(sqlLlaves, new Object[]{currentRoomId, mapId},
+                    new BeanPropertyRowMapper<>(Llave.class));
+            targetRoom.setLlaves(llaves);
+
+            return targetRoom;
+        }catch (Exception e){
+            return null;
+        }
+    }
 }
