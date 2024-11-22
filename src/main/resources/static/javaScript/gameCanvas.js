@@ -54,13 +54,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Realizar la solicitud al servidor
-        fetch(`/nav?direction=${direction}`)
-            .then((response) => response.json())
-            .then((newRoomData) => {
-                roomData = newRoomData;
-                drawRoom();
-            })
-            .catch((err) => console.error("Error al cargar la nueva habitación:", err));
+            fetch(`/nav?direction=${direction}`)
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error(`Error HTTP: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then((newRoomData) => {
+                    roomData = newRoomData;
+                    drawRoom();
+                })
+                .catch((err) => console.error("Error al cargar la nueva habitación:", err));
+
     };
 
     compass.addEventListener('click', (event) => {

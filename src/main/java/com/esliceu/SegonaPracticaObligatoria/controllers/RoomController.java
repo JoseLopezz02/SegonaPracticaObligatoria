@@ -10,7 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class GameCanvasController {
+public class RoomController {
     @Autowired
     GameCanvasService gameCanvasService;
     @GetMapping("/gameCanvas")
