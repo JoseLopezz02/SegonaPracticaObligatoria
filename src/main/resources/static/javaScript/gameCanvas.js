@@ -14,6 +14,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const ctx = canvas.getContext('2d');
     const compass = document.getElementById('compass');
 
+    const coin = new Image();
+    coin.src = "/img/coin.gif";
+
     const drawRoom = () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -38,6 +41,13 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.fillStyle = roomData.doors.find(d => d.id === roomData.oeste)?.open ? '#FFF' : '#F00';
             ctx.fillRect(0, canvas.height / 2 - 25, 10, 50); // Puerta al oeste
         }
+
+       if (roomData.coin !== 0) {
+           const coinX = 50; //píxeles desde el borde izquierdo (ajustable)
+           const coinY = canvas.height - 80; //píxeles desde el borde inferior (ajustable)
+           ctx.drawImage(coin, coinX, coinY, 40, 40); // Dibuja la moneda
+       }
+
     };
 
     const fetchNextRoom = (direction) => {
