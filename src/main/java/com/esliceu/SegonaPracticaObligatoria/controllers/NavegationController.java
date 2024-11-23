@@ -25,7 +25,7 @@ public class NavegationController {
         try {
             Room futureCurrentRoom = gameCanvasService.roomNavegacion(mapId, currentRoomId, direction);
             session.setAttribute("currentRoomId", String.valueOf(futureCurrentRoom.getId()));
-            return futureCurrentRoom; // Devuelve JSON automáticamente
+            return futureCurrentRoom;
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }

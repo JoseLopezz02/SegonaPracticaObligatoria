@@ -23,6 +23,9 @@ public class StartController {
     }
     @PostMapping("/start")
     public String postStart(@RequestParam String mapId, Model model,HttpSession session){
+
+        //Lanzar exception si el user cambia el nombre del mapa o el id del mapa
+        //Y  preguntar a pere si cambiar esto y coger la id del mapa desde la BD
         if ("mazeForest".equals(mapId)){
             model.addAttribute("mapType", "forest");
         }else {
@@ -32,7 +35,7 @@ public class StartController {
         String idRoomInicial = gameCanvasService.getInitialRoomIdByMapId(mapId);
         session.setAttribute("currentRoomId", idRoomInicial);
 
-        //Lanzar exception si el user cambia el nombre del mapa o el id del mapa
+
         return "redirect:/gameCanvas";
     }
 }
