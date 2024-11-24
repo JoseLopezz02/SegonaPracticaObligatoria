@@ -18,13 +18,17 @@ public class NavegationController {
     GameCanvasService gameCanvasService;
     @GetMapping("/nav")
     @ResponseBody
-    public Room getNav(@RequestParam("direction") String direction, HttpSession session, Model model){
+    public Room getNav(@RequestParam("direction") String direction, HttpSession session){
         String mapId = (String) session.getAttribute("mapId");
         String currentRoomId = (String) session.getAttribute("currentRoomId");
 
         try {
             Room futureCurrentRoom = gameCanvasService.roomNavegacion(mapId, currentRoomId, direction);
             session.setAttribute("currentRoomId", String.valueOf(futureCurrentRoom.getId()));
+            session.setAttribute("mapId", mapId);
+            System.out.println("mapId desde la navegación: " + mapId);
+            System.out.println("currentRoomId desde la navegación: " + currentRoomId);
+
             return futureCurrentRoom;
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());

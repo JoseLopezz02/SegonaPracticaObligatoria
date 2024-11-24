@@ -18,6 +18,9 @@ public class SegonaPracticaObligatoriaApplication implements WebMvcConfigurer {
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(loginInterceptor).addPathPatterns("/start").addPathPatterns("/gameCanvas");
+		registry.addInterceptor(loginInterceptor).addPathPatterns("/start")
+				.addPathPatterns("/gameCanvas")
+				.addPathPatterns("/nav")
+				.addPathPatterns("/getCoin");
 	}
 }

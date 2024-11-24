@@ -81,6 +81,12 @@ public class RoomDAOImpl implements RoomDAO {
         }
     }
 
+    @Override
+    public void updateCoinNumber(String mapId, String currentRoomId) {
+        String sqlCoinUpdate = "UPDATE Room SET coin = 0 WHERE id = ? AND mapaId = ?";
+        jdbcTemplate.update(sqlCoinUpdate, currentRoomId, mapId);
+    }
+
     private void getKeysOfRoom(String mapId, String currentRoomId, Room room) {
         String sqlLlaves = "SELECT * FROM Llave WHERE id IN (SELECT keyId FROM Room WHERE id = ? AND mapaId = ?)";
         List<Llave> llaves = jdbcTemplate.query(sqlLlaves, new Object[]{currentRoomId, mapId},

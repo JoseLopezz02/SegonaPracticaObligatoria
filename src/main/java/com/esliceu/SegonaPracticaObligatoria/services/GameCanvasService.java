@@ -34,4 +34,7 @@ public class GameCanvasService {
         return targetRoom;
     }
 
+    public void updateRoom(String mapId ,String currentRoomId) {
+        roomDAO.updateCoinNumber(mapId, currentRoomId);
+    }
 }
