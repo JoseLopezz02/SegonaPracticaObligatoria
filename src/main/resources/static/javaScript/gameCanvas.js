@@ -19,10 +19,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const coin = new Image();
     coin.src = "/img/coin.gif";
+    const keyImg = new Image();
+    keyImg.src = "/img/key.webp";
 
     let coinsCollected = 0;
 
-    // Función para verificar si el clic fue sobre la moneda
     const isCoinClicked = (x, y) => {
         const coinX = 50; // Posición X de la moneda
         const coinY = canvas.height - 80; // Posición Y de la moneda
@@ -32,7 +33,16 @@ document.addEventListener('DOMContentLoaded', () => {
         return x >= coinX && x <= coinX + coinWidth && y >= coinY && y <= coinY + coinHeight;
     };
 
-    // Función para dibujar la habitación
+    const isKeyClicked = (x, y) => {
+        const keyX = canvas.width - 90;
+        const keyY = canvas.height - 80;
+        const keyWidth = 40;
+        const keyHeight = 40;
+
+        return x >= keyX && x <= keyX + keyWidth && y >= keyY && y <= keyY + keyHeight;
+    };
+
+
     const drawRoom = () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -58,28 +68,44 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.fillRect(0, canvas.height / 2 - 25, 10, 50); // Puerta al oeste
         }
 
-        // Dibujar la moneda si hay una
+
         if (roomData.coin !== 0) {
-            const coinX = 50; // 50 píxeles desde el borde izquierdo
-            const coinY = canvas.height - 80; // 80 píxeles desde el borde inferior
+            const coinX = 50; //píxeles desde el borde izquierdo
+            const coinY = canvas.height - 80; //píxeles desde el borde inferior
             ctx.drawImage(coin, coinX, coinY, 40, 40); // Dibuja la moneda
         }
+        // Dibujar la llave si hay una
+        if (roomData.keyId !== null) {
+            const keyX = canvas.width - 90; // Posición X de la llave
+            const keyY = canvas.height - 80; // Posición Y de la llave
+            ctx.drawImage(keyImg, keyX, keyY, 40, 40); // Dibuja la llave
+        }
 
-        // Actualizar la información del juego
         currentRoomElement.textContent = roomData.name;
         coinCountElement.textContent = coinsCollected;
         keysElement.textContent = roomData.llaves.length ? roomData.llaves.join(', ') : 'Ninguna';
     };
 
-    // Función para recoger la moneda
-    const fetchGetCoin = () => {
-        const getCoin = roomData.coin;
-        if (getCoin === 0) {
-            alert("No hay monedas en esta habitación.");
+    canvas.addEventListener('click', (event) => {
+        const canvasRect = canvas.getBoundingClientRect();
+        const x = event.clientX - canvasRect.left;
+        const y = event.clientY - canvasRect.top;
+
+        if (isCoinClicked(x, y)) {
+            fetchGetCoin();
+        }
+        if(isKeyClicked(x,y)){
+          fetchGetKey();
+        }
+    });
+
+    const fetchGetKey = () => {
+        if (roomData.keyId === null) {
+            alert("No hay llaves en esta habitación.");
             return;
         }
 
-        fetch(`/getCoin`)
+        fetch(`/getKey`)
             .then((response) => {
                 if (!response.ok) {
                     throw new Error(`Error HTTP: ${response.status}`);
@@ -87,27 +113,40 @@ document.addEventListener('DOMContentLoaded', () => {
                 return response.json();
             })
             .then((updatedRoomData) => {
-                roomData = updatedRoomData; // Actualizar roomData con los datos del servidor
-                coinsCollected++; // Incrementar el contador de monedas
-                alert("¡Moneda recogida!");
-                drawRoom(); // Redibujar la habitación después de recoger la moneda
+                if (!updatedRoomData) {
+                    throw new Error("Datos inválidos recibidos del servidor.");
+                }
+
+                roomData = updatedRoomData; // Actualizar datos de la habitación
+                alert("¡Llave recogida!");
+                drawRoom(); // Redibujar el canvas
             })
+            .catch((err) => console.error("Error al recoger la llave:", err));
+    };
+
+    const fetchGetCoin = () => {
+            const getCoin = roomData.coin;
+            if (getCoin === 0) {
+                alert("No hay monedas en esta habitación.");
+                return;
+            }
+
+            fetch(`/getCoin`)
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error(`Error HTTP: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then((updatedRoomData) => {
+                    roomData = updatedRoomData;
+                    coinsCollected++;
+                    alert("¡Moneda recogida!");
+                    drawRoom(); // Redibujar la habitación después de recoger la moneda
+                })
             .catch((err) => console.error("Error al coger la moneda:", err));
     };
 
-    // Detectar clics en el canvas
-    canvas.addEventListener('click', (event) => {
-        const canvasRect = canvas.getBoundingClientRect();
-        const x = event.clientX - canvasRect.left;
-        const y = event.clientY - canvasRect.top;
-
-        // Verificar si el clic fue sobre la moneda
-        if (isCoinClicked(x, y)) {
-            fetchGetCoin(); // Llamar a la función para recoger la moneda
-        }
-    });
-
-    // Función para mover a la siguiente habitación
     const fetchNextRoom = (direction) => {
         const doorId = roomData[direction.toLowerCase()];
         if (!doorId) {
@@ -121,7 +160,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Realizar la solicitud al servidor
         fetch(`/nav?direction=${direction}`)
             .then((response) => {
                 if (!response.ok) {

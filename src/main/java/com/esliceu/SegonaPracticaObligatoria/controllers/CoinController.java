@@ -16,8 +16,6 @@ public class CoinController {
     public ResponseEntity<Object> getCoin(HttpSession session){
         String mapId = (String) session.getAttribute("mapId");
         String currentRoomId = (String) session.getAttribute("currentRoomId");
-        System.out.println("Desde el getCoin" + mapId);
-        System.out.println("Desde el getCoin" + currentRoomId);
        try {
            Room roomData = gameCanvasService.getRoom(mapId,currentRoomId);
 
