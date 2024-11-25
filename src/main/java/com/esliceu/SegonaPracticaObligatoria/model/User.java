@@ -8,8 +8,23 @@ public class User {
     int id;
     String password;
     int idHabitacionActual;
-    //Hay que guardar el score del jugador, las llaves del mismo y las monedas
+    List<Partida> partidas;
 
+    public int getIdHabitacionActual() {
+        return idHabitacionActual;
+    }
+
+    public void setIdHabitacionActual(int idHabitacionActual) {
+        this.idHabitacionActual = idHabitacionActual;
+    }
+
+    public List<Partida> getPartidas() {
+        return partidas;
+    }
+
+    public void setPartidas(List<Partida> partidas) {
+        this.partidas = partidas;
+    }
 
     public String getUsername() {
         return username;
