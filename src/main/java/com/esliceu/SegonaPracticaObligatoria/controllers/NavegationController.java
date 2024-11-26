@@ -21,13 +21,13 @@ public class NavegationController {
     public Room getNav(@RequestParam("direction") String direction, HttpSession session){
         String mapId = (String) session.getAttribute("mapId");
         String currentRoomId = (String) session.getAttribute("currentRoomId");
+        String partidaId = (String) session.getAttribute("partidaId");
 
         try {
             Room futureCurrentRoom = gameCanvasService.roomNavegacion(mapId, currentRoomId, direction);
+            gameCanvasService.updateCurrentRoomPartida(String.valueOf(futureCurrentRoom.getId()), partidaId);
             session.setAttribute("currentRoomId", String.valueOf(futureCurrentRoom.getId()));
             session.setAttribute("mapId", mapId);
-            System.out.println("mapId desde la navegación: " + mapId);
-            System.out.println("currentRoomId desde la navegación: " + currentRoomId);
 
             return futureCurrentRoom;
         } catch (IllegalArgumentException e) {

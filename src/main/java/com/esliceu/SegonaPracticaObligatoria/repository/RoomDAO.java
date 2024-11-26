@@ -8,4 +8,5 @@ public interface RoomDAO {
     Room getRoomByDirection(String map,String currentRoomId,String direction);
     void updateCoinNumber(String mapId, String currentRoomId);
     String createPartida(String userId);
+    void updateCurrentRoom(String currentRoomId, String partidaId);
 }

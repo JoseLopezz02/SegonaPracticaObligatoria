@@ -41,4 +41,8 @@ public class GameCanvasService {
     public String createNewPartida(String userId) {
         return roomDAO.createPartida(userId);
     }
+
+    public void updateCurrentRoomPartida(String currentRoomId, String partidaId) {
+        roomDAO.updateCurrentRoom(currentRoomId,partidaId);
+    }
 }

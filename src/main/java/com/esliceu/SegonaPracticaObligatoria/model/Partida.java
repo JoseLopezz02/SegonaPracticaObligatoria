@@ -10,6 +10,24 @@ public class Partida {
     int score;
     LocalDateTime createdAt;
     LocalDateTime updatedAt;
+    int currentRoomId;
+    int idHabitacionMoneda; //habitacion que tiene moneda
+
+    public int getIdHabitacionMoneda() {
+        return idHabitacionMoneda;
+    }
+
+    public void setIdHabitacionMoneda(int idHabitacionMoneda) {
+        this.idHabitacionMoneda = idHabitacionMoneda;
+    }
+
+    public int getCurrentRoomId() {
+        return currentRoomId;
+    }
+
+    public void setCurrentRoomId(int currentRoomId) {
+        this.currentRoomId = currentRoomId;
+    }
 
     public int getId() {
         return id;

@@ -24,14 +24,13 @@ public class StartController {
     @PostMapping("/start")
     public String postStart(@RequestParam String mapId, Model model,HttpSession session){
 
-        //Lanzar exception si el user cambia el nombre del mapa o el id del mapa
-        //Y  preguntar a pere si cambiar esto y coger la id del mapa desde la BD
+        //Cambiar de coger los mapas en estatico a cogerlos en base a la base de datos
         if ("mazeForest".equals(mapId)){
             model.addAttribute("mapType", "forest");
         }else {
             model.addAttribute("mapType", "cave");
         }
-        String userId = (String) session.getAttribute("userId");
+        String userId = String.valueOf(session.getAttribute("userId"));
         String partidaId = gameCanvasService.createNewPartida(userId);
         session.setAttribute("partidaId", partidaId);
 

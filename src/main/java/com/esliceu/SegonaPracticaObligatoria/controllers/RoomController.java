@@ -22,16 +22,24 @@ public class RoomController {
             model.addAttribute("error", "No se ha seleccionado un mapa.");
             return "redirect:/start";
         }
+
+        String partidaId = (String) session.getAttribute("partidaId");
+        if (partidaId == null) {
+            model.addAttribute("error", "No se ha iniciado una partida.");
+            return "redirect:/start";
+        }
+
+
         Room room = gameCanvasService.getRoom(mapId, currentRoomId);
         if(room == null){
             model.addAttribute("error", "Habitacion no encontrado.");
             return "start";
         }
 
-
         String roomData = gameCanvasService.convertDataToString(room);
+        gameCanvasService.updateCurrentRoomPartida(currentRoomId,partidaId);
         System.out.println("Este es el id" + mapId);
-        System.out.println(roomData);
+        System.out.println("Habitacion inicial" + roomData);
         model.addAttribute("roomData", roomData);
         return "gameCanvas";
     }

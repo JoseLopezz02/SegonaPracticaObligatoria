@@ -18,27 +18,31 @@ public class RoomDAOImpl implements RoomDAO {
         try {
             Room room = jdbcTemplate.queryForObject(sqlRoom, new Object[]{currentRoomId, mapId},
                     new BeanPropertyRowMapper<>(Room.class));
-            String sqlDoors = "SELECT * FROM Door WHERE (habitacion1 = ? OR habitacion2 = ?) AND mapaId = ?";
-            List<Door> doors = jdbcTemplate.query(sqlDoors, new Object[]{currentRoomId, currentRoomId, mapId},
-                    (rs, rowNum) -> {
-                        //RowMapper personalizado por errores con boolean al pasarlo de  la BD al Servidro
-                        Door door = new Door();
-                        door.setId(rs.getInt("id"));
-                        door.setIsOpen(rs.getBoolean("isOpen"));
-                        door.setHabitacion1(rs.getInt("habitacion1"));
-                        door.setHabitacion2(rs.getInt("habitacion2"));
-                        door.setLlaveId(rs.getInt("llaveId"));
-                        door.setMapaId(rs.getInt("mapaId"));
-                        door.setRoomId(rs.getInt("roomId"));
-                        return door;
-                    });
-            room.setDoors(doors);
+            getDoorsOfRoom(mapId, currentRoomId, room);
             getKeysOfRoom(mapId, currentRoomId, room);
 
             return room;
         }catch (Exception e){
             return null;
         }
+    }
+
+    private void getDoorsOfRoom(String mapId, String currentRoomId, Room room) {
+        String sqlDoors = "SELECT * FROM Door WHERE (habitacion1 = ? OR habitacion2 = ?) AND mapaId = ?";
+        List<Door> doors = jdbcTemplate.query(sqlDoors, new Object[]{currentRoomId, currentRoomId, mapId},
+                (rs, rowNum) -> {
+                    //RowMapper personalizado por errores con boolean al pasarlo de  la BD al Servidro
+                    Door door = new Door();
+                    door.setId(rs.getInt("id"));
+                    door.setIsOpen(rs.getBoolean("isOpen"));
+                    door.setHabitacion1(rs.getInt("habitacion1"));
+                    door.setHabitacion2(rs.getInt("habitacion2"));
+                    door.setLlaveId(rs.getInt("llaveId"));
+                    door.setMapaId(rs.getInt("mapaId"));
+                    door.setRoomId(rs.getInt("roomId"));
+                    return door;
+                });
+        room.setDoors(doors);
     }
 
     public Room getRoomByDirection(String mapId, String currentRoomId, String direction) {
@@ -95,6 +99,12 @@ public class RoomDAOImpl implements RoomDAO {
 
         String getIdSql = "SELECT LAST_INSERT_ID()";
         return jdbcTemplate.queryForObject(getIdSql, String.class);
+    }
+
+    @Override
+    public void updateCurrentRoom(String currentRoomId, String partidaId) {
+        String sqlPartidaRoom = "UPDATE Partida SET currentRoomId = ? WHERE id = ?";
+        jdbcTemplate.update(sqlPartidaRoom, currentRoomId, partidaId);
     }
 
 
