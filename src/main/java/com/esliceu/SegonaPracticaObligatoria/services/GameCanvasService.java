@@ -37,4 +37,8 @@ public class GameCanvasService {
     public void updateRoom(String mapId ,String currentRoomId) {
         roomDAO.updateCoinNumber(mapId, currentRoomId);
     }
+
+    public String createNewPartida(String userId) {
+        return roomDAO.createPartida(userId);
+    }
 }

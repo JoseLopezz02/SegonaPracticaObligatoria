@@ -7,4 +7,5 @@ public interface RoomDAO {
     String getInitialRoomId(String mapId);
     Room getRoomByDirection(String map,String currentRoomId,String direction);
     void updateCoinNumber(String mapId, String currentRoomId);
+    String createPartida(String userId);
 }

@@ -87,6 +87,17 @@ public class RoomDAOImpl implements RoomDAO {
         jdbcTemplate.update(sqlCoinUpdate, currentRoomId, mapId);
     }
 
+    @Override
+    public String createPartida(String userId) {
+        String sql = "INSERT INTO Partida (userId, coinsCollected, keysCollected, score, createdAt, updatedAt) " +
+                "VALUES (?, 0, '', 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
+        jdbcTemplate.update(sql, userId);
+
+        String getIdSql = "SELECT LAST_INSERT_ID()";
+        return jdbcTemplate.queryForObject(getIdSql, String.class);
+    }
+
+
     private void getKeysOfRoom(String mapId, String currentRoomId, Room room) {
         String sqlLlaves = "SELECT * FROM Llave WHERE id IN (SELECT keyId FROM Room WHERE id = ? AND mapaId = ?)";
         List<Llave> llaves = jdbcTemplate.query(sqlLlaves, new Object[]{currentRoomId, mapId},

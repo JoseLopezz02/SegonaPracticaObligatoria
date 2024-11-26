@@ -31,10 +31,13 @@ public class StartController {
         }else {
             model.addAttribute("mapType", "cave");
         }
+        String userId = (String) session.getAttribute("userId");
+        String partidaId = gameCanvasService.createNewPartida(userId);
+        session.setAttribute("partidaId", partidaId);
+
         session.setAttribute("mapId", mapId);
         String idRoomInicial = gameCanvasService.getInitialRoomIdByMapId(mapId);
         session.setAttribute("currentRoomId", idRoomInicial);
-
 
         return "redirect:/gameCanvas";
     }
