@@ -34,9 +34,6 @@ public class GameCanvasService {
         return targetRoom;
     }
 
-    public void updateRoom(String mapId ,String currentRoomId) {
-        roomDAO.updateCoinNumber(mapId, currentRoomId);
-    }
 
     public String createNewPartida(String userId) {
         return roomDAO.createPartida(userId);
@@ -44,5 +41,13 @@ public class GameCanvasService {
 
     public void updateCurrentRoomPartida(String currentRoomId, String partidaId) {
         roomDAO.updateCurrentRoom(currentRoomId,partidaId);
+    }
+
+    public void updatePartidaWhereRoomHaveCoin(String partidaId, String currentRoomId) {
+        roomDAO.updateCoinPartida(partidaId,currentRoomId);
+    }
+
+    public void updateCountMonedasPartida(String partidaId) {
+        roomDAO.updateCountMonedas(partidaId);
     }
 }

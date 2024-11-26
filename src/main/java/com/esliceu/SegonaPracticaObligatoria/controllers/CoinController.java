@@ -12,23 +12,27 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class CoinController {
     @Autowired
     GameCanvasService gameCanvasService;
+
     @GetMapping("/getCoin")
     public ResponseEntity<Object> getCoin(HttpSession session){
         String mapId = (String) session.getAttribute("mapId");
         String currentRoomId = (String) session.getAttribute("currentRoomId");
-       try {
-           Room roomData = gameCanvasService.getRoom(mapId,currentRoomId);
+        String partidaId = (String) session.getAttribute("partidaId");
 
-           if (roomData == null || roomData.getCoin() == 0) {
-               return ResponseEntity.badRequest().body("No hay monedas en esta habitación.");
-           }
+        try {
+            Room roomData = gameCanvasService.getRoom(mapId, currentRoomId);
 
-           roomData.setCoin(0);
-           gameCanvasService.updateRoom(mapId,currentRoomId);
+            if (roomData == null || roomData.getCoin() == 0) {
+                return ResponseEntity.badRequest().body("No hay monedas en esta habitación.");
+            }
 
-         return ResponseEntity.accepted().body(roomData);
-       }catch (Exception e){
-           return ResponseEntity.status(500).body(null);
-       }
+
+            gameCanvasService.updatePartidaWhereRoomHaveCoin(partidaId, currentRoomId);
+            gameCanvasService.updateCountMonedasPartida(partidaId);
+
+            return ResponseEntity.accepted().body(roomData);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(null);
+        }
     }
 }

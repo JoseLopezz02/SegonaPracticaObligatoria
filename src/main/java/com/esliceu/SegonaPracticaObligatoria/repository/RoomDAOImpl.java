@@ -86,12 +86,6 @@ public class RoomDAOImpl implements RoomDAO {
     }
 
     @Override
-    public void updateCoinNumber(String mapId, String currentRoomId) {
-        String sqlCoinUpdate = "UPDATE Room SET coin = 0 WHERE id = ? AND mapaId = ?";
-        jdbcTemplate.update(sqlCoinUpdate, currentRoomId, mapId);
-    }
-
-    @Override
     public String createPartida(String userId) {
         String sql = "INSERT INTO Partida (userId, coinsCollected, keysCollected, score, createdAt, updatedAt) " +
                 "VALUES (?, 0, '', 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
@@ -107,6 +101,17 @@ public class RoomDAOImpl implements RoomDAO {
         jdbcTemplate.update(sqlPartidaRoom, currentRoomId, partidaId);
     }
 
+    @Override
+    public void updateCoinPartida(String partidaId, String currentRoomId) {
+        String sql = "UPDATE Partida SET idHabitacionMoneda = CONCAT(COALESCE(idHabitacionMoneda, ''), ?, ',') WHERE id = ?";
+        jdbcTemplate.update(sql, currentRoomId, partidaId);
+    }
+
+    @Override
+    public void updateCountMonedas(String partidaId) {
+        String sql = "UPDATE Partida SET coinsCollected = coinsCollected + 1 WHERE id = ?";
+        jdbcTemplate.update(sql, partidaId);
+    }
 
     private void getKeysOfRoom(String mapId, String currentRoomId, Room room) {
         String sqlLlaves = "SELECT * FROM Llave WHERE id IN (SELECT keyId FROM Room WHERE id = ? AND mapaId = ?)";
