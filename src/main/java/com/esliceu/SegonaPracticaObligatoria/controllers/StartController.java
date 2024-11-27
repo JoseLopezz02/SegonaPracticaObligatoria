@@ -30,6 +30,7 @@ public class StartController {
         }else {
             model.addAttribute("mapType", "cave");
         }
+
         String userId = String.valueOf(session.getAttribute("userId"));
         String partidaId = gameCanvasService.createNewPartida(userId);
         session.setAttribute("partidaId", partidaId);

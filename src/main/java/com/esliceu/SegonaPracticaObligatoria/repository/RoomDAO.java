@@ -1,5 +1,6 @@
 package com.esliceu.SegonaPracticaObligatoria.repository;
 
+import com.esliceu.SegonaPracticaObligatoria.model.Partida;
 import com.esliceu.SegonaPracticaObligatoria.model.Room;
 
 public interface RoomDAO {
@@ -10,4 +11,5 @@ public interface RoomDAO {
     void updateCurrentRoom(String currentRoomId, String partidaId);
     void updateCoinPartida(String partidaId, String currentRoomId);
     void updateCountMonedas(String partidaId);
+    Partida getPartida(String partidaId);
 }

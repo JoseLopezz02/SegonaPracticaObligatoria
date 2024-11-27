@@ -1,5 +1,6 @@
 package com.esliceu.SegonaPracticaObligatoria.controllers;
 
+import com.esliceu.SegonaPracticaObligatoria.model.Partida;
 import com.esliceu.SegonaPracticaObligatoria.model.Room;
 import com.esliceu.SegonaPracticaObligatoria.services.GameCanvasService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -16,19 +17,18 @@ public class RoomController {
     @GetMapping("/gameCanvas")
     public String getGameCanvas(HttpSession session, Model model) throws JsonProcessingException {
         String mapId = (String) session.getAttribute("mapId");
-        String currentRoomId = session.getAttribute("currentRoomId").toString();
+        String currentRoomId = (String) session.getAttribute("currentRoomId");
+        String partidaId = (String) session.getAttribute("partidaId");
 
         if (mapId == null) {
             model.addAttribute("error", "No se ha seleccionado un mapa.");
             return "redirect:/start";
         }
 
-        String partidaId = (String) session.getAttribute("partidaId");
         if (partidaId == null) {
             model.addAttribute("error", "No se ha iniciado una partida.");
             return "redirect:/start";
         }
-
 
         Room room = gameCanvasService.getRoom(mapId, currentRoomId);
         if(room == null){
@@ -36,8 +36,10 @@ public class RoomController {
             return "start";
         }
 
-        String roomData = gameCanvasService.convertDataToString(room);
+        Partida partida = gameCanvasService.getPartidaById(partidaId);
+        String roomData = gameCanvasService.convertDataToString(room, partida);
         gameCanvasService.updateCurrentRoomPartida(currentRoomId,partidaId);
+
         System.out.println("Este es el id" + mapId);
         System.out.println("Habitacion inicial" + roomData);
         model.addAttribute("roomData", roomData);

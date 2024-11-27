@@ -25,8 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let coinsCollected = 0;
 
     const isCoinClicked = (x, y) => {
-        const coinX = 50; // Posición X de la moneda
-        const coinY = canvas.height - 80; // Posición Y de la moneda
+        const coinX = 50;
+        const coinY = canvas.height - 80;
         const coinWidth = 40;
         const coinHeight = 40;
 
@@ -42,7 +42,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return x >= keyX && x <= keyX + keyWidth && y >= keyY && y <= keyY + keyHeight;
     };
 
-
     const drawRoom = () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -50,40 +49,55 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.fillStyle = '#000';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        // Dibujar las puertas
-        if (roomData.norte !== null) {
-            ctx.fillStyle = roomData.doors.find(d => d.id === roomData.norte)?.open ? '#FFF' : '#F00';
+        // Dibujar las puertas según su estado
+        if (roomData.north === 'open') {
+            ctx.fillStyle = '#FFF';
             ctx.fillRect(canvas.width / 2 - 25, 0, 50, 10); // Puerta al norte
+        } else if (roomData.north === 'closed') {
+            ctx.fillStyle = '#F00';
+            ctx.fillRect(canvas.width / 2 - 25, 0, 50, 10);
         }
-        if (roomData.sur !== null) {
-            ctx.fillStyle = roomData.doors.find(d => d.id === roomData.sur)?.open ? '#FFF' : '#F00';
+
+        if (roomData.south === 'open') {
+            ctx.fillStyle = '#FFF';
             ctx.fillRect(canvas.width / 2 - 25, canvas.height - 10, 50, 10); // Puerta al sur
+        } else if (roomData.south === 'closed') {
+            ctx.fillStyle = '#F00';
+            ctx.fillRect(canvas.width / 2 - 25, canvas.height - 10, 50, 10);
         }
-        if (roomData.este !== null) {
-            ctx.fillStyle = roomData.doors.find(d => d.id === roomData.este)?.open ? '#FFF' : '#F00';
+
+        if (roomData.east === 'open') {
+            ctx.fillStyle = '#FFF';
             ctx.fillRect(canvas.width - 10, canvas.height / 2 - 25, 10, 50); // Puerta al este
+        } else if (roomData.east === 'closed') {
+            ctx.fillStyle = '#F00';
+            ctx.fillRect(canvas.width - 10, canvas.height / 2 - 25, 10, 50);
         }
-        if (roomData.oeste !== null) {
-            ctx.fillStyle = roomData.doors.find(d => d.id === roomData.oeste)?.open ? '#FFF' : '#F00';
+
+        if (roomData.west === 'open') {
+            ctx.fillStyle = '#FFF';
             ctx.fillRect(0, canvas.height / 2 - 25, 10, 50); // Puerta al oeste
+        } else if (roomData.west === 'closed') {
+            ctx.fillStyle = '#F00';
+            ctx.fillRect(0, canvas.height / 2 - 25, 10, 50);
         }
 
-
-        if (roomData.coin !== 0) {
-            const coinX = 50; //píxeles desde el borde izquierdo
-            const coinY = canvas.height - 80; //píxeles desde el borde inferior
-            ctx.drawImage(coin, coinX, coinY, 40, 40); // Dibuja la moneda
-        }
-        // Dibujar la llave si hay una
-        if (roomData.keyId !== null) {
-            const keyX = canvas.width - 90; // Posición X de la llave
-            const keyY = canvas.height - 80; // Posición Y de la llave
-            ctx.drawImage(keyImg, keyX, keyY, 40, 40); // Dibuja la llave
+        if (roomData.coin) {
+            const coinX = 50;
+            const coinY = canvas.height - 80;
+            ctx.drawImage(coin, coinX, coinY, 40, 40);
         }
 
-        currentRoomElement.textContent = roomData.name;
+        // Dibujar llave si hay
+        if (roomData.keys.length > 0) {
+            const keyX = canvas.width - 90;
+            const keyY = canvas.height - 80;
+            ctx.drawImage(keyImg, keyX, keyY, 40, 40);
+        }
+
+        currentRoomElement.textContent = roomData.roomName;
         coinCountElement.textContent = coinsCollected;
-        keysElement.textContent = roomData.llaves.length ? roomData.llaves.join(', ') : 'Ninguna';
+        keysElement.textContent = roomData.keys.length ? roomData.keys.join(', ') : 'Ninguna';
     };
 
     canvas.addEventListener('click', (event) => {
@@ -94,13 +108,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isCoinClicked(x, y)) {
             fetchGetCoin();
         }
-        if(isKeyClicked(x,y)){
-          fetchGetKey();
+        if (isKeyClicked(x, y)) {
+            fetchGetKey();
         }
     });
 
     const fetchGetKey = () => {
-        if (roomData.keyId === null) {
+        if (!roomData.keys.length) {
             alert("No hay llaves en esta habitación.");
             return;
         }
@@ -113,49 +127,41 @@ document.addEventListener('DOMContentLoaded', () => {
                 return response.json();
             })
             .then((updatedRoomData) => {
-                if (!updatedRoomData) {
-                    throw new Error("Datos inválidos recibidos del servidor.");
-                }
-
-                roomData = updatedRoomData; // Actualizar datos de la habitación
+                roomData = updatedRoomData;
                 alert("¡Llave recogida!");
-                drawRoom(); // Redibujar el canvas
+                drawRoom();
             })
             .catch((err) => console.error("Error al recoger la llave:", err));
     };
 
     const fetchGetCoin = () => {
-            const getCoin = roomData.coin;
-            if (getCoin === 0) {
-                alert("No hay monedas en esta habitación.");
-                return;
-            }
-
-            fetch(`/getCoin`)
-                .then((response) => {
-                    if (!response.ok) {
-                        throw new Error(`Error HTTP: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then((updatedRoomData) => {
-                    roomData = updatedRoomData;
-                    coinsCollected++;
-                    alert("¡Moneda recogida!");
-                    drawRoom(); // Redibujar la habitación después de recoger la moneda
-                })
-            .catch((err) => console.error("Error al coger la moneda:", err));
-    };
-
-    const fetchNextRoom = (direction) => {
-        const doorId = roomData[direction.toLowerCase()];
-        if (!doorId) {
-            alert("No puedes atravesar la pared.");
+        if (!roomData.coin) {
+            alert("No hay monedas en esta habitación.");
             return;
         }
 
-        const door = roomData.doors.find(d => d.id === doorId);
-        if (!door.open) {
+        fetch(`/getCoin`)
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`Error HTTP: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then((updatedRoomData) => {
+                roomData = updatedRoomData;
+                coinsCollected++;
+                alert("¡Moneda recogida!");
+                drawRoom();
+            })
+            .catch((err) => console.error("Error al recoger la moneda:", err));
+    };
+
+    const fetchNextRoom = (direction) => {
+        const doorStatus = roomData[direction];
+        if (doorStatus === 'wall') {
+            alert("No puedes atravesar una pared.");
+            return;
+        } else if (doorStatus === 'closed') {
             alert("La puerta está cerrada.");
             return;
         }
@@ -169,7 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .then((newRoomData) => {
                 roomData = newRoomData;
-                drawRoom(); // Redibujar la habitación después de moverse
+                drawRoom();
             })
             .catch((err) => console.error("Error al cargar la nueva habitación:", err));
     };
@@ -179,19 +185,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const x = event.clientX - compassRect.left;
         const y = event.clientY - compassRect.top;
 
-        // Determinar la dirección según el clic
         const centerX = compassRect.width / 2;
         const centerY = compassRect.height / 2;
         const angle = Math.atan2(y - centerY, x - centerX);
 
         if (angle > -Math.PI / 4 && angle <= Math.PI / 4) {
-            fetchNextRoom('este'); // Este
+            fetchNextRoom('east');
         } else if (angle > Math.PI / 4 && angle <= 3 * Math.PI / 4) {
-            fetchNextRoom('sur'); // Sur
+            fetchNextRoom('south');
         } else if (angle > -3 * Math.PI / 4 && angle <= -Math.PI / 4) {
-            fetchNextRoom('norte'); // Norte
+            fetchNextRoom('north');
         } else {
-            fetchNextRoom('oeste'); // Oeste
+            fetchNextRoom('west');
         }
     });
 

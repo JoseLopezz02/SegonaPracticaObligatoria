@@ -55,14 +55,25 @@ public class RoomDAOImpl implements RoomDAO {
                 "  END " +
                 "  FROM Door d " +
                 "  WHERE d.id = (" +
-                "    SELECT " + direction + " " +
-                "    FROM Room " +
-                "    WHERE id = ? AND mapaId = ?" +
+                "    SELECT " +
+                "      CASE " +
+                "        WHEN ? = 'norte' THEN r.norte " +
+                "        WHEN ? = 'sur' THEN r.sur " +
+                "        WHEN ? = 'este' THEN r.este " +
+                "        WHEN ? = 'oeste' THEN r.oeste " +
+                "        ELSE NULL " +
+                "      END " +
+                "    FROM Room r " +
+                "    WHERE r.id = ? AND r.mapaId = ?" +
                 "  )" +
                 ")";
+
         try {
+            // Ejecutar la consulta con los parámetros
             Room targetRoom = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Room.class),
-                    currentRoomId, currentRoomId, currentRoomId, mapId);
+                    currentRoomId, currentRoomId, direction, direction, direction, direction, currentRoomId, mapId);
+
+            // Consultar las puertas de la nueva habitación
             String sqlDoors = "SELECT * FROM Door WHERE (habitacion1 = ? OR habitacion2 = ?) AND mapaId = ?";
             List<Door> doors = jdbcTemplate.query(sqlDoors, new Object[]{targetRoom.getId(), targetRoom.getId(), mapId},
                     (rs, rowNum) -> {
@@ -76,11 +87,15 @@ public class RoomDAOImpl implements RoomDAO {
                         door.setRoomId(rs.getInt("roomId"));
                         return door;
                     });
+
             targetRoom.setDoors(doors);
+
+            // Obtener las llaves de la habitación
             getKeysOfRoom(mapId, currentRoomId, targetRoom);
 
             return targetRoom;
-        }catch (Exception e){
+        } catch (Exception e) {
+            e.printStackTrace(); // Para depuración
             return null;
         }
     }
@@ -111,6 +126,12 @@ public class RoomDAOImpl implements RoomDAO {
     public void updateCountMonedas(String partidaId) {
         String sql = "UPDATE Partida SET coinsCollected = coinsCollected + 1 WHERE id = ?";
         jdbcTemplate.update(sql, partidaId);
+    }
+
+    @Override
+    public Partida getPartida(String partidaId) {
+        String sql = "SELECT * FROM Partida WHERE id = ?";
+        return jdbcTemplate.queryForObject(sql, new Object[]{partidaId}, new BeanPropertyRowMapper<>(Partida.class));
     }
 
     private void getKeysOfRoom(String mapId, String currentRoomId, Room room) {

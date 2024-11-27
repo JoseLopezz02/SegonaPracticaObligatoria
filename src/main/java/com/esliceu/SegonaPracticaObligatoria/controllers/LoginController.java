@@ -22,10 +22,10 @@ public class LoginController{
     @PostMapping("/login")
     public String postLogin(HttpSession session, @RequestParam String username, @RequestParam String password, Model model) {
         User user = userService.checkUser(username, password);
-        session.setAttribute("userId", user.getId());
 
         if (user != null) {
             session.setAttribute("username", username);
+            session.setAttribute("userId", user.getId());
             return "redirect:/start";
         } else {
             model.addAttribute("message", "El usuario y/o contraseña son incorrectos");
