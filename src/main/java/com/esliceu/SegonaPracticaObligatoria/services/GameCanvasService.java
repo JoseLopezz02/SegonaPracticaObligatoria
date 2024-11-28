@@ -1,6 +1,7 @@
 package com.esliceu.SegonaPracticaObligatoria.services;
 
 import com.esliceu.SegonaPracticaObligatoria.model.Door;
+import com.esliceu.SegonaPracticaObligatoria.model.Mapa;
 import com.esliceu.SegonaPracticaObligatoria.model.Partida;
 import com.esliceu.SegonaPracticaObligatoria.model.Room;
 import com.esliceu.SegonaPracticaObligatoria.repository.RoomDAO;
@@ -25,10 +26,10 @@ public class GameCanvasService {
     public String convertDataToString(Room room, Partida partida) throws JsonProcessingException {
         Map<String, Object> map = new HashMap<>();
 
-        map.put("north", getDoorStatus(room.getNorte(), room.getDoors()));
-        map.put("south", getDoorStatus(room.getSur(), room.getDoors()));
-        map.put("east", getDoorStatus(room.getEste(), room.getDoors()));
-        map.put("west", getDoorStatus(room.getOeste(), room.getDoors()));
+        map.put("norte", getDoorStatus(room.getNorte(), room.getDoors()));
+        map.put("sur", getDoorStatus(room.getSur(), room.getDoors()));
+        map.put("este", getDoorStatus(room.getEste(), room.getDoors()));
+        map.put("oeste", getDoorStatus(room.getOeste(), room.getDoors()));
 
         boolean hayMoneda = room.getCoin() > 0 && monedaNoRecogida(partida,room.getId());
         map.put("coin", hayMoneda);
@@ -79,10 +80,6 @@ public class GameCanvasService {
     public Room roomNavegacion(String mapId, String currentRoomId, String direction) {
         Room targetRoom = roomDAO.getRoomByDirection(mapId, currentRoomId, direction);
         System.out.println("Voy a la direccion : " + direction);
-        System.out.println(targetRoom.getCoin());
-        System.out.println(targetRoom.getDoors());
-        System.out.println(targetRoom.getCoin());
-        System.out.println(targetRoom.getId());
         if (targetRoom == null) {
             throw new IllegalArgumentException("No puedes atravesar la pared.");
         }
@@ -107,5 +104,13 @@ public class GameCanvasService {
 
     public Partida getPartidaById(String partidaId) {
         return roomDAO.getPartida(partidaId);
+    }
+
+    public String getMapIdByName(String mapName) {
+        return roomDAO.getMapIdByName(mapName);
+    }
+
+    public List<Mapa> getAllMaps() {
+        return roomDAO.getMaps();
     }
 }

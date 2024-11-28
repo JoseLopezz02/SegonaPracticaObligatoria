@@ -1,7 +1,10 @@
 package com.esliceu.SegonaPracticaObligatoria.repository;
 
+import com.esliceu.SegonaPracticaObligatoria.model.Mapa;
 import com.esliceu.SegonaPracticaObligatoria.model.Partida;
 import com.esliceu.SegonaPracticaObligatoria.model.Room;
+
+import java.util.List;
 
 public interface RoomDAO {
     Room get (String mapId, String currentRoomId);
@@ -12,4 +15,8 @@ public interface RoomDAO {
     void updateCoinPartida(String partidaId, String currentRoomId);
     void updateCountMonedas(String partidaId);
     Partida getPartida(String partidaId);
+
+    String getMapIdByName(String mapName);
+
+    List<Mapa> getMaps();
 }

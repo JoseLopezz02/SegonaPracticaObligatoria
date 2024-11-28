@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -69,7 +70,6 @@ public class RoomDAOImpl implements RoomDAO {
                 ")";
 
         try {
-            // Ejecutar la consulta con los parámetros
             Room targetRoom = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Room.class),
                     currentRoomId, currentRoomId, direction, direction, direction, direction, currentRoomId, mapId);
 
@@ -95,7 +95,7 @@ public class RoomDAOImpl implements RoomDAO {
 
             return targetRoom;
         } catch (Exception e) {
-            e.printStackTrace(); // Para depuración
+            e.printStackTrace();
             return null;
         }
     }
@@ -133,6 +133,18 @@ public class RoomDAOImpl implements RoomDAO {
         String sql = "SELECT * FROM Partida WHERE id = ?";
         return jdbcTemplate.queryForObject(sql, new Object[]{partidaId}, new BeanPropertyRowMapper<>(Partida.class));
     }
+
+    public String getMapIdByName(String mapName) {
+        String sql = "SELECT id FROM Mapa WHERE name = ?";
+        return jdbcTemplate.queryForObject(sql, new Object[]{mapName}, String.class);
+    }
+
+    @Override
+    public List<Mapa> getMaps() {
+        String sql = "SELECT name FROM Mapa";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Mapa.class));
+    }
+
 
     private void getKeysOfRoom(String mapId, String currentRoomId, Room room) {
         String sqlLlaves = "SELECT * FROM Llave WHERE id IN (SELECT keyId FROM Room WHERE id = ? AND mapaId = ?)";

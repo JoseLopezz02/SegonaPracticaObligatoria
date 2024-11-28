@@ -28,6 +28,9 @@ public class NavegationController {
             gameCanvasService.updateCurrentRoomPartida(String.valueOf(futureCurrentRoom.getId()), partidaId);
             session.setAttribute("currentRoomId", String.valueOf(futureCurrentRoom.getId()));
             session.setAttribute("mapId", mapId);
+            System.out.println("Futura room id :" + futureCurrentRoom.getId());
+            System.out.println("Futura room coin :" + futureCurrentRoom.getCoin());
+            System.out.println("Futura room doors :" + futureCurrentRoom.getDoors());
 
             return futureCurrentRoom;
         } catch (IllegalArgumentException e) {

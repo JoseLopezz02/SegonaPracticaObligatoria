@@ -9,28 +9,22 @@
 <body>
 <div class="jungle-container">
     <h1 class="title">Welcome to the Jungle Maze Game!</h1>
-    <p class="subtitle">Choose your adventure <span th:text="${message}"></span>:</p>
+    <p class="subtitle">Choose your adventure, <span th:text="${message}"></span>:</p>
 
-    <div class="map-selection">
-        <div class="map-option" onclick="selectMap(1)">
-            <div class="map-image" id="mazeForest"></div>
-            <p>Map 1 - The Dense Forest</p>
+    <form id="mapForm" action="/start" method="post">
+        <div class="map-selection">
+            <!-- Generar mapas dinámicamente -->
+            <div th:each="mapa : ${mapas}" class="map-option">
+                <label>
+                    <input type="radio" name="mapName" th:value="${mapa.name}">
+                    <!-- Asignar una clase específica por nombre de mapa -->
+                    <div class="map-image" th:class="'map-' + ${mapa.name}"></div>
+                    <p th:text="${mapa.name}"></p>
+                </label>
+            </div>
         </div>
-        <div class="map-option" onclick="selectMap(2)">
-            <div class="map-image" id="mazeCave"></div>
-            <p>Map 2 - The Hidden Cave</p>
-        </div>
-    </div>
+        <button type="submit" class="start-button">Start Game</button>
+    </form>
 </div>
-
-<form id="mapForm" action="/start" method="post">
-    <input type="hidden" name="mapId" id="mapId">
-</form>
-<script>
-    function selectMap(mapId) {
-        document.getElementById("mapId").value = mapId;
-        document.getElementById("mapForm").submit();
-    }
-</script>
 </body>
 </html>

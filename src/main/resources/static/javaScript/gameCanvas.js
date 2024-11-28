@@ -50,34 +50,34 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         // Dibujar las puertas según su estado
-        if (roomData.north === 'open') {
+        if (roomData.norte === 'open') {
             ctx.fillStyle = '#FFF';
             ctx.fillRect(canvas.width / 2 - 25, 0, 50, 10); // Puerta al norte
-        } else if (roomData.north === 'closed') {
+        } else if (roomData.norte === 'closed') {
             ctx.fillStyle = '#F00';
             ctx.fillRect(canvas.width / 2 - 25, 0, 50, 10);
         }
 
-        if (roomData.south === 'open') {
+        if (roomData.sur === 'open') {
             ctx.fillStyle = '#FFF';
             ctx.fillRect(canvas.width / 2 - 25, canvas.height - 10, 50, 10); // Puerta al sur
-        } else if (roomData.south === 'closed') {
+        } else if (roomData.sur === 'closed') {
             ctx.fillStyle = '#F00';
             ctx.fillRect(canvas.width / 2 - 25, canvas.height - 10, 50, 10);
         }
 
-        if (roomData.east === 'open') {
+        if (roomData.este === 'open') {
             ctx.fillStyle = '#FFF';
             ctx.fillRect(canvas.width - 10, canvas.height / 2 - 25, 10, 50); // Puerta al este
-        } else if (roomData.east === 'closed') {
+        } else if (roomData.este === 'closed') {
             ctx.fillStyle = '#F00';
             ctx.fillRect(canvas.width - 10, canvas.height / 2 - 25, 10, 50);
         }
 
-        if (roomData.west === 'open') {
+        if (roomData.oeste === 'open') {
             ctx.fillStyle = '#FFF';
             ctx.fillRect(0, canvas.height / 2 - 25, 10, 50); // Puerta al oeste
-        } else if (roomData.west === 'closed') {
+        } else if (roomData.oeste === 'closed') {
             ctx.fillStyle = '#F00';
             ctx.fillRect(0, canvas.height / 2 - 25, 10, 50);
         }
@@ -190,13 +190,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const angle = Math.atan2(y - centerY, x - centerX);
 
         if (angle > -Math.PI / 4 && angle <= Math.PI / 4) {
-            fetchNextRoom('east');
+            fetchNextRoom('este');
         } else if (angle > Math.PI / 4 && angle <= 3 * Math.PI / 4) {
-            fetchNextRoom('south');
+            fetchNextRoom('sur');
         } else if (angle > -3 * Math.PI / 4 && angle <= -Math.PI / 4) {
-            fetchNextRoom('north');
+            fetchNextRoom('norte');
         } else {
-            fetchNextRoom('west');
+            fetchNextRoom('oeste');
         }
     });
 
