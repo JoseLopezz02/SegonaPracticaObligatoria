@@ -106,57 +106,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const y = event.clientY - canvasRect.top;
 
         if (isCoinClicked(x, y)) {
-            fetchGetCoin();
+            // Redirigir a la acción de recoger moneda
+            window.location.href = '/getCoin';
         }
         if (isKeyClicked(x, y)) {
-            fetchGetKey();
+            // Redirigir a la acción de recoger llave
+            window.location.href = '/getKey';
         }
     });
 
-    const fetchGetKey = () => {
-        if (!roomData.keys.length) {
-            alert("No hay llaves en esta habitación.");
-            return;
-        }
-
-        fetch(`/getKey`)
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error(`Error HTTP: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then((updatedRoomData) => {
-                roomData = updatedRoomData;
-                alert("¡Llave recogida!");
-                drawRoom();
-            })
-            .catch((err) => console.error("Error al recoger la llave:", err));
-    };
-
-    const fetchGetCoin = () => {
-        if (!roomData.coin) {
-            alert("No hay monedas en esta habitación.");
-            return;
-        }
-
-        fetch(`/getCoin`)
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error(`Error HTTP: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then((updatedRoomData) => {
-                roomData = updatedRoomData;
-                coinsCollected++;
-                alert("¡Moneda recogida!");
-                drawRoom();
-            })
-            .catch((err) => console.error("Error al recoger la moneda:", err));
-    };
-
-    const fetchNextRoom = (direction) => {
+    const navigateRoom = (direction) => {
         const doorStatus = roomData[direction];
         if (doorStatus === 'wall') {
             alert("No puedes atravesar una pared.");
@@ -166,18 +125,8 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        fetch(`/nav?direction=${direction}`)
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error(`Error HTTP: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then((newRoomData) => {
-                roomData = newRoomData;
-                drawRoom();
-            })
-            .catch((err) => console.error("Error al cargar la nueva habitación:", err));
+        // Redirigir al servidor para cargar la nueva habitación
+        window.location.href = `/nav?direction=${direction}`;
     };
 
     compass.addEventListener('click', (event) => {
@@ -190,13 +139,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const angle = Math.atan2(y - centerY, x - centerX);
 
         if (angle > -Math.PI / 4 && angle <= Math.PI / 4) {
-            fetchNextRoom('este');
+            navigateRoom('este');
         } else if (angle > Math.PI / 4 && angle <= 3 * Math.PI / 4) {
-            fetchNextRoom('sur');
+            navigateRoom('sur');
         } else if (angle > -3 * Math.PI / 4 && angle <= -Math.PI / 4) {
-            fetchNextRoom('norte');
+            navigateRoom('norte');
         } else {
-            fetchNextRoom('oeste');
+            navigateRoom('oeste');
         }
     });
 

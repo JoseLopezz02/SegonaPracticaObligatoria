@@ -74,11 +74,12 @@ body {
   align-items: center;
 }
 
-#mazeForest {
+/* Especificar imágenes de fondo para cada mapa */
+.map-mazeForest {
   background-image: url('https://img.freepik.com/premium-photo/pixel-art-maze-amidst-lush-forest-setting_811279-119635.jpg');
 }
 
-#mazeCave {
+.map-mazeCave {
   background-image: url('https://imgcdn.stablediffusionweb.com/2024/10/26/44a0176a-b0a0-41be-a2e8-de521ea5481b.jpg');
 }
 

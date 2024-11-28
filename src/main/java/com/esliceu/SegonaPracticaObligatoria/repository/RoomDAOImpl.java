@@ -145,7 +145,6 @@ public class RoomDAOImpl implements RoomDAO {
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Mapa.class));
     }
 
-
     private void getKeysOfRoom(String mapId, String currentRoomId, Room room) {
         String sqlLlaves = "SELECT * FROM Llave WHERE id IN (SELECT keyId FROM Room WHERE id = ? AND mapaId = ?)";
         List<Llave> llaves = jdbcTemplate.query(sqlLlaves, new Object[]{currentRoomId, mapId},

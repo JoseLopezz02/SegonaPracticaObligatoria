@@ -1,7 +1,9 @@
 package com.esliceu.SegonaPracticaObligatoria.controllers;
 
+import com.esliceu.SegonaPracticaObligatoria.model.Partida;
 import com.esliceu.SegonaPracticaObligatoria.model.Room;
 import com.esliceu.SegonaPracticaObligatoria.services.GameCanvasService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,8 +19,8 @@ public class NavegationController {
     @Autowired
     GameCanvasService gameCanvasService;
     @GetMapping("/nav")
-    @ResponseBody
-    public Room getNav(@RequestParam("direction") String direction, HttpSession session){
+
+    public String getNav(@RequestParam("direction") String direction, HttpSession session, Model model){
         String mapId = (String) session.getAttribute("mapId");
         String currentRoomId = (String) session.getAttribute("currentRoomId");
         String partidaId = (String) session.getAttribute("partidaId");
@@ -26,15 +28,21 @@ public class NavegationController {
         try {
             Room futureCurrentRoom = gameCanvasService.roomNavegacion(mapId, currentRoomId, direction);
             gameCanvasService.updateCurrentRoomPartida(String.valueOf(futureCurrentRoom.getId()), partidaId);
+            Partida partida = gameCanvasService.getPartidaById(partidaId);
+            String roomData = gameCanvasService.convertDataToString(futureCurrentRoom, partida);
             session.setAttribute("currentRoomId", String.valueOf(futureCurrentRoom.getId()));
             session.setAttribute("mapId", mapId);
+            model.addAttribute("roomData", roomData);
+
             System.out.println("Futura room id :" + futureCurrentRoom.getId());
             System.out.println("Futura room coin :" + futureCurrentRoom.getCoin());
             System.out.println("Futura room doors :" + futureCurrentRoom.getDoors());
 
-            return futureCurrentRoom;
+            return "gameCanvas";
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
         }
     }
 }

@@ -4,6 +4,7 @@ import com.esliceu.SegonaPracticaObligatoria.model.Mapa;
 import com.esliceu.SegonaPracticaObligatoria.model.Partida;
 import com.esliceu.SegonaPracticaObligatoria.model.Room;
 import com.esliceu.SegonaPracticaObligatoria.services.GameCanvasService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,24 +33,26 @@ public class StartController {
     }
 
     @PostMapping("/start")
-    public String postStart(@RequestParam String mapName, HttpSession session) {
+    public String postStart(@RequestParam String mapName, HttpSession session, Model model) throws JsonProcessingException {
         String mapId = gameCanvasService.getMapIdByName(mapName);
         String userId = String.valueOf(session.getAttribute("userId"));
         String partidaId = gameCanvasService.createNewPartida(userId);
-
-        // Obtener la habitación inicial del mapa
         String idRoomInicial = gameCanvasService.getInitialRoomIdByMapId(mapId);
 
-        /*Room room = gameCanvasService.getRoom(mapId, currentRoomId);
+
+        Room room = gameCanvasService.getRoom(mapId, idRoomInicial);
         Partida partida = gameCanvasService.getPartidaById(partidaId);
         String roomData = gameCanvasService.convertDataToString(room, partida);
-        gameCanvasService.updateCurrentRoomPartida(currentRoomId,partidaId);
-         model.addAttribute("roomData", roomData);
-        */
+        gameCanvasService.updateCurrentRoomPartida(idRoomInicial,partidaId);
+        model.addAttribute("roomData", roomData);
+
         // Configurar los atributos en la sesión
         session.setAttribute("partidaId", partidaId);
         session.setAttribute("mapId", mapId);
         session.setAttribute("currentRoomId", idRoomInicial);
+
+        System.out.println("Este es el id" + mapId);
+        System.out.println("Habitacion inicial" + roomData);
 
         return "gameCanvas";
     }

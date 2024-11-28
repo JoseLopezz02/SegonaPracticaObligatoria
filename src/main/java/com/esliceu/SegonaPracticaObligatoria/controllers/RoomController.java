@@ -12,6 +12,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class RoomController {
+
+
+    /////////////////////////////Hay que borrarlo ////////////////////////////////////
+
+
     @Autowired
     GameCanvasService gameCanvasService;
     @GetMapping("/gameCanvas")
