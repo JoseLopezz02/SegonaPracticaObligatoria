@@ -18,7 +18,7 @@
         <img id="compass" src="/img/cross.webp" alt="Brújula" style="width: 150px; height: 150px;">
     </div>
     <div id="game-info">
-        <p>Monedas recogidas: <span id="coinCount">0</span></p>
+        <p>Monedas recogidas: <span id="coinCount" th:text="${coinsCollected}">0</span></p>
         <p>Habitación actual: <span id="currentRoom">Habitación inicial</span></p>
         <p>Llaves: <span id="keys">Ninguna</span></p>
     </div>

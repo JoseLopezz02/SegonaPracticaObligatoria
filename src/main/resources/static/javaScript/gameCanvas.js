@@ -106,11 +106,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const y = event.clientY - canvasRect.top;
 
         if (isCoinClicked(x, y)) {
-            // Redirigir a la acción de recoger moneda
             window.location.href = '/getCoin';
+            coinsCollected++;
+            coinCountElement.textContent = coinsCollected;
         }
         if (isKeyClicked(x, y)) {
-            // Redirigir a la acción de recoger llave
             window.location.href = '/getKey';
         }
     });
