@@ -28,11 +28,16 @@ public class NavegationController {
         try {
             Room futureCurrentRoom = gameCanvasService.roomNavegacion(mapId, currentRoomId, direction);
             gameCanvasService.updateCurrentRoomPartida(String.valueOf(futureCurrentRoom.getId()), partidaId);
+
             Partida partida = gameCanvasService.getPartidaById(partidaId);
+
             String roomData = gameCanvasService.convertDataToString(futureCurrentRoom, partida);
             session.setAttribute("currentRoomId", String.valueOf(futureCurrentRoom.getId()));
             session.setAttribute("mapId", mapId);
             model.addAttribute("roomData", roomData);
+
+            int coinsCollected = partida.getCoinsCollected();
+            model.addAttribute("coinsCollected", coinsCollected);
 
 
             System.out.println("Futura room id :" + futureCurrentRoom.getId());

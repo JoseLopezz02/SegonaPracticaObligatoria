@@ -32,10 +32,10 @@ public class CoinController {
             // Actualiza estado de la partida
             Partida partida = gameCanvasService.getPartidaById(partidaId);
             int coinsCollected = partida.getCoinsCollected();
-            gameCanvasService.updatePartidaWhereRoomHaveCoin(partidaId, currentRoomId);
-            gameCanvasService.updateCountMonedasPartida(partidaId);
             model.addAttribute("coinsCollected", coinsCollected);
 
+            gameCanvasService.updatePartidaWhereRoomHaveCoin(partidaId, currentRoomId);
+            gameCanvasService.updateCountMonedasPartida(partidaId);
 
             return "redirect:/gameCanvas";
         } catch (Exception e) {
