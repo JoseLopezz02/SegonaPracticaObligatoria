@@ -29,6 +29,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const coinWidth = 40;
         const coinHeight = 40;
 
+        // Verifica si hay una moneda en la habitación actual
+        if (!roomData.coin) {
+            return false;
+        }
+
+        // Verifica si el clic está en la posición de la moneda
         return x >= coinX && x <= coinX + coinWidth && y >= coinY && y <= coinY + coinHeight;
     };
 
