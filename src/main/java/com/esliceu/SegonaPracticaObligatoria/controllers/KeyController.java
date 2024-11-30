@@ -1,19 +1,25 @@
 package com.esliceu.SegonaPracticaObligatoria.controllers;
 
+import com.esliceu.SegonaPracticaObligatoria.model.Llave;
+import com.esliceu.SegonaPracticaObligatoria.model.Partida;
 import com.esliceu.SegonaPracticaObligatoria.model.Room;
 import com.esliceu.SegonaPracticaObligatoria.services.GameCanvasService;
+import com.esliceu.SegonaPracticaObligatoria.services.KeyService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class KeyController {
     @Autowired
     GameCanvasService gameCanvasService;
+    @Autowired
+    KeyService keyService;
+
     @GetMapping("/getKey")
-    public String getKey(HttpSession session){
+    public String getKey(HttpSession session, Model model){
         String mapId = (String) session.getAttribute("mapId");
         String currentRoomId = (String) session.getAttribute("currentRoomId");
         String partidaId = (String) session.getAttribute("partidaId");
@@ -21,11 +27,28 @@ public class KeyController {
         try {
             Room room = gameCanvasService.getRoom(mapId, currentRoomId);
 
+            // Verificar si la habitación tiene una llave
             if (room.getKeyId() == null) {
                 session.setAttribute("error", "No hay llaves en esta habitación.");
                 return "gameCanvas";
             }
 
+            // Obtener la llave de la habitación
+            Llave llave = keyService.getKeyOfRoom(currentRoomId);
+            Partida partida = gameCanvasService.getPartidaById(partidaId);
+
+            if (llave.getPrecioMonedas() <= partida.getCoinsCollected()) {
+                keyService.updatePartidaWhereRoomHaveKey(partidaId, currentRoomId);
+                String roomData = gameCanvasService.convertDataToString(room, partida);
+                model.addAttribute("roomData", roomData);
+                model.addAttribute("coinsCollected", partida.getCoinsCollected());
+                model.addAttribute("keysCollected", llave.getNombre());
+
+                session.setAttribute("message", "¡Llave obtenida con éxito!");
+            } else {
+                //Modificar para mostrar otro error
+                session.setAttribute("error", "No tienes suficientes monedas para obtener la llave.");
+            }
 
             return "gameCanvas";
 
@@ -34,4 +57,5 @@ public class KeyController {
             return "gameCanvas";
         }
     }
+
 }

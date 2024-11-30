@@ -1,5 +1,6 @@
 package com.esliceu.SegonaPracticaObligatoria.repository;
 
+import com.esliceu.SegonaPracticaObligatoria.model.Llave;
 import com.esliceu.SegonaPracticaObligatoria.model.Mapa;
 import com.esliceu.SegonaPracticaObligatoria.model.Partida;
 import com.esliceu.SegonaPracticaObligatoria.model.Room;
@@ -19,4 +20,8 @@ public interface RoomDAO {
     String getMapIdByName(String mapName);
 
     List<Mapa> getMaps();
+
+    void updateKeyPartida(String partidaId, String currentRoomId);
+
+    Llave getKey(String currentRoomId);
 }

@@ -35,11 +35,26 @@ public class GameCanvasService {
         map.put("coin", hayMoneda);
 
         map.put("roomName", room.getName());
-        //Hacer un boolean no hace falta mandar toda esa info
-        map.put("keys", room.getLlaves());
+
+        boolean hayLlave = room.getKeyId() != null && llaveNoRecogida(partida,room.getId());
+        map.put("keys", hayLlave);
 
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(map);
+    }
+
+    private boolean llaveNoRecogida(Partida partida, int roomId) {
+        if (partida.getIdHabitacionLlave() == null){
+            return true;
+        }
+        String[] habitacionesConLlaves = partida.getIdHabitacionMoneda().split(",");
+        for (String id : habitacionesConLlaves) {
+            if (id.equals(String.valueOf(roomId))) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     private String getDoorStatus(Integer doorId, List<Door> doors) {

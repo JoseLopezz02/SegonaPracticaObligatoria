@@ -14,7 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const ctx = canvas.getContext('2d');
     const compass = document.getElementById('compass');
     const currentRoomElement = document.getElementById('currentRoom');
-    const keysElement = document.getElementById('keys');
 
     const coin = new Image();
     coin.src = "/img/coin.gif";
@@ -29,12 +28,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const coinWidth = 40;
         const coinHeight = 40;
 
-        // Verifica si hay una moneda en la habitación actual
+
         if (!roomData.coin) {
             return false;
         }
 
-        // Verifica si el clic está en la posición de la moneda
         return x >= coinX && x <= coinX + coinWidth && y >= coinY && y <= coinY + coinHeight;
     };
 
@@ -43,6 +41,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const keyY = canvas.height - 80;
         const keyWidth = 40;
         const keyHeight = 40;
+
+        if (!roomData.keys) {
+            return false;
+        }
 
         return x >= keyX && x <= keyX + keyWidth && y >= keyY && y <= keyY + keyHeight;
     };
@@ -93,15 +95,13 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.drawImage(coin, coinX, coinY, 40, 40);
         }
 
-        // Dibujar llave si hay
-        if (roomData.keys.length > 0) {
+        if (roomData.keys) {
             const keyX = canvas.width - 90;
             const keyY = canvas.height - 80;
             ctx.drawImage(keyImg, keyX, keyY, 40, 40);
         }
 
         currentRoomElement.textContent = roomData.roomName;
-        keysElement.textContent = roomData.keys.length ? roomData.keys.join(', ') : 'Ninguna';
     };
 
     canvas.addEventListener('click', (event) => {
@@ -112,6 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isCoinClicked(x, y)) {
             window.location.href = '/getCoin';
         }
+
         if (isKeyClicked(x, y)) {
             window.location.href = '/getKey';
         }

@@ -36,11 +36,10 @@ public class CoinController {
             coinService.updateCountMonedasPartida(partidaId);
 
             // Vuelve a obtener la habitación actualizada
-            Room updatedRoom = gameCanvasService.getRoom(mapId, currentRoomId);
             Partida partida = gameCanvasService.getPartidaById(partidaId);
-            String updatedRoomData = gameCanvasService.convertDataToString(updatedRoom, partida);
+            String roomData = gameCanvasService.convertDataToString(room, partida);
 
-            model.addAttribute("roomData", updatedRoomData);
+            model.addAttribute("roomData", roomData);
             model.addAttribute("coinsCollected", partida.getCoinsCollected());
 
             return "gameCanvas";

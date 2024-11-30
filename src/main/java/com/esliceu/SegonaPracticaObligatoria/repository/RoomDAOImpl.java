@@ -6,7 +6,6 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -90,7 +89,6 @@ public class RoomDAOImpl implements RoomDAO {
 
             targetRoom.setDoors(doors);
 
-            // Obtener las llaves de la habitación
             getKeysOfRoom(mapId, currentRoomId, targetRoom);
 
             return targetRoom;
@@ -102,8 +100,8 @@ public class RoomDAOImpl implements RoomDAO {
 
     @Override
     public String createPartida(String userId) {
-        String sql = "INSERT INTO Partida (userId, coinsCollected, keysCollected, score, createdAt, updatedAt) " +
-                "VALUES (?, 0, '', 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
+        String sql = "INSERT INTO Partida (userId, coinsCollected, score, createdAt, updatedAt) " +
+                "VALUES (?, 0, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
         jdbcTemplate.update(sql, userId);
 
         String getIdSql = "SELECT LAST_INSERT_ID()";
@@ -144,6 +142,19 @@ public class RoomDAOImpl implements RoomDAO {
         String sql = "SELECT name FROM Mapa";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Mapa.class));
     }
+
+    @Override
+    public void updateKeyPartida(String partidaId, String currentRoomId) {
+        String sql = "UPDATE Partida SET idHabitacionLlave = CONCAT(COALESCE(idHabitacionLlave, ''), ?, ',') WHERE id = ?";
+        jdbcTemplate.update(sql, currentRoomId, partidaId);
+    }
+
+    @Override
+    public Llave getKey(String currentRoomId) {
+        String sql = "SELECT * FROM Llave WHERE roomId = ?";
+        return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Llave.class), currentRoomId);
+    }
+
 
     private void getKeysOfRoom(String mapId, String currentRoomId, Room room) {
         String sqlLlaves = "SELECT * FROM Llave WHERE id IN (SELECT keyId FROM Room WHERE id = ? AND mapaId = ?)";

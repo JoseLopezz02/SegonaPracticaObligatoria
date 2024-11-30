@@ -6,12 +6,20 @@ public class Partida {
     int id;
     int userId;
     int coinsCollected;
-    String keysCollected;
     int score;
     LocalDateTime createdAt;
     LocalDateTime updatedAt;
     Integer currentRoomId;
     String idHabitacionMoneda;
+    String idHabitacionLlave;
+
+    public String getIdHabitacionLlave() {
+        return idHabitacionLlave;
+    }
+
+    public void setIdHabitacionLlave(String idHabitacionLlave) {
+        this.idHabitacionLlave = idHabitacionLlave;
+    }
 
     public String getIdHabitacionMoneda() {
         return idHabitacionMoneda;
@@ -51,14 +59,6 @@ public class Partida {
 
     public void setCoinsCollected(int coinsCollected) {
         this.coinsCollected = coinsCollected;
-    }
-
-    public String getKeysCollected() {
-        return keysCollected;
-    }
-
-    public void setKeysCollected(String keysCollected) {
-        this.keysCollected = keysCollected;
     }
 
     public int getScore() {

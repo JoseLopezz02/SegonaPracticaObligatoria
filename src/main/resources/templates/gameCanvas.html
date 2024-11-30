@@ -20,8 +20,9 @@
     <div id="game-info">
         <p>Monedas recogidas: <span id="coinCount" th:text="${coinsCollected}">0</span></p>
         <p>Habitación actual: <span id="currentRoom">Habitación inicial</span></p>
-        <p>Llaves: <span id="keys">Ninguna</span></p>
+        <p>Llaves: <span id="keys"  th:text="${keysCollected}">Ninguna</span></p>
     </div>
+
 </div>
 
 <script type="application/json" id="dataJson" th:utext="${roomData}"></script>

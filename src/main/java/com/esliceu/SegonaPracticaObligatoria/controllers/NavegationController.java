@@ -1,8 +1,10 @@
 package com.esliceu.SegonaPracticaObligatoria.controllers;
 
+import com.esliceu.SegonaPracticaObligatoria.model.Llave;
 import com.esliceu.SegonaPracticaObligatoria.model.Partida;
 import com.esliceu.SegonaPracticaObligatoria.model.Room;
 import com.esliceu.SegonaPracticaObligatoria.services.GameCanvasService;
+import com.esliceu.SegonaPracticaObligatoria.services.KeyService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,7 @@ public class NavegationController {
 
             Partida partida = gameCanvasService.getPartidaById(partidaId);
 
+
             String roomData = gameCanvasService.convertDataToString(futureCurrentRoom, partida);
             session.setAttribute("currentRoomId", String.valueOf(futureCurrentRoom.getId()));
             session.setAttribute("mapId", mapId);
@@ -38,9 +41,8 @@ public class NavegationController {
             model.addAttribute("coinsCollected", partida.getCoinsCollected());
 
 
-            System.out.println("Futura room id :" + futureCurrentRoom.getId());
-            System.out.println("Futura room coin :" + futureCurrentRoom.getCoin());
-            System.out.println("Futura room doors :" + futureCurrentRoom.getDoors());
+
+            System.out.println("Habitacion actual" + roomData);
 
             return "gameCanvas";
         } catch (IllegalArgumentException e) {

@@ -6,6 +6,15 @@ public class Llave {
     String nombre;
     int precioMonedas;
     int mapaId;
+    int idRoom;
+
+    public int getIdRoom() {
+        return idRoom;
+    }
+
+    public void setIdRoom(int idRoom) {
+        this.idRoom = idRoom;
+    }
 
     public int getId() {
         return id;
