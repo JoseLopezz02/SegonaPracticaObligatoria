@@ -59,7 +59,6 @@ public class GameCanvasService {
         return door.isOpen() ? "open" : "closed";
     }
 
-
     private boolean monedaNoRecogida(Partida partida, int roomId) {
         if (partida.getIdHabitacionMoneda() == null) {
             return true;
@@ -92,14 +91,6 @@ public class GameCanvasService {
 
     public void updateCurrentRoomPartida(String currentRoomId, String partidaId) {
         roomDAO.updateCurrentRoom(currentRoomId,partidaId);
-    }
-
-    public void updatePartidaWhereRoomHaveCoin(String partidaId, String currentRoomId) {
-        roomDAO.updateCoinPartida(partidaId,currentRoomId);
-    }
-
-    public void updateCountMonedasPartida(String partidaId) {
-        roomDAO.updateCountMonedas(partidaId);
     }
 
     public Partida getPartidaById(String partidaId) {

@@ -2,6 +2,7 @@ package com.esliceu.SegonaPracticaObligatoria.controllers;
 
 import com.esliceu.SegonaPracticaObligatoria.model.Partida;
 import com.esliceu.SegonaPracticaObligatoria.model.Room;
+import com.esliceu.SegonaPracticaObligatoria.services.CoinService;
 import com.esliceu.SegonaPracticaObligatoria.services.GameCanvasService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class CoinController {
     @Autowired
     GameCanvasService gameCanvasService;
+    @Autowired
+    CoinService coinService;
 
     @GetMapping("/getCoin")
     public String getCoin(HttpSession session, Model model) {
@@ -29,8 +32,8 @@ public class CoinController {
             }
 
             // Actualiza estado de la partida
-            gameCanvasService.updatePartidaWhereRoomHaveCoin(partidaId, currentRoomId);
-            gameCanvasService.updateCountMonedasPartida(partidaId);
+            coinService.updatePartidaWhereRoomHaveCoin(partidaId, currentRoomId);
+            coinService.updateCountMonedasPartida(partidaId);
 
             // Vuelve a obtener la habitación actualizada
             Room updatedRoom = gameCanvasService.getRoom(mapId, currentRoomId);
