@@ -21,26 +21,29 @@ public class CoinController {
         String partidaId = (String) session.getAttribute("partidaId");
 
         try {
-            Room roomData = gameCanvasService.getRoom(mapId, currentRoomId);
+            Room room = gameCanvasService.getRoom(mapId, currentRoomId);
 
-            // Verifica si hay moneda
-            if (roomData == null || roomData.getCoin() == 0) {
+            if (room.getCoin() == 0) {
                 session.setAttribute("error", "No hay monedas en esta habitación.");
-                return "redirect:/gameCanvas";
+                return "gameCanvas";
             }
 
             // Actualiza estado de la partida
-            Partida partida = gameCanvasService.getPartidaById(partidaId);
-            int coinsCollected = partida.getCoinsCollected();
-            model.addAttribute("coinsCollected", coinsCollected);
-
             gameCanvasService.updatePartidaWhereRoomHaveCoin(partidaId, currentRoomId);
             gameCanvasService.updateCountMonedasPartida(partidaId);
 
-            return "redirect:/gameCanvas";
+            // Vuelve a obtener la habitación actualizada
+            Room updatedRoom = gameCanvasService.getRoom(mapId, currentRoomId);
+            Partida partida = gameCanvasService.getPartidaById(partidaId);
+            String updatedRoomData = gameCanvasService.convertDataToString(updatedRoom, partida);
+
+            model.addAttribute("roomData", updatedRoomData);
+            model.addAttribute("coinsCollected", partida.getCoinsCollected());
+
+            return "gameCanvas";
         } catch (Exception e) {
             session.setAttribute("error", "Ocurrió un error inesperado.");
-            return "redirect:/gameCanvas";
+            return "gameCanvas";
         }
     }
 }

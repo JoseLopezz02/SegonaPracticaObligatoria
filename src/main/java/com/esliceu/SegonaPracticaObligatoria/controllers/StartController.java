@@ -29,6 +29,7 @@ public class StartController {
         model.addAttribute("message", username);
         model.addAttribute("mapas", mapas);
 
+
         return "start";
     }
 
@@ -53,6 +54,7 @@ public class StartController {
 
         System.out.println("Este es el id" + mapId);
         System.out.println("Habitacion inicial" + roomData);
+        model.addAttribute("coinsCollected", partida.getCoinsCollected());
 
         return "gameCanvas";
     }

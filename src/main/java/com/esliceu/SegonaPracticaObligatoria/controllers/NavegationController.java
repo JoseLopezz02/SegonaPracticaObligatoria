@@ -35,9 +35,7 @@ public class NavegationController {
             session.setAttribute("currentRoomId", String.valueOf(futureCurrentRoom.getId()));
             session.setAttribute("mapId", mapId);
             model.addAttribute("roomData", roomData);
-
-            int coinsCollected = partida.getCoinsCollected();
-            model.addAttribute("coinsCollected", coinsCollected);
+            model.addAttribute("coinsCollected", partida.getCoinsCollected());
 
 
             System.out.println("Futura room id :" + futureCurrentRoom.getId());

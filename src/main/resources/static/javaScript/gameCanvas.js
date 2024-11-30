@@ -13,7 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
     const compass = document.getElementById('compass');
-    const coinCountElement = document.getElementById('coinCount');
     const currentRoomElement = document.getElementById('currentRoom');
     const keysElement = document.getElementById('keys');
 
@@ -96,7 +95,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         currentRoomElement.textContent = roomData.roomName;
-        coinCountElement.textContent = coinsCollected;
         keysElement.textContent = roomData.keys.length ? roomData.keys.join(', ') : 'Ninguna';
     };
 
@@ -107,8 +105,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (isCoinClicked(x, y)) {
             window.location.href = '/getCoin';
-            coinsCollected++;
-            coinCountElement.textContent = coinsCollected;
         }
         if (isKeyClicked(x, y)) {
             window.location.href = '/getKey';
@@ -125,7 +121,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Redirigir al servidor para cargar la nueva habitación
         window.location.href = `/nav?direction=${direction}`;
     };
 
