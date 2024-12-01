@@ -11,12 +11,15 @@ public class KeyService {
     @Autowired
     RoomDAO roomDAO;
 
-    public void updatePartidaWhereRoomHaveKey(String partidaId, String currentRoomId) {
-        roomDAO.updateKeyPartida(partidaId,currentRoomId);
+    public void updatePartidaWhereRoomHaveKey(String partidaId, String currentRoomId, String keyName) {
+        roomDAO.updateKeyPartida(partidaId,currentRoomId, keyName);
     }
 
     public Llave getKeyOfRoom(String currentRoomId) {
          return roomDAO.getKey(currentRoomId);
     }
 
+    public String getKeysInventario(String partidaId) {
+        return roomDAO.getKeyInventario(partidaId);
+    }
 }

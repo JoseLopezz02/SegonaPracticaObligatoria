@@ -47,7 +47,7 @@ public class GameCanvasService {
         if (partida.getIdHabitacionLlave() == null){
             return true;
         }
-        String[] habitacionesConLlaves = partida.getIdHabitacionMoneda().split(",");
+        String[] habitacionesConLlaves = partida.getIdHabitacionLlave().split(",");
         for (String id : habitacionesConLlaves) {
             if (id.equals(String.valueOf(roomId))) {
                 return false;

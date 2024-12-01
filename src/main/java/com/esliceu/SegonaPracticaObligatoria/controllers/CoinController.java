@@ -1,9 +1,11 @@
 package com.esliceu.SegonaPracticaObligatoria.controllers;
 
+import com.esliceu.SegonaPracticaObligatoria.model.Llave;
 import com.esliceu.SegonaPracticaObligatoria.model.Partida;
 import com.esliceu.SegonaPracticaObligatoria.model.Room;
 import com.esliceu.SegonaPracticaObligatoria.services.CoinService;
 import com.esliceu.SegonaPracticaObligatoria.services.GameCanvasService;
+import com.esliceu.SegonaPracticaObligatoria.services.KeyService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +27,7 @@ public class CoinController {
 
         try {
             Room room = gameCanvasService.getRoom(mapId, currentRoomId);
+
 
             if (room.getCoin() == 0) {
                 session.setAttribute("error", "No hay monedas en esta habitación.");

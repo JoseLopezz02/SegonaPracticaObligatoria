@@ -100,7 +100,7 @@ public class RoomDAOImpl implements RoomDAO {
 
     @Override
     public String createPartida(String userId) {
-        String sql = "INSERT INTO Partida (userId, coinsCollected, score, createdAt, updatedAt) " +
+        String sql = "INSERT INTO Partida (userId, coinsCollected ,score, createdAt, updatedAt) " +
                 "VALUES (?, 0, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
         jdbcTemplate.update(sql, userId);
 
@@ -144,17 +144,37 @@ public class RoomDAOImpl implements RoomDAO {
     }
 
     @Override
-    public void updateKeyPartida(String partidaId, String currentRoomId) {
-        String sql = "UPDATE Partida SET idHabitacionLlave = CONCAT(COALESCE(idHabitacionLlave, ''), ?, ',') WHERE id = ?";
-        jdbcTemplate.update(sql, currentRoomId, partidaId);
+    public void updateKeyPartida(String partidaId, String currentRoomId, String keyName) {
+        String sql = "UPDATE Partida " +
+                "SET idHabitacionLlave = CONCAT(COALESCE(idHabitacionLlave, ''), ?, ','), " +
+                "keysCollected = CONCAT(COALESCE(keysCollected, ''), ?, ',') " +
+                "WHERE id = ?";
+        jdbcTemplate.update(sql, currentRoomId, keyName, partidaId);
     }
+
 
     @Override
     public Llave getKey(String currentRoomId) {
         String sql = "SELECT * FROM Llave WHERE roomId = ?";
-        return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Llave.class), currentRoomId);
+        try {
+            return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Llave.class), currentRoomId);
+        } catch (org.springframework.dao.EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
+    //Implementar en el gameInfo
+    @Override
+    public String getKeyInventario(String partidaId) {
+        String sql = "SELECT keysCollected FROM Partida WHERE id = ? ";
+        return String.valueOf(jdbcTemplate.queryForObject(sql, new Object[]{partidaId}, Integer.class));
+    }
+
+    @Override
+    public void restaCoinsCollected(String partidaId, int nuevasMonedas) {
+        String sql = "UPDATE Partida SET coinsCollected = ? WHERE id = ?";
+        jdbcTemplate.update(sql, nuevasMonedas, partidaId);
+    }
 
     private void getKeysOfRoom(String mapId, String currentRoomId, Room room) {
         String sqlLlaves = "SELECT * FROM Llave WHERE id IN (SELECT keyId FROM Room WHERE id = ? AND mapaId = ?)";

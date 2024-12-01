@@ -16,10 +16,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.security.Key;
+
 @Controller
 public class NavegationController {
     @Autowired
     GameCanvasService gameCanvasService;
+    @Autowired
+    KeyService keyService;
+
     @GetMapping("/nav")
 
     public String getNav(@RequestParam("direction") String direction, HttpSession session, Model model){
@@ -32,14 +37,16 @@ public class NavegationController {
             gameCanvasService.updateCurrentRoomPartida(String.valueOf(futureCurrentRoom.getId()), partidaId);
 
             Partida partida = gameCanvasService.getPartidaById(partidaId);
+            Llave llave = keyService.getKeyOfRoom(String.valueOf(futureCurrentRoom.getId()));
 
 
             String roomData = gameCanvasService.convertDataToString(futureCurrentRoom, partida);
             session.setAttribute("currentRoomId", String.valueOf(futureCurrentRoom.getId()));
             session.setAttribute("mapId", mapId);
+
             model.addAttribute("roomData", roomData);
             model.addAttribute("coinsCollected", partida.getCoinsCollected());
-
+            // Maneja el caso donde no hay llave en la habitación con un model
 
 
             System.out.println("Habitacion actual" + roomData);

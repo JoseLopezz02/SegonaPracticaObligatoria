@@ -6,12 +6,21 @@ public class Partida {
     int id;
     int userId;
     int coinsCollected;
+    String llavesCollected;
     int score;
     LocalDateTime createdAt;
     LocalDateTime updatedAt;
     Integer currentRoomId;
     String idHabitacionMoneda;
     String idHabitacionLlave;
+
+    public String getLlavesCollected() {
+        return llavesCollected;
+    }
+
+    public void setLlavesCollected(String llavesCollected) {
+        this.llavesCollected = llavesCollected;
+    }
 
     public String getIdHabitacionLlave() {
         return idHabitacionLlave;

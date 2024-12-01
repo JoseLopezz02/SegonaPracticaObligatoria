@@ -3,6 +3,7 @@ package com.esliceu.SegonaPracticaObligatoria.controllers;
 import com.esliceu.SegonaPracticaObligatoria.model.Llave;
 import com.esliceu.SegonaPracticaObligatoria.model.Partida;
 import com.esliceu.SegonaPracticaObligatoria.model.Room;
+import com.esliceu.SegonaPracticaObligatoria.services.CoinService;
 import com.esliceu.SegonaPracticaObligatoria.services.GameCanvasService;
 import com.esliceu.SegonaPracticaObligatoria.services.KeyService;
 import jakarta.servlet.http.HttpSession;
@@ -17,6 +18,8 @@ public class KeyController {
     GameCanvasService gameCanvasService;
     @Autowired
     KeyService keyService;
+    @Autowired
+    CoinService coinService;
 
     @GetMapping("/getKey")
     public String getKey(HttpSession session, Model model){
@@ -38,16 +41,20 @@ public class KeyController {
             Partida partida = gameCanvasService.getPartidaById(partidaId);
 
             if (llave.getPrecioMonedas() <= partida.getCoinsCollected()) {
-                keyService.updatePartidaWhereRoomHaveKey(partidaId, currentRoomId);
-                String roomData = gameCanvasService.convertDataToString(room, partida);
-                model.addAttribute("roomData", roomData);
-                model.addAttribute("coinsCollected", partida.getCoinsCollected());
-                model.addAttribute("keysCollected", llave.getNombre());
+                int cambioMonedas = partida.getCoinsCollected() - llave.getPrecioMonedas();
+                coinService.restaCoinsCollected(partidaId, cambioMonedas);
 
-                session.setAttribute("message", "¡Llave obtenida con éxito!");
+                keyService.updatePartidaWhereRoomHaveKey(partidaId, currentRoomId, llave.getNombre());
+                String roomData = gameCanvasService.convertDataToString(room, partida);
+
+                model.addAttribute("roomData", roomData);
+                model.addAttribute("coinsCollected", cambioMonedas);
+
+
+                System.out.println("¡Llave obtenida con éxito!");
             } else {
                 //Modificar para mostrar otro error
-                session.setAttribute("error", "No tienes suficientes monedas para obtener la llave.");
+                System.out.println("No tienes suficientes monedas para obtener la llave.");
             }
 
             return "gameCanvas";

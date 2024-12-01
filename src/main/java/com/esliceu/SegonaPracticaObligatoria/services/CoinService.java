@@ -16,4 +16,8 @@ public class CoinService {
     public void updatePartidaWhereRoomHaveCoin(String partidaId, String currentRoomId) {
         roomDAO.updateCoinPartida(partidaId,currentRoomId);
     }
+
+    public void restaCoinsCollected(String partidaId, int nuevasMonedas) {
+        roomDAO.restaCoinsCollected(partidaId,nuevasMonedas);
+    }
 }
