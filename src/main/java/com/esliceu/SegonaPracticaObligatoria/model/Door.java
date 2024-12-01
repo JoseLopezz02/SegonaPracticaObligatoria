@@ -9,6 +9,7 @@ public class Door {
     int mapaId;
     int roomId;
 
+
     public boolean isOpen() {
         return isOpen;
     }

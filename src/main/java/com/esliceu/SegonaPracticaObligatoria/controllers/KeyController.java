@@ -55,14 +55,13 @@ public class KeyController {
                 model.addAttribute("keysCollected", llave.getNombre());
 
                 model.addAttribute("message", "¡Llave obtenida con éxito!");
+                return "gameCanvas";
 
             } else {
                 //Modificar para mostrar otro error
                 model.addAttribute("message", "No tienes suficientes monedas para obtener la llave.");
                 return "gameCanvas";
             }
-
-            return "gameCanvas";
 
         } catch (Exception e) {
             session.setAttribute("error", "Ocurrió un error inesperado.");

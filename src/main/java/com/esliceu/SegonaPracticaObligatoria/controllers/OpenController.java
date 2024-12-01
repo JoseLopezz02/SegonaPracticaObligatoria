@@ -1,13 +1,9 @@
 package com.esliceu.SegonaPracticaObligatoria.controllers;
 
-import com.esliceu.SegonaPracticaObligatoria.model.Door;
-import com.esliceu.SegonaPracticaObligatoria.model.Partida;
-import com.esliceu.SegonaPracticaObligatoria.model.Room;
 import com.esliceu.SegonaPracticaObligatoria.services.GameCanvasService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 

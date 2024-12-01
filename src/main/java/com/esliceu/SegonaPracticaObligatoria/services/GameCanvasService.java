@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -132,13 +133,15 @@ public class GameCanvasService {
 
         if (!door.isOpen()) {
             if (hasKeyForDoor(partida, door)) {
-                door.setIsOpen(true); // Abrir la puerta
-                updateDoorState(door); // Actualizar en la base de datos
+                door.setIsOpen(true);
+               // updateDoorState(door); // Actualizar en la base de datos
+                System.out.println("La puerta se ha abierto.");
                 return "La puerta se ha abierto.";
             } else {
                 return "No tienes la llave para abrir esta puerta.";
             }
         } else {
+            System.out.println("La puerta ya está abierta.");
             return "La puerta ya está abierta.";
         }
     }
@@ -167,16 +170,12 @@ public class GameCanvasService {
             return false;
         }
 
-        String[] keysCollected = partida.getIdKeysCollected().split(",");
-        for (String key : keysCollected) {
-            if (key.equals(String.valueOf(door.getLlaveId()))) {
-                return true;
-            }
-        }
-        return false;
+        // Convertimos el array a una lista para usar contains()
+        List<String> keysCollected = Arrays.asList(partida.getIdKeysCollected().split(","));
+
+        // Comprobar si la llave de la puerta está en la lista
+        return keysCollected.contains(String.valueOf(door.getLlaveId()));
     }
 
-    public void updateDoorState(Door door) {
-        roomDAO.updateDoor(door);
-    }
+
 }

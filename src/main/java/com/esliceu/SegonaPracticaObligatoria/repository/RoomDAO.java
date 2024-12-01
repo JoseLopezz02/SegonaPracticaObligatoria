@@ -22,8 +22,5 @@ public interface RoomDAO {
 
     Llave getKey(String currentRoomId);
 
-
     void restaCoinsCollected(String partidaId, int nuevasMonedas);
-
-    void updateDoor(Door door);
 }
