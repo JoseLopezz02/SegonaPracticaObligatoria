@@ -11,8 +11,8 @@ public class KeyService {
     @Autowired
     RoomDAO roomDAO;
 
-    public void updatePartidaWhereRoomHaveKey(String partidaId, String currentRoomId, String keyName) {
-        roomDAO.updateKeyPartida(partidaId,currentRoomId, keyName);
+    public void updatePartidaWhereRoomHaveKey(String partidaId, String currentRoomId, String idKey) {
+        roomDAO.updateKeyPartida(partidaId,currentRoomId, idKey);
     }
 
     public Llave getKeyOfRoom(String currentRoomId) {

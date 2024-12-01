@@ -144,12 +144,12 @@ public class RoomDAOImpl implements RoomDAO {
     }
 
     @Override
-    public void updateKeyPartida(String partidaId, String currentRoomId, String keyName) {
+    public void updateKeyPartida(String partidaId, String currentRoomId, String idKey) {
         String sql = "UPDATE Partida " +
                 "SET idHabitacionLlave = CONCAT(COALESCE(idHabitacionLlave, ''), ?, ','), " +
-                "keysCollected = CONCAT(COALESCE(keysCollected, ''), ?, ',') " +
+                "idKeysCollected = CONCAT(COALESCE(idKeysCollected, ''), ?, ',') " +
                 "WHERE id = ?";
-        jdbcTemplate.update(sql, currentRoomId, keyName, partidaId);
+        jdbcTemplate.update(sql, currentRoomId, idKey, partidaId);
     }
 
 

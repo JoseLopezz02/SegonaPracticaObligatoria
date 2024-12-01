@@ -6,7 +6,7 @@ public class Partida {
     int id;
     int userId;
     int coinsCollected;
-    String llavesCollected;
+    String idKeysCollected;
     int score;
     LocalDateTime createdAt;
     LocalDateTime updatedAt;
@@ -14,12 +14,12 @@ public class Partida {
     String idHabitacionMoneda;
     String idHabitacionLlave;
 
-    public String getLlavesCollected() {
-        return llavesCollected;
+    public String getIdKeysCollected() {
+        return idKeysCollected;
     }
 
-    public void setLlavesCollected(String llavesCollected) {
-        this.llavesCollected = llavesCollected;
+    public void setIdKeysCollected(String idKeysCollected) {
+        this.idKeysCollected = idKeysCollected;
     }
 
     public String getIdHabitacionLlave() {
