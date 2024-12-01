@@ -1,9 +1,6 @@
 package com.esliceu.SegonaPracticaObligatoria.repository;
 
-import com.esliceu.SegonaPracticaObligatoria.model.Llave;
-import com.esliceu.SegonaPracticaObligatoria.model.Mapa;
-import com.esliceu.SegonaPracticaObligatoria.model.Partida;
-import com.esliceu.SegonaPracticaObligatoria.model.Room;
+import com.esliceu.SegonaPracticaObligatoria.model.*;
 
 import java.util.List;
 
@@ -25,7 +22,8 @@ public interface RoomDAO {
 
     Llave getKey(String currentRoomId);
 
-    String getKeyInventario(String partidaId);
 
     void restaCoinsCollected(String partidaId, int nuevasMonedas);
+
+    void updateDoor(Door door);
 }

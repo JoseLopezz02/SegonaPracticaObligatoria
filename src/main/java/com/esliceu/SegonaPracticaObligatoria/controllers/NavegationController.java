@@ -37,8 +37,6 @@ public class NavegationController {
             gameCanvasService.updateCurrentRoomPartida(String.valueOf(futureCurrentRoom.getId()), partidaId);
 
             Partida partida = gameCanvasService.getPartidaById(partidaId);
-            Llave llave = keyService.getKeyOfRoom(String.valueOf(futureCurrentRoom.getId()));
-
 
             String roomData = gameCanvasService.convertDataToString(futureCurrentRoom, partida);
             session.setAttribute("currentRoomId", String.valueOf(futureCurrentRoom.getId()));
@@ -46,8 +44,7 @@ public class NavegationController {
 
             model.addAttribute("roomData", roomData);
             model.addAttribute("coinsCollected", partida.getCoinsCollected());
-            // Maneja el caso donde no hay llave en la habitación con un model
-
+            //Meter en el game-Info la llave
 
             System.out.println("Habitacion actual" + roomData);
 

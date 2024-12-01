@@ -12,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.Collections;
+
 @Controller
 public class KeyController {
     @Autowired
@@ -41,20 +43,23 @@ public class KeyController {
             Partida partida = gameCanvasService.getPartidaById(partidaId);
 
             if (llave.getPrecioMonedas() <= partida.getCoinsCollected()) {
+                keyService.updatePartidaWhereRoomHaveKey(partidaId, currentRoomId, String.valueOf(llave.getId()));
+
                 int cambioMonedas = partida.getCoinsCollected() - llave.getPrecioMonedas();
                 coinService.restaCoinsCollected(partidaId, cambioMonedas);
 
-                keyService.updatePartidaWhereRoomHaveKey(partidaId, currentRoomId, String.valueOf(llave.getId()));
                 String roomData = gameCanvasService.convertDataToString(room, partida);
 
                 model.addAttribute("roomData", roomData);
                 model.addAttribute("coinsCollected", cambioMonedas);
+                model.addAttribute("keysCollected", llave.getNombre());
 
+                model.addAttribute("message", "¡Llave obtenida con éxito!");
 
-                System.out.println("¡Llave obtenida con éxito!");
             } else {
                 //Modificar para mostrar otro error
-                System.out.println("No tienes suficientes monedas para obtener la llave.");
+                model.addAttribute("message", "No tienes suficientes monedas para obtener la llave.");
+                return "gameCanvas";
             }
 
             return "gameCanvas";

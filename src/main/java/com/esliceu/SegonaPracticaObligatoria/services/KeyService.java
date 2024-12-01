@@ -19,7 +19,4 @@ public class KeyService {
          return roomDAO.getKey(currentRoomId);
     }
 
-    public String getKeysInventario(String partidaId) {
-        return roomDAO.getKeyInventario(partidaId);
-    }
 }

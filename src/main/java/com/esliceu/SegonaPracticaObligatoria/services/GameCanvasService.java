@@ -119,4 +119,64 @@ public class GameCanvasService {
     public List<Mapa> getAllMaps() {
         return roomDAO.getMaps();
     }
+
+    public String openDoor(String direction, String partidaId, String mapId, String currentRoomId) {
+        Partida partida = roomDAO.getPartida(partidaId);
+        Room room = roomDAO.get(mapId, currentRoomId);
+
+        Door door = searchDoorByDirection(direction, room);
+
+        if (door == null) {
+            return "No hay puerta en esa dirección.";
+        }
+
+        if (!door.isOpen()) {
+            if (hasKeyForDoor(partida, door)) {
+                door.setIsOpen(true); // Abrir la puerta
+                updateDoorState(door); // Actualizar en la base de datos
+                return "La puerta se ha abierto.";
+            } else {
+                return "No tienes la llave para abrir esta puerta.";
+            }
+        } else {
+            return "La puerta ya está abierta.";
+        }
+    }
+
+    private Door searchDoorByDirection(String direction, Room room) {
+        return switch (direction) {
+            case "norte" -> getDoorByRoomId(room, room.getNorte());
+            case "sur" -> getDoorByRoomId(room, room.getSur());
+            case "este" -> getDoorByRoomId(room, room.getEste());
+            case "oeste" -> getDoorByRoomId(room, room.getOeste());
+            default -> null;
+        };
+    }
+
+    private Door getDoorByRoomId(Room room, Integer doorId) {
+        for (Door door : room.getDoors()) {
+            if (door.getId() == doorId) {
+                return door;
+            }
+        }
+        return null;
+    }
+
+    private boolean hasKeyForDoor(Partida partida, Door door) {
+        if (partida.getIdKeysCollected() == null || partida.getIdKeysCollected().isEmpty()) {
+            return false;
+        }
+
+        String[] keysCollected = partida.getIdKeysCollected().split(",");
+        for (String key : keysCollected) {
+            if (key.equals(String.valueOf(door.getLlaveId()))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void updateDoorState(Door door) {
+        roomDAO.updateDoor(door);
+    }
 }

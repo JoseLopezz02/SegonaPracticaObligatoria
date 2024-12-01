@@ -1,6 +1,8 @@
 package com.esliceu.SegonaPracticaObligatoria.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Partida {
     int id;
@@ -13,6 +15,7 @@ public class Partida {
     Integer currentRoomId;
     String idHabitacionMoneda;
     String idHabitacionLlave;
+
 
     public String getIdKeysCollected() {
         return idKeysCollected;

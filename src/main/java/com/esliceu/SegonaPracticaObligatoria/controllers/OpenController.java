@@ -1,5 +1,6 @@
 package com.esliceu.SegonaPracticaObligatoria.controllers;
 
+import com.esliceu.SegonaPracticaObligatoria.model.Door;
 import com.esliceu.SegonaPracticaObligatoria.model.Partida;
 import com.esliceu.SegonaPracticaObligatoria.model.Room;
 import com.esliceu.SegonaPracticaObligatoria.services.GameCanvasService;
@@ -14,17 +15,23 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class OpenController {
     @Autowired
     GameCanvasService gameCanvasService;
-    @GetMapping("/open")
-    public String getOpen(HttpSession session, @RequestParam String direction, Model model){
-        String mapId = (String) session.getAttribute("mapId");
-        String partidaId = (String) session.getAttribute("partidaId");
-        String currentRoomId = (String) session.getAttribute("currentRoomId");
+        @GetMapping("/open")
+        public String getOpen(HttpSession session, @RequestParam String direction) {
+            String mapId = (String) session.getAttribute("mapId");
+            String partidaId = (String) session.getAttribute("partidaId");
+            String currentRoomId = (String) session.getAttribute("currentRoomId");
 
-        Partida partida = gameCanvasService.getPartidaById(partidaId);
-        Room room = gameCanvasService.getRoom(mapId, currentRoomId);
+            try {
+                // Llamar al servicio para abrir la puerta
+                String message = gameCanvasService.openDoor(direction, partidaId, mapId, currentRoomId);
 
+                // Establecer el mensaje en el modelo para que se muestre en la vista
+                session.setAttribute("message", message);
 
-
-        return  "gameCanvas";
+                return "gameCanvas";
+            } catch (Exception e) {
+                session.setAttribute("error", "Hubo un error al intentar abrir la puerta.");
+                return "gameCanvas";
+            }
+        }
     }
-}

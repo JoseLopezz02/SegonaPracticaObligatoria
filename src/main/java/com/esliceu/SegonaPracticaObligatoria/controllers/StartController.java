@@ -29,31 +29,37 @@ public class StartController {
         model.addAttribute("message", username);
         model.addAttribute("mapas", mapas);
 
-
         return "start";
     }
 
     @PostMapping("/start")
-    public String postStart(@RequestParam String mapName, HttpSession session, Model model) throws JsonProcessingException {
+    public String postStart(@RequestParam(required = false) String mapName, HttpSession session, Model model) throws JsonProcessingException {
+        if (mapName == null || mapName.isEmpty()) {
+            model.addAttribute("error", "Por favor, selecciona un mapa antes de empezar.");
+
+            // Vuelve a cargar los mapas en el modelo
+            List<Mapa> mapas = gameCanvasService.getAllMaps();
+            model.addAttribute("mapas", mapas);
+
+            return "start";
+        }
+
         String mapId = gameCanvasService.getMapIdByName(mapName);
         String userId = String.valueOf(session.getAttribute("userId"));
         String partidaId = gameCanvasService.createNewPartida(userId);
         String idRoomInicial = gameCanvasService.getInitialRoomIdByMapId(mapId);
 
-
         Room room = gameCanvasService.getRoom(mapId, idRoomInicial);
         Partida partida = gameCanvasService.getPartidaById(partidaId);
         String roomData = gameCanvasService.convertDataToString(room, partida);
-        gameCanvasService.updateCurrentRoomPartida(idRoomInicial,partidaId);
+        gameCanvasService.updateCurrentRoomPartida(idRoomInicial, partidaId);
+
         model.addAttribute("roomData", roomData);
 
-        // Configurar los atributos en la sesión
         session.setAttribute("partidaId", partidaId);
         session.setAttribute("mapId", mapId);
         session.setAttribute("currentRoomId", idRoomInicial);
 
-        System.out.println("Este es el id" + mapId);
-        System.out.println("Habitacion inicial" + roomData);
         model.addAttribute("coinsCollected", partida.getCoinsCollected());
 
         return "gameCanvas";

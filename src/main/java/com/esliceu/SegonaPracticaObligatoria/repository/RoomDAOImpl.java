@@ -163,17 +163,16 @@ public class RoomDAOImpl implements RoomDAO {
         }
     }
 
-    //Implementar en el gameInfo
-    @Override
-    public String getKeyInventario(String partidaId) {
-        String sql = "SELECT keysCollected FROM Partida WHERE id = ? ";
-        return String.valueOf(jdbcTemplate.queryForObject(sql, new Object[]{partidaId}, Integer.class));
-    }
-
     @Override
     public void restaCoinsCollected(String partidaId, int nuevasMonedas) {
         String sql = "UPDATE Partida SET coinsCollected = ? WHERE id = ?";
         jdbcTemplate.update(sql, nuevasMonedas, partidaId);
+    }
+
+    @Override
+    public void updateDoor(Door door) {
+        String sql = "UPDATE Door SET isOpen = ? WHERE id = ?";
+        jdbcTemplate.update(sql, door.isOpen(), door.getId());
     }
 
     private void getKeysOfRoom(String mapId, String currentRoomId, Room room) {

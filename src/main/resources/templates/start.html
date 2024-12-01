@@ -8,12 +8,14 @@
 </head>
 <body>
 <div class="jungle-container">
+    <div th:if="${error}" class="error-message">
+        <p th:text="${error}"></p>
+    </div>
     <h1 class="title">Welcome to the Jungle Maze Game!</h1>
     <p class="subtitle">Choose your adventure, <span th:text="${message}"></span>:</p>
 
     <form id="mapForm" action="/start" method="post">
         <div class="map-selection">
-            <!-- Generar mapas dinámicamente -->
             <div th:each="mapa : ${mapas}" class="map-option">
                 <label>
                     <input type="radio" name="mapName" th:value="${mapa.name}">

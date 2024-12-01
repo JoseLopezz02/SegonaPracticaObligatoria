@@ -20,14 +20,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const keyImg = new Image();
     keyImg.src = "/img/key.webp";
 
-    let coinsCollected = 0;
-
     const isCoinClicked = (x, y) => {
         const coinX = 50;
         const coinY = canvas.height - 80;
         const coinWidth = 40;
         const coinHeight = 40;
-
 
         if (!roomData.coin) {
             return false;
@@ -110,11 +107,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const y = event.clientY - canvasRect.top;
 
         if (isCoinClicked(x, y)) {
-            window.location.href = '/getCoin';
+            window.location.href = '/getCoin'; // Redirigir a la URL para obtener la moneda
         }
 
         if (isKeyClicked(x, y)) {
-            window.location.href = '/getKey';
+            window.location.href = '/getKey'; // Redirigir a la URL para obtener la llave
         }
     });
 
@@ -124,12 +121,15 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("No puedes atravesar una pared.");
             return;
         } else if (doorStatus === 'closed') {
-            alert("La puerta está cerrada.");
+            // Redirigir al controlador para abrir la puerta
+            window.location.href = `/open?direction=${direction}`;
             return;
         }
 
+        // Si la puerta está abierta, navegar normalmente
         window.location.href = `/nav?direction=${direction}`;
     };
+
 
     compass.addEventListener('click', (event) => {
         const compassRect = compass.getBoundingClientRect();

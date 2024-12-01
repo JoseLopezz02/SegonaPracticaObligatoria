@@ -74,17 +74,37 @@ body {
   align-items: center;
 }
 
-/* Especificar imágenes de fondo para cada mapa */
-.map-mazeForest {
-  background-image: url('https://img.freepik.com/premium-photo/pixel-art-maze-amidst-lush-forest-setting_811279-119635.jpg');
-}
-
-.map-mazeCave {
-  background-image: url('https://imgcdn.stablediffusionweb.com/2024/10/26/44a0176a-b0a0-41be-a2e8-de521ea5481b.jpg');
-}
-
 .map-option p {
   color: #f3f3e0;
   font-size: 1rem;
   font-weight: bold;
+}
+.start-button {
+  background-color: #ffbf00;
+  color: #2b3e20;
+  font-size: 1.5rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 10px;
+  cursor: pointer;
+  transition: transform 0.3s, background-color 0.3s, color 0.3s;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.start-button:hover {
+  background-color: #ffd84c;
+  color: #1f2916;
+  transform: scale(1.1);
+}
+
+.start-button:active {
+  background-color: #e6a700;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transform: scale(1);
+}
+.error-message {
+    color: #ff4c4c;
+    font-weight: bold;
+    margin-bottom: 15px;
 }
