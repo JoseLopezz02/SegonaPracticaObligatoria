@@ -8,14 +8,22 @@ public class Partida {
     int id;
     int userId;
     int coinsCollected;
-    String idKeysCollected;
     int score;
     LocalDateTime createdAt;
     LocalDateTime updatedAt;
     Integer currentRoomId;
+    String idKeysCollected;
     String idHabitacionMoneda;
     String idHabitacionLlave;
+    String idPuertasAbiertas; //Puertas que pasan de cerradas a abiertas
 
+    public String getIdPuertasAbiertas() {
+        return idPuertasAbiertas;
+    }
+
+    public void setIdPuertasAbiertas(String idPuertasAbiertas) {
+        this.idPuertasAbiertas = idPuertasAbiertas;
+    }
 
     public String getIdKeysCollected() {
         return idKeysCollected;
