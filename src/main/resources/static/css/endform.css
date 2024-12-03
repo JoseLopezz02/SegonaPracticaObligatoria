@@ -1,0 +1,67 @@
+ body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #b0f2b1; /* Verde claro */
+            color: #2c6b2f; /* Verde oscuro */
+            text-align: center;
+            padding: 50px;
+        }
+
+        h1 {
+            color: #48c48a; /* Verde brillante */
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        p {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            color: #4e8b4e; /* Verde intermedio */
+        }
+
+        form {
+            background-color: #d4f7d1; /* Verde muy claro */
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+        }
+
+        label {
+            font-size: 1.1em;
+            color: #4a9c49;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        textarea {
+            font-size: 1.1em;
+            padding: 10px;
+            width: 300px;
+            height: 100px;
+            border: 2px solid #82d182;
+            border-radius: 5px;
+            resize: none;
+            background-color: #f0f8f0; /* Fondo muy claro */
+            color: #4a9c49; /* Verde oscuro */
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #4a9c49; /* Verde cuando está en foco */
+        }
+
+        button {
+            font-size: 1.2em;
+            padding: 10px 20px;
+            background-color: #62e18c; /* Verde brillante */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #48c48a; /* Verde oscuro al pasar el ratón */
+        }

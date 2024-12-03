@@ -19,6 +19,8 @@ document.addEventListener('DOMContentLoaded', () => {
     coin.src = "/img/coin.gif";
     const keyImg = new Image();
     keyImg.src = "/img/key.webp";
+    const winImage = new Image();
+    winImage.src = "/img/win.gif";
 
     const isCoinClicked = (x, y) => {
         const coinX = 50;
@@ -49,11 +51,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const drawRoom = () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        // Dibujar las paredes
         ctx.fillStyle = '#000';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        // Dibujar las puertas según su estado
+        if (roomData.roomName === "habitacionFinal") {
+                ctx.drawImage(winImage, canvas.width / 2 - 150, canvas.height / 2 - 150, 300, 300);
+                return;
+            }
+
+
         if (roomData.norte === 'open') {
             ctx.fillStyle = '#FFF';
             ctx.fillRect(canvas.width / 2 - 25, 0, 50, 10); // Puerta al norte
@@ -101,19 +107,36 @@ document.addEventListener('DOMContentLoaded', () => {
         currentRoomElement.textContent = roomData.roomName;
     };
 
-    canvas.addEventListener('click', (event) => {
-        const canvasRect = canvas.getBoundingClientRect();
-        const x = event.clientX - canvasRect.left;
-        const y = event.clientY - canvasRect.top;
+   canvas.addEventListener('click', (event) => {
+       const canvasRect = canvas.getBoundingClientRect();
+       const x = event.clientX - canvasRect.left;
+       const y = event.clientY - canvasRect.top;
 
-        if (isCoinClicked(x, y)) {
-            window.location.href = '/getCoin'; // Redirigir a la URL para obtener la moneda
-        }
+       // Coordenadas y dimensiones de la imagen de victoria
+       const winImageX = canvas.width / 2 - 150;
+       const winImageY = canvas.height / 2 - 150;
+       const winImageWidth = 300;
+       const winImageHeight = 300;
 
-        if (isKeyClicked(x, y)) {
-            window.location.href = '/getKey'; // Redirigir a la URL para obtener la llave
-        }
-    });
+       if (roomData.roomName === "habitacionFinal") {
+           if (x >= winImageX && x <= winImageX + winImageWidth &&
+               y >= winImageY && y <= winImageY + winImageHeight) {
+               window.location.href = '/endform';
+               return;
+           }
+       }
+
+       if (isCoinClicked(x, y)) {
+           window.location.href = '/getCoin';
+           return;
+       }
+
+       if (isKeyClicked(x, y)) {
+           window.location.href = '/getKey';
+           return;
+       }
+   });
+
 
     const navigateRoom = (direction) => {
         const doorStatus = roomData[direction];

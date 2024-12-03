@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>End Form</title>
+  <link rel="stylesheet" href="/css/endform.css">
+</head>
+<body>
+<h1>Gracias por jugar</h1>
+<p>Por favor, déjanos tu comentario:</p>
+
+<form action="/endform" method="POST">
+  <label for="comment">Comentario (máximo 50 caracteres):</label><br>
+  <textarea id="comment" name="comment" rows="4" cols="50" maxlength="50" required></textarea><br><br>
+
+  <button type="submit">Enviar Comentario</button>
+</form>
+
+</body>
+</html>

@@ -5,9 +5,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class ScoreController {
-    @GetMapping("/scores")
+    @GetMapping("/score")
     public String getScores(){
 
-        return "scores";
+        return "score";
     }
 }

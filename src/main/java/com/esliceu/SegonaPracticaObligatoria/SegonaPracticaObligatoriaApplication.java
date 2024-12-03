@@ -23,7 +23,8 @@ public class SegonaPracticaObligatoriaApplication implements WebMvcConfigurer {
 				.addPathPatterns("/getCoin")
 				.addPathPatterns("/getKey")
 				.addPathPatterns("/open")
-				.addPathPatterns("/endForm")
+				//.addPathPatterns("/endform")
 				.addPathPatterns("/reset");
+			//	.addPathPatterns("/score");
 	}
 }

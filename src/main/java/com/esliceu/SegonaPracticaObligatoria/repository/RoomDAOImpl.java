@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -31,7 +32,7 @@ public class RoomDAOImpl implements RoomDAO {
         String sqlDoors = "SELECT * FROM Door WHERE (habitacion1 = ? OR habitacion2 = ?) AND mapaId = ?";
         List<Door> doors = jdbcTemplate.query(sqlDoors, new Object[]{currentRoomId, currentRoomId, mapId},
                 (rs, rowNum) -> {
-                    //RowMapper personalizado por errores con boolean al pasarlo de  la BD al Servidro
+                    //RowMapper personalizado por errores con boolean al pasarlo de  la BD al Servidor
                     Door door = new Door();
                     door.setId(rs.getInt("id"));
                     door.setIsOpen(rs.getBoolean("isOpen"));
@@ -100,8 +101,8 @@ public class RoomDAOImpl implements RoomDAO {
 
     @Override
     public String createPartida(String userId) {
-        String sql = "INSERT INTO Partida (userId, coinsCollected ,score, createdAt, updatedAt) " +
-                "VALUES (?, 0, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
+        String sql = "INSERT INTO Partida (userId, coinsCollected, createdAt, updatedAt) " +
+                "VALUES (?, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
         jdbcTemplate.update(sql, userId);
 
         String getIdSql = "SELECT LAST_INSERT_ID()";
@@ -157,6 +158,18 @@ public class RoomDAOImpl implements RoomDAO {
     public String mostrarLlavesRecogidas(String partidaId) {
         String sql = "SELECT nombreLlaveCogida FROM Partida WHERE id = ?";
         return jdbcTemplate.queryForObject(sql, String.class, partidaId);
+    }
+
+    @Override
+    public LocalDateTime getFinalTime(String partidaId) {
+        String sql = "SELECT updatedAt FROM Partida WHERE id = ?";
+        return jdbcTemplate.queryForObject(sql, LocalDateTime.class, partidaId);
+    }
+
+    @Override
+    public LocalDateTime getInitialTime(String partidaId) {
+        String sql = "SELECT createdAt FROM Partida WHERE id = ?";
+        return jdbcTemplate.queryForObject(sql, LocalDateTime.class, partidaId);
     }
 
 

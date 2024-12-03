@@ -1,68 +1,107 @@
-  body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            background: linear-gradient(to bottom, #2f4f23, #4b762a);
-            color: #fff;
-        }
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom, #2f4f23, #4b762a);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden; /* Evita el scroll */
+}
 
-        .canvas-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            border: 10px solid #3c5a33; /* Bordes verdes oscuros */
-            border-radius: 10px;
-            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
-        }
-        h1 {
-            font-size: 2em;
-            text-align: center;
-            color: #d4e157; /* Verde claro */
-            text-shadow: 2px 2px #2f4f23;
-        }
+.game-layout {
+    display: flex;
+    gap: 20px; /* Espacio entre barra lateral y canvas */
+    align-items: flex-start;
+    width: 90%; /* Ajusta el ancho total */
+    max-width: 1200px; /* Máximo ancho para el diseño */
+}
 
-        #canvas {
-            border: 15px solid #8b5e34; /* Color madera */
-            border-radius: 10px;
-            background-color: #354e26; /* Verde oscuro para simular selva */
-            box-shadow: inset 0 0 20px #1c2a13;
-        }
+/* Barra lateral con información del juego */
+.sidebar {
+    flex: 0 0 25%; /* Ancho fijo de 25% */
+    background: #3c5a33; /* Verde oscuro */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+}
 
-        .compass-container {
-            text-align: center;
-            margin-top: 10px;
-        }
-        #message {
-            background-color: #ffeeba;
-            border: 1px solid #f5c6cb;
-            color: #721c24;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-        }
+#game-info p {
+    margin: 10px 0;
+    font-size: 1.2em;
+    color: #d4e157; /* Verde claro */
+}
 
-        .reset-container {
-            margin-top: 20px;
-            text-align: center;
-        }
+.reset-container {
+    width: 100%;
+    text-align: center;
+}
 
-        .reset-button {
-            display: inline-block;
-            background: #f44336; /* Rojo vibrante */
-            color: #fff;
-            font-size: 1.2em;
-            padding: 10px 20px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: bold;
-            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
-            transition: transform 0.2s ease, background 0.2s ease;
-        }
+.reset-button {
+    display: inline-block;
+    background: #f44336; /* Rojo vibrante */
+    color: #fff;
+    font-size: 1.2em;
+    padding: 10px 20px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease, background 0.2s ease;
+}
 
-        .reset-button:hover {
-            background: #d32f2f; /* Rojo más oscuro al pasar el cursor */
-            transform: scale(1.1); /* Efecto de zoom */
-        }
+.reset-button:hover {
+    background: #d32f2f; /* Rojo más oscuro */
+    transform: scale(1.1);
+}
 
+/* Contenedor del canvas y brújula */
+.canvas-container {
+    flex: 1; /* Ocupa el espacio restante */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border: 10px solid #3c5a33; /* Bordes verdes oscuros */
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
+}
 
+.canvas-and-compass {
+    display: flex;
+    align-items: center; /* Alinea canvas y brújula horizontalmente */
+    gap: 20px; /* Espacio entre canvas y brújula */
+}
+
+h1 {
+    font-size: 2em;
+    text-align: center;
+    color: #d4e157; /* Verde claro */
+    text-shadow: 2px 2px #2f4f23;
+}
+
+#canvas {
+    border: 15px solid #8b5e34; /* Color madera */
+    border-radius: 10px;
+    background-color: #354e26; /* Verde oscuro para simular selva */
+    box-shadow: inset 0 0 20px #1c2a13;
+}
+
+.compass-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#compass {
+    width: 150px;
+    height: 150px;
+    border: 3px solid #d4e157;
+    border-radius: 50%;
+}

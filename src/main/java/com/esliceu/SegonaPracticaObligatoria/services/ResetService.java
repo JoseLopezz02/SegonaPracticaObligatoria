@@ -10,6 +10,5 @@ public class ResetService {
         session.setAttribute("currentRoomId", "1");
         session.setAttribute("coinsCollected", 0);
         session.setAttribute("keysCollected", "");
-
     }
 }

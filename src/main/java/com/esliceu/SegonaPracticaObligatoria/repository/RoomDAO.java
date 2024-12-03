@@ -2,6 +2,7 @@ package com.esliceu.SegonaPracticaObligatoria.repository;
 
 import com.esliceu.SegonaPracticaObligatoria.model.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface RoomDAO {
@@ -32,4 +33,8 @@ public interface RoomDAO {
     void restaCoinsCollected(String partidaId, int nuevasMonedas);
 
     String mostrarLlavesRecogidas(String partidaId);
+
+    LocalDateTime getFinalTime(String partidaId);
+
+    LocalDateTime getInitialTime(String partidaId);
 }

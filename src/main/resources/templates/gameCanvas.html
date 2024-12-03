@@ -8,25 +8,29 @@
     <script src="/javaScript/gameCanvas.js"></script>
 </head>
 <body>
-<div class="canvas-container">
-    <h1>Bienvenido al Juego del Laberinto</h1>
-    <div id="message" style="color: red; font-weight: bold; text-align: center;" th:text="${message}"></div>
-
-
-    <div class="canvas-decorations">
-        <canvas id="canvas" height="400" width="600"></canvas>
-    </div>
-    <div class="compass-container">
-        <img id="compass" src="/img/cross.webp" alt="Brújula" style="width: 150px; height: 150px;">
-    </div>
-    <div id="game-info">
-        <p>Monedas recogidas: <span id="coinCount" th:text="${coinsCollected}">0</span></p>
-        <p>Habitación actual: <span id="currentRoom">Habitación inicial</span></p>
-        <p>Llaves: <span id="keys"  th:text="${keysCollected}">Ninguna</span></p>
+<div class="game-layout">
+    <!-- Información del juego y botón de reset -->
+    <div class="sidebar">
+        <div id="game-info">
+            <p>Monedas recogidas: <span id="coinCount" th:text="${coinsCollected}">0</span></p>
+            <p>Habitación actual: <span id="currentRoom">Habitación inicial</span></p>
+            <p>Llaves: <span id="keys" th:text="${keysCollected}">Ninguna</span></p>
+        </div>
+        <div class="reset-container">
+            <a href="/reset" class="reset-button">Reiniciar Juego</a>
+        </div>
     </div>
 
-    <div class="reset-container">
-        <a href="/reset" class="reset-button">Reiniciar Juego</a>
+    <!-- Canvas y brújula -->
+    <div class="canvas-container">
+        <h1>Bienvenido al Juego del Laberinto</h1>
+        <div id="message" style="color: red; font-weight: bold; text-align: center;" th:text="${message}"></div>
+        <div class="canvas-and-compass">
+            <canvas id="canvas" height="400" width="600"></canvas>
+            <div class="compass-container">
+                <img id="compass" src="/img/cross.webp" alt="Brújula">
+            </div>
+        </div>
     </div>
 </div>
 

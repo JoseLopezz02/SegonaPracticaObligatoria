@@ -8,7 +8,6 @@ public class Partida {
     int id;
     int userId;
     int coinsCollected;
-    int score;
     LocalDateTime createdAt;
     LocalDateTime updatedAt;
     Integer currentRoomId;
@@ -88,14 +87,6 @@ public class Partida {
 
     public void setCoinsCollected(int coinsCollected) {
         this.coinsCollected = coinsCollected;
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
     }
 
     public LocalDateTime getCreatedAt() {
