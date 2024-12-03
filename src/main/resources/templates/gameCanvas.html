@@ -25,6 +25,9 @@
         <p>Llaves: <span id="keys"  th:text="${keysCollected}">Ninguna</span></p>
     </div>
 
+    <div class="reset-container">
+        <a href="/reset" class="reset-button">Reiniciar Juego</a>
+    </div>
 </div>
 
 <script type="application/json" id="dataJson" th:utext="${roomData}"></script>
