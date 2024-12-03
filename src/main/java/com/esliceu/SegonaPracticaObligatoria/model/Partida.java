@@ -15,7 +15,16 @@ public class Partida {
     String idKeysCollected;
     String idHabitacionMoneda;
     String idHabitacionLlave;
-    String idPuertasAbiertas; //Puertas que pasan de cerradas a abiertas
+    String idPuertasAbiertas;//Puertas que pasan de cerradas a abiertas
+    String nombreLlaveCogida;
+
+    public String getNombreLlaveCogida() {
+        return nombreLlaveCogida;
+    }
+
+    public void setNombreLlaveCogida(String nombreLlaveCogida) {
+        this.nombreLlaveCogida = nombreLlaveCogida;
+    }
 
     public String getIdPuertasAbiertas() {
         return idPuertasAbiertas;

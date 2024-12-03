@@ -25,9 +25,11 @@ public interface RoomDAO {
 
     List<Mapa> getMaps();
 
-    void updateKeyPartida(String partidaId, String currentRoomId, String keyName);
+    void updateKeyPartida(String partidaId, String currentRoomId, String keyName, String nombreLlave);
 
     Llave getKey(String currentRoomId);
 
     void restaCoinsCollected(String partidaId, int nuevasMonedas);
+
+    String mostrarLlavesRecogidas(String partidaId);
 }

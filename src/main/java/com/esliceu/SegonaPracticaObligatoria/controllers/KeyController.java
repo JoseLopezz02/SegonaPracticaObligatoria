@@ -12,7 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 @Controller
 public class KeyController {
@@ -40,24 +42,26 @@ public class KeyController {
             // Obtener la llave de la habitación
             Llave llave = keyService.getKeyOfRoom(currentRoomId);
             Partida partida = gameCanvasService.getPartidaById(partidaId);
+            int cambioMonedas = partida.getCoinsCollected() - llave.getPrecioMonedas();
 
             if (llave.getPrecioMonedas() <= partida.getCoinsCollected()) {
-                keyService.updatePartidaWhereRoomHaveKey(partidaId, currentRoomId, String.valueOf(llave.getId()));
+                keyService.updatePartidaWhereRoomHaveKey(partidaId, currentRoomId, String.valueOf(llave.getId()), llave.getNombre());
+               String llavesRecogidas = keyService.recogerLlavesDeLaPartida(partidaId);
 
-                int cambioMonedas = partida.getCoinsCollected() - llave.getPrecioMonedas();
                 coinService.restaCoinsCollected(partidaId, cambioMonedas);
 
                 String roomData = gameCanvasService.convertDataToString(room, partida);
 
                 model.addAttribute("roomData", roomData);
                 model.addAttribute("coinsCollected", cambioMonedas);
-                model.addAttribute("keysCollected", llave.getNombre());
+                model.addAttribute("keysCollected", llavesRecogidas);
 
                 model.addAttribute("message", "¡Llave obtenida con éxito!");
 
             } else {
                 String roomData = gameCanvasService.convertDataToString(room, partida);
                 model.addAttribute("roomData", roomData);
+                model.addAttribute("coinsCollected", cambioMonedas);
 
                 model.addAttribute("message", "No tienes suficientes monedas para obtener la llave.");
             }
