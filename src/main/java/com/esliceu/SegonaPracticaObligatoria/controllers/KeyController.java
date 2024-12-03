@@ -43,10 +43,11 @@ public class KeyController {
             Llave llave = keyService.getKeyOfRoom(currentRoomId);
             Partida partida = gameCanvasService.getPartidaById(partidaId);
             int cambioMonedas = partida.getCoinsCollected() - llave.getPrecioMonedas();
+            String llavesRecogidas = keyService.recogerLlavesDeLaPartida(partidaId);
 
             if (llave.getPrecioMonedas() <= partida.getCoinsCollected()) {
                 keyService.updatePartidaWhereRoomHaveKey(partidaId, currentRoomId, String.valueOf(llave.getId()), llave.getNombre());
-               String llavesRecogidas = keyService.recogerLlavesDeLaPartida(partidaId);
+
 
                 coinService.restaCoinsCollected(partidaId, cambioMonedas);
 
@@ -62,6 +63,7 @@ public class KeyController {
                 String roomData = gameCanvasService.convertDataToString(room, partida);
                 model.addAttribute("roomData", roomData);
                 model.addAttribute("coinsCollected", cambioMonedas);
+                model.addAttribute("keysCollected", llavesRecogidas);
 
                 model.addAttribute("message", "No tienes suficientes monedas para obtener la llave.");
             }

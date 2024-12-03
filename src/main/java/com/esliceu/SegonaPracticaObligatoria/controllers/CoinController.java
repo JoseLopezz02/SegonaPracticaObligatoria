@@ -18,6 +18,8 @@ public class CoinController {
     GameCanvasService gameCanvasService;
     @Autowired
     CoinService coinService;
+    @Autowired
+    KeyService keyService;
 
     @GetMapping("/getCoin")
     public String getCoin(HttpSession session, Model model) {
@@ -27,6 +29,7 @@ public class CoinController {
 
         try {
             Room room = gameCanvasService.getRoom(mapId, currentRoomId);
+            String llavesRecogidas = keyService.recogerLlavesDeLaPartida(partidaId);
 
 
             if (room.getCoin() == 0) {
@@ -44,6 +47,7 @@ public class CoinController {
 
             model.addAttribute("roomData", roomData);
             model.addAttribute("coinsCollected", partida.getCoinsCollected());
+            model.addAttribute("keysCollected", llavesRecogidas);
 
             return "gameCanvas";
         } catch (Exception e) {

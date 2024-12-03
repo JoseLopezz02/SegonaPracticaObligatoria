@@ -35,6 +35,7 @@ public class NavegationController {
         try {
             Room futureCurrentRoom = gameCanvasService.roomNavegacion(mapId, currentRoomId, direction);
             gameCanvasService.updateCurrentRoomPartida(String.valueOf(futureCurrentRoom.getId()), partidaId);
+            String llavesRecogidas = keyService.recogerLlavesDeLaPartida(partidaId);
 
             Partida partida = gameCanvasService.getPartidaById(partidaId);
 
@@ -44,6 +45,7 @@ public class NavegationController {
 
             model.addAttribute("roomData", roomData);
             model.addAttribute("coinsCollected", partida.getCoinsCollected());
+            model.addAttribute("keysCollected", llavesRecogidas);
             //Meter en el game-Info la llave
 
             System.out.println("Habitacion actual" + roomData);
