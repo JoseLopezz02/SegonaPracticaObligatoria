@@ -36,6 +36,8 @@ public class OpenController {
 
                 model.addAttribute("message", "¡Puerta abierta con éxito!");
             } else {
+                String roomData = gameCanvasService.convertDataToString(room, partida);
+                model.addAttribute("roomData", roomData);
                 model.addAttribute("message", "No puedes abrir esta puerta. Quizás necesitas una llave.");
             }
 

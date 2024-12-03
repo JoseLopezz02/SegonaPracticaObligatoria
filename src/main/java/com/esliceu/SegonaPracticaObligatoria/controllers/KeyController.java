@@ -56,7 +56,9 @@ public class KeyController {
                 model.addAttribute("message", "¡Llave obtenida con éxito!");
 
             } else {
-                //Modificar para mostrar otro error
+                String roomData = gameCanvasService.convertDataToString(room, partida);
+                model.addAttribute("roomData", roomData);
+
                 model.addAttribute("message", "No tienes suficientes monedas para obtener la llave.");
             }
             return "gameCanvas";
