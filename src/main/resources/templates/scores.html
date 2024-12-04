@@ -4,12 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scores</title>
-    <link rel="stylesheet" href="scores.css">
+    <link rel="stylesheet" href="/css/scores.css">
 </head>
 <body>
 <h1>Scores - Ranking</h1>
 
-<!-- Podio -->
 <div class="podium-container">
     <div class="podium silver">
         <div class="rank">2nd</div>
@@ -40,6 +39,7 @@
         <th>Comentario</th>
         <th>Tiempo Inicial</th>
         <th>Tiempo Final</th>
+        <th>Duración (s)</th>
     </tr>
     </thead>
     <tbody>
@@ -49,6 +49,7 @@
         <td th:text="${score.comment}">Comentario</td>
         <td th:text="${score.initialTime}">Tiempo Inicial</td>
         <td th:text="${score.finalTime}">Tiempo Final</td>
+        <td th:text="${score.duration}">Duración</td>
     </tr>
     </tbody>
 </table>

@@ -31,4 +31,10 @@ public class ScoreService {
     public List<Score> getAllScoresOrderedByTime() {
         return scoreDAO.orderedByTime();
     }
+
+    public void aseguraImpresioPodio(List<Score> scores) {
+        while (scores.size() < 3) {
+            scores.add(new Score("Vacío", "Sin comentario", null, null, 0L));
+        }
+    }
 }

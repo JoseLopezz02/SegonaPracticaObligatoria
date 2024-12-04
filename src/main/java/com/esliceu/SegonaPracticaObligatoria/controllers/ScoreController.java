@@ -19,7 +19,9 @@ public class ScoreController {
     @GetMapping("/scores")
     public String getScores(Model model) {
         List<Score> scores = scoreService.getAllScoresOrderedByTime();
+        scoreService.aseguraImpresioPodio(scores);
+
         model.addAttribute("scores", scores);
-        return "scores";
+       return "scores";
     }
 }

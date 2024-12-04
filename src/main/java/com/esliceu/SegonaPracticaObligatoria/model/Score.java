@@ -10,6 +10,28 @@ public class Score {
         private LocalDateTime initialTime; // Corresponde a createdAt en Partida
         private LocalDateTime finalTime;   // Corresponde a updatedAt en Partida
         private int mapId;
+        private long duration; // Tiempo total en segundos
+
+    public Score(String userName, String comment, LocalDateTime initialTime, LocalDateTime finalTime, long duration) {
+        this.userName = userName;
+        this.comment = comment;
+        this.initialTime = initialTime;
+        this.finalTime = finalTime;
+        this.duration = duration;
+    }
+    public Score() {
+        // Constructor vacío necesario para Spring
+    }
+
+
+    public long getDuration() {
+        return duration;
+    }
+
+    public void setDuration(long duration) {
+        this.duration = duration;
+    }
+
 
     public int getMapId() {
         return mapId;
