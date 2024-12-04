@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scores</title>
+    <link rel="stylesheet" href="scores.css">
+</head>
+<body>
+<h1>Scores - Ranking</h1>
+
+<!-- Podio -->
+<div class="podium-container">
+    <div class="podium silver">
+        <div class="rank">2nd</div>
+        <div class="name" th:text="${scores[1]?.userName}">Nombre</div>
+        <div class="comment" th:text="${scores[1]?.comment}">Comentario</div>
+        <div class="time" th:text="${scores[1]?.finalTime}">Tiempo</div>
+    </div>
+    <div class="podium gold">
+        <div class="rank">1st</div>
+        <div class="name" th:text="${scores[0]?.userName}">Nombre</div>
+        <div class="comment" th:text="${scores[0]?.comment}">Comentario</div>
+        <div class="time" th:text="${scores[0]?.finalTime}">Tiempo</div>
+    </div>
+    <div class="podium bronze">
+        <div class="rank">3rd</div>
+        <div class="name" th:text="${scores[2]?.userName}">Nombre</div>
+        <div class="comment" th:text="${scores[2]?.comment}">Comentario</div>
+        <div class="time" th:text="${scores[2]?.finalTime}">Tiempo</div>
+    </div>
+</div>
+
+<!-- Tabla general -->
+<table>
+    <thead>
+    <tr>
+        <th>Posición</th>
+        <th>Nombre</th>
+        <th>Comentario</th>
+        <th>Tiempo Inicial</th>
+        <th>Tiempo Final</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="score, iterStat : ${scores}">
+        <td th:text="${iterStat.index + 1}"></td>
+        <td th:text="${score.userName}">Nombre</td>
+        <td th:text="${score.comment}">Comentario</td>
+        <td th:text="${score.initialTime}">Tiempo Inicial</td>
+        <td th:text="${score.finalTime}">Tiempo Final</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
