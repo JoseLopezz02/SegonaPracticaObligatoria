@@ -37,4 +37,8 @@ public interface RoomDAO {
     LocalDateTime getFinalTime(String partidaId);
 
     LocalDateTime getInitialTime(String partidaId);
+
+    void resetLlaves(String partidaId);
+
+    void resetMonedas(String partidaId);
 }

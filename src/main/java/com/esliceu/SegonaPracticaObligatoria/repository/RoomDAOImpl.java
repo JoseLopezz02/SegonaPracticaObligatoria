@@ -172,6 +172,18 @@ public class RoomDAOImpl implements RoomDAO {
         return jdbcTemplate.queryForObject(sql, LocalDateTime.class, partidaId);
     }
 
+    @Override
+    public void resetLlaves(String partidaId) {
+        String sqlResetLlaves = "UPDATE Partida SET idHabitacionLlave = '', idKeysCollected = '', nombreLlaveCogida = '' WHERE id = ?";
+        jdbcTemplate.update(sqlResetLlaves, partidaId);
+    }
+
+    @Override
+    public void resetMonedas(String partidaId) {
+        String sqlResetMonedas = "UPDATE Partida SET idHabitacionMoneda = '', coinsCollected = 0 WHERE id = ?";
+        jdbcTemplate.update(sqlResetMonedas, partidaId);
+    }
+
 
     @Override
     public Llave getKey(String currentRoomId) {
