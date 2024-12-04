@@ -25,11 +25,11 @@ public class EndFormController {
     public String postEndForm(@RequestParam("comment") String comment, HttpSession session) {
         String username = (String) session.getAttribute("username");
        String partidaId = (String) session.getAttribute("partidaId");
-       String mapId = (String) session.getAttribute("mapId");
+       String mapName = (String) session.getAttribute("mapName");
 
         LocalDateTime finalTime = scoreService.getFinalTimeFromPartida(partidaId);
         LocalDateTime initialTime = scoreService.getInitialTimeFromPartida(partidaId);
-        scoreService.saveScore(username, comment, finalTime, initialTime,mapId);
+        scoreService.saveScore(username, comment, finalTime, initialTime,mapName);
 
         // Redirigir a la página de scores
         return "redirect:/scores";

@@ -47,8 +47,6 @@ public class KeyController {
 
             if (llave.getPrecioMonedas() <= partida.getCoinsCollected()) {
                 keyService.updatePartidaWhereRoomHaveKey(partidaId, currentRoomId, String.valueOf(llave.getId()), llave.getNombre());
-
-
                 coinService.restaCoinsCollected(partidaId, cambioMonedas);
 
                 String roomData = gameCanvasService.convertDataToString(room, partida);
@@ -74,5 +72,4 @@ public class KeyController {
             return "gameCanvas";
         }
     }
-
 }

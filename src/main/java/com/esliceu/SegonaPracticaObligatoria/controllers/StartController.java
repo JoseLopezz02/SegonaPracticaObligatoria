@@ -56,6 +56,7 @@ public class StartController {
 
         model.addAttribute("roomData", roomData);
 
+        session.setAttribute("mapName", mapName);
         session.setAttribute("partidaId", partidaId);
         session.setAttribute("mapId", mapId);
         session.setAttribute("currentRoomId", idRoomInicial);

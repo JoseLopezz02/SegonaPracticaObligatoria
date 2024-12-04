@@ -16,11 +16,11 @@ public class ScoreDAOImpl implements ScoreDAO{
     @Autowired
     JdbcTemplate jdbcTemplate;
     @Override
-    public void saveScore(String userName, String comment, LocalDateTime finalTime, LocalDateTime initialTime, String mapId) {
-        String sql = "INSERT INTO Score (userName, comment, mapId, initialTime, finalTime, duration) " +
+    public void saveScore(String userName, String comment, LocalDateTime finalTime, LocalDateTime initialTime, String mapName) {
+        String sql = "INSERT INTO Score (userName, comment, mapName, initialTime, finalTime, duration) " +
                 "VALUES (?, ?, ?, ?, ?, ?)";
         long duration = java.time.Duration.between(initialTime, finalTime).getSeconds();
-        jdbcTemplate.update(sql, userName, comment, mapId, initialTime, finalTime, duration);
+        jdbcTemplate.update(sql, userName, comment, mapName, initialTime, finalTime, duration);
     }
 
     @Override

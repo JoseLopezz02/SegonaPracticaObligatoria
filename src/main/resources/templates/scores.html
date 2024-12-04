@@ -29,8 +29,6 @@
         <div class="time" th:text="${scores[2]?.finalTime}">Tiempo</div>
     </div>
 </div>
-
-<!-- Tabla general -->
 <table>
     <thead>
     <tr>
@@ -40,6 +38,7 @@
         <th>Tiempo Inicial</th>
         <th>Tiempo Final</th>
         <th>Duración (s)</th>
+        <th>Mapa Jugado</th>
     </tr>
     </thead>
     <tbody>
@@ -50,6 +49,7 @@
         <td th:text="${score.initialTime}">Tiempo Inicial</td>
         <td th:text="${score.finalTime}">Tiempo Final</td>
         <td th:text="${score.duration}">Duración</td>
+        <td th:text="${score.mapName}">Mapa</td>
     </tr>
     </tbody>
 </table>
