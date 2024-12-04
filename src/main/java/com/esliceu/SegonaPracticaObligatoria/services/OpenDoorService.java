@@ -54,5 +54,4 @@ public class OpenDoorService {
                 .findFirst()
                 .orElse(null);
     }
-
 }

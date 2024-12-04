@@ -31,7 +31,6 @@ public class EndFormController {
         LocalDateTime initialTime = scoreService.getInitialTimeFromPartida(partidaId);
         scoreService.saveScore(username, comment, finalTime, initialTime,mapName);
 
-        // Redirigir a la página de scores
         return "redirect:/scores";
     }
 }
