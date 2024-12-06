@@ -21,6 +21,63 @@ document.addEventListener('DOMContentLoaded', () => {
     keyImg.src = "/img/key.webp";
     const winImage = new Image();
     winImage.src = "/img/win.gif";
+    const personaje = new Image();
+    personaje.src = "/img/char_yellow.png";
+
+    personaje.onload = () => {
+        drawRoom();  // Dibuja la habitación y el personaje después de que la imagen esté cargada
+    };
+
+    // Tamaño de cada frame del sprite
+    const spriteWidth = 100;
+    const spriteHeight = 120;
+    const framesPerRow = 4;  // Si tienes 4 posturas en una fila
+
+    // Estado del personaje (puede cambiar a 'quieto', 'caminando_derecha', 'caminando_izquierda', etc.)
+    let estadoPersonaje = 'quieto';
+
+    // Función para determinar las coordenadas del frame a dibujar
+    const getFrameCoordinates = (estado) => {
+        let frameX, frameY;
+
+        switch (estado) {
+            case 'quieto':
+                frameX = 0;  // Primer frame en la primera fila
+                frameY = 0;  // Fila 1
+                break;
+            case 'caminando_derecha':
+                frameX = 1;  // Segundo frame en la primera fila
+                frameY = 0;  // Fila 1
+                break;
+            case 'caminando_izquierda':
+                frameX = 2;  // Tercer frame en la primera fila
+                frameY = 0;  // Fila 1
+                break;
+            case 'saltando':
+                frameX = 3;  // Cuarto frame en la primera fila
+                frameY = 0;  // Fila 1
+                break;
+            // Agregar más estados según sea necesario
+            default:
+                frameX = 0;  // Default a la postura quieta
+                frameY = 0;
+                break;
+        }
+
+        return { frameX, frameY };
+    };
+
+
+    const drawPersonaje = () => {
+        const x = (canvas.width - spriteWidth) / 2;
+        const y = (canvas.height - spriteHeight) / 2;
+
+        // Obtener las coordenadas del frame basado en el estado
+        const { frameX, frameY } = getFrameCoordinates(estadoPersonaje);
+
+        // Dibujar el frame correspondiente
+        ctx.drawImage(personaje, frameX * spriteWidth, frameY * spriteHeight, spriteWidth, spriteHeight, x, y, spriteWidth, spriteHeight);
+    };
 
     const isCoinClicked = (x, y) => {
         const coinX = 50;
@@ -55,10 +112,9 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         if (roomData.roomName === "habitacionFinal") {
-                ctx.drawImage(winImage, canvas.width / 2 - 150, canvas.height / 2 - 150, 300, 300);
-                return;
-            }
-
+            ctx.drawImage(winImage, canvas.width / 2 - 150, canvas.height / 2 - 150, 300, 300);
+            return;
+        }
 
         if (roomData.norte === 'open') {
             ctx.fillStyle = '#FFF';
@@ -104,10 +160,11 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.drawImage(keyImg, keyX, keyY, 40, 40);
         }
 
+        drawPersonaje();
         currentRoomElement.textContent = roomData.roomName;
     };
 
-   canvas.addEventListener('click', (event) => {
+    canvas.addEventListener('click', (event) => {
        const canvasRect = canvas.getBoundingClientRect();
        const x = event.clientX - canvasRect.left;
        const y = event.clientY - canvasRect.top;
@@ -137,7 +194,6 @@ document.addEventListener('DOMContentLoaded', () => {
        }
    });
 
-
     const navigateRoom = (direction) => {
         const doorStatus = roomData[direction];
         if (doorStatus === 'wall') {
@@ -153,7 +209,6 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.href = `/nav?direction=${direction}`;
     };
 
-
     compass.addEventListener('click', (event) => {
         const compassRect = compass.getBoundingClientRect();
         const x = event.clientX - compassRect.left;
@@ -164,15 +219,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const angle = Math.atan2(y - centerY, x - centerX);
 
         if (angle > -Math.PI / 4 && angle <= Math.PI / 4) {
+            estadoPersonaje = 'caminando_derecha';  // Actualizamos el estado al caminar a la derecha
             navigateRoom('este');
         } else if (angle > Math.PI / 4 && angle <= 3 * Math.PI / 4) {
+            estadoPersonaje = 'caminando_derecha';
             navigateRoom('sur');
         } else if (angle > -3 * Math.PI / 4 && angle <= -Math.PI / 4) {
+            estadoPersonaje = 'caminando_izquierda';
             navigateRoom('norte');
         } else {
+            estadoPersonaje = 'caminando_izquierda';
             navigateRoom('oeste');
         }
     });
-
-    drawRoom();
 });
