@@ -105,3 +105,34 @@ h1 {
     border: 3px solid #d4e157;
     border-radius: 50%;
 }
+
+.logout-container {
+    width: 100%;
+    text-align: center; /* Alinea el botón al centro */
+}
+
+.logout-btn {
+    background-color: #ff4c4c;  /* Color rojo para indicar salida */
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: transform 0.3s, background-color 0.3s, color 0.3s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-top: 20px;
+}
+
+.logout-btn:hover {
+    background-color: #ff3333;  /* Rojo más oscuro en hover */
+    color: #fff;
+    transform: scale(1.05);
+}
+
+.logout-btn:active {
+    background-color: #e60000;  /* Rojo aún más oscuro cuando se hace clic */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transform: scale(1);
+}

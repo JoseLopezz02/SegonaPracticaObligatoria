@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Tamaño de cada frame del sprite
     const spriteWidth = 100;
     const spriteHeight = 120;
-    const framesPerRow = 4;  // Si tienes 4 posturas en una fila
+    const framesPerRow = 4;
 
     // Estado del personaje (puede cambiar a 'quieto', 'caminando_derecha', 'caminando_izquierda', etc.)
     let estadoPersonaje = 'quieto';
@@ -188,10 +188,14 @@ document.addEventListener('DOMContentLoaded', () => {
            return;
        }
 
-       if (isKeyClicked(x, y)) {
-           window.location.href = '/getKey';
-           return;
-       }
+        if (isKeyClicked(x, y)) {
+               window.location.href = '/getKey';
+
+               // Actualizar la visibilidad de la llave inmediatamente
+               roomData.keys = null;  // Eliminar la llave de los datos del cliente
+               drawRoom();  // Redibujar la habitación sin la llave
+               return;
+           }
    });
 
     const navigateRoom = (direction) => {

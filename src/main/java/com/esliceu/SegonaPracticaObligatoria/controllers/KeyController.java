@@ -39,7 +39,6 @@ public class KeyController {
                 return "gameCanvas";
             }
 
-            // Obtener la llave de la habitación
             Llave llave = keyService.getKeyOfRoom(currentRoomId);
             Partida partida = gameCanvasService.getPartidaById(partidaId);
             int cambioMonedas = partida.getCoinsCollected() - llave.getPrecioMonedas();

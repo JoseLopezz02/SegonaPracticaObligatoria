@@ -1,4 +1,4 @@
- body {
+  body {
             font-family: Arial, sans-serif;
             background-color: #f0f8f5;
             margin: 0;
@@ -93,4 +93,25 @@
 
         tr:hover {
             background-color: #f1f1f1;
+        }
+
+        /* Estilos para el botón */
+        a button {
+            background-color: #4CAF50; /* Color de fondo */
+            color: white; /* Texto en blanco */
+            font-size: 16px; /* Tamaño del texto */
+            padding: 10px 20px; /* Espaciado interno */
+            border: none; /* Sin bordes */
+            border-radius: 5px; /* Bordes redondeados */
+            cursor: pointer; /* Apunta como mano */
+            transition: background-color 0.3s ease; /* Animación de cambio de color */
+            margin-top: 20px; /* Separación superior */
+        }
+
+        a button:hover {
+            background-color: #45a049; /* Color de fondo cuando se pasa el mouse */
+        }
+
+        a button:focus {
+            outline: none; /* Quitar el borde cuando el botón está en foco */
         }

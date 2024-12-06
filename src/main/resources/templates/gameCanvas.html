@@ -9,7 +9,7 @@
 </head>
 <body>
 <div class="game-layout">
-    <!-- Información del juego y botón de reset -->
+    <!-- Información del juego y botones de reset y logout -->
     <div class="sidebar">
         <div id="game-info">
             <p>Monedas recogidas: <span id="coinCount" th:text="${coinsCollected}">0</span></p>
@@ -18,6 +18,11 @@
         </div>
         <div class="reset-container">
             <a href="/reset" class="reset-button">Reiniciar Juego</a>
+        </div>
+        <div class="logout-container">
+            <form action="/logout" method="post">
+                <button type="submit" class="logout-btn">Cerrar sesión</button>
+            </form>
         </div>
     </div>
 

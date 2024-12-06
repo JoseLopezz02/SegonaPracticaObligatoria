@@ -108,3 +108,27 @@ body {
     font-weight: bold;
     margin-bottom: 15px;
 }
+.logout-button {
+  background-color: #76b041;  /* Color verde claro similar al de los otros botones */
+  color: #2b3e20;  /* Texto en un verde oscuro */
+  font-size: 1.5rem;  /* Tamaño del texto */
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;  /* Bordes redondeados */
+  padding: 12px 20px;  /* Espaciado interno */
+  cursor: pointer;
+  transition: transform 0.3s, background-color 0.3s, color 0.3s, box-shadow 0.3s;  /* Efectos de transición */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);  /* Sombra suave */
+}
+
+.logout-button:hover {
+  background-color: #659438;  /* Cambio a verde más oscuro en hover */
+  color: #1f2916;  /* Cambiar color de texto */
+  transform: scale(1.05);  /* Aumenta ligeramente el tamaño */
+}
+
+.logout-button:active {
+  background-color: #5a8034;  /* Color más oscuro cuando se hace clic */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);  /* Sombra más pequeña */
+  transform: scale(1);  /* Restaurar tamaño al hacer clic */
+}
