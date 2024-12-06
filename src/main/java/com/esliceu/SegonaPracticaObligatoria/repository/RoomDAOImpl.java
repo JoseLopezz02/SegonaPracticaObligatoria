@@ -23,10 +23,13 @@ public class RoomDAOImpl implements RoomDAO {
             getKeysOfRoom(mapId, currentRoomId, room);
 
             return room;
-        }catch (Exception e){
+        } catch (Exception e) {
+            System.err.println("Error al obtener la habitación. mapId: " + mapId + ", currentRoomId: " + currentRoomId);
+            e.printStackTrace();
             return null;
         }
     }
+
 
     private void getDoorsOfRoom(String mapId, String currentRoomId, Room room) {
         String sqlDoors = "SELECT * FROM Door WHERE (habitacion1 = ? OR habitacion2 = ?) AND mapaId = ?";
@@ -99,6 +102,13 @@ public class RoomDAOImpl implements RoomDAO {
         }
     }
 
+    private void getKeysOfRoom(String mapId, String currentRoomId, Room room) {
+        String sqlLlaves = "SELECT * FROM Llave WHERE id IN (SELECT keyId FROM Room WHERE id = ? AND mapaId = ?)";
+        List<Llave> llaves = jdbcTemplate.query(sqlLlaves, new Object[]{currentRoomId, mapId},
+                new BeanPropertyRowMapper<>(Llave.class));
+        room.setLlaves(llaves);
+    }
+
     @Override
     public String createPartida(String userId) {
         String sql = "INSERT INTO Partida (userId, coinsCollected, createdAt, updatedAt) " +
@@ -122,10 +132,11 @@ public class RoomDAOImpl implements RoomDAO {
     }
 
     @Override
-    public void updateCountMonedas(String partidaId) {
-        String sql = "UPDATE Partida SET coinsCollected = coinsCollected + 1 WHERE id = ?";
-        jdbcTemplate.update(sql, partidaId);
+    public void updateCountMonedas(String partidaId, int monedas) {
+        String sql = "UPDATE Partida SET coinsCollected = coinsCollected + ? WHERE id = ?";
+        jdbcTemplate.update(sql, monedas, partidaId);
     }
+
 
     @Override
     public Partida getPartida(String partidaId) {
@@ -199,13 +210,6 @@ public class RoomDAOImpl implements RoomDAO {
     public void restaCoinsCollected(String partidaId, int nuevasMonedas) {
         String sql = "UPDATE Partida SET coinsCollected = ? WHERE id = ?";
         jdbcTemplate.update(sql, nuevasMonedas, partidaId);
-    }
-
-    private void getKeysOfRoom(String mapId, String currentRoomId, Room room) {
-        String sqlLlaves = "SELECT * FROM Llave WHERE id IN (SELECT keyId FROM Room WHERE id = ? AND mapaId = ?)";
-        List<Llave> llaves = jdbcTemplate.query(sqlLlaves, new Object[]{currentRoomId, mapId},
-                new BeanPropertyRowMapper<>(Llave.class));
-        room.setLlaves(llaves);
     }
 
     public String getInitialRoomId(String mapId) {

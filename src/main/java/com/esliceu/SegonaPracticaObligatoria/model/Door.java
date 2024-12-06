@@ -7,7 +7,7 @@ public class Door {
     int id;
     Integer llaveId;
     int mapaId;
-    int roomId;
+    int roomId; //Id de la habitacion donde se encuentra la puerta por primera vez
 
 
     public boolean isOpen() {

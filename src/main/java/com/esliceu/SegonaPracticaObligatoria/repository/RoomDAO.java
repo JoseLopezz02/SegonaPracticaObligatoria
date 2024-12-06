@@ -18,7 +18,7 @@ public interface RoomDAO {
 
     void updateCoinPartida(String partidaId, String currentRoomId);
 
-    void updateCountMonedas(String partidaId);
+    void updateCountMonedas(String partidaId, int monedas);
 
     Partida getPartida(String partidaId);
 

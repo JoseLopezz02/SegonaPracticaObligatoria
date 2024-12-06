@@ -9,8 +9,8 @@ public class CoinService {
     @Autowired
     RoomDAO roomDAO;
 
-    public void updateCountMonedasPartida(String partidaId) {
-        roomDAO.updateCountMonedas(partidaId);
+    public void updateCountMonedasPartida(String partidaId, int monedas) {
+        roomDAO.updateCountMonedas(partidaId,monedas);
     }
 
     public void updatePartidaWhereRoomHaveCoin(String partidaId, String currentRoomId) {

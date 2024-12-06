@@ -37,9 +37,10 @@ public class CoinController {
                 return "gameCanvas";
             }
 
+            int monedas = room.getCoin();
             // Actualiza estado de la partida
             coinService.updatePartidaWhereRoomHaveCoin(partidaId, currentRoomId);
-            coinService.updateCountMonedasPartida(partidaId);
+            coinService.updateCountMonedasPartida(partidaId, monedas);
 
             // Vuelve a obtener la habitación actualizada
             Partida partida = gameCanvasService.getPartidaById(partidaId);
