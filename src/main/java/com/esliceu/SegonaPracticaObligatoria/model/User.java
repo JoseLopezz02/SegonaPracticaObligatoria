@@ -7,16 +7,7 @@ public class User {
     String name;
     int id;
     String password;
-    int idHabitacionActual;
     List<Partida> partidas;
-
-    public int getIdHabitacionActual() {
-        return idHabitacionActual;
-    }
-
-    public void setIdHabitacionActual(int idHabitacionActual) {
-        this.idHabitacionActual = idHabitacionActual;
-    }
 
     public List<Partida> getPartidas() {
         return partidas;

@@ -38,7 +38,7 @@ public class CoinController {
             }
 
             int monedas = room.getCoin();
-            // Actualiza estado de la partida
+
             coinService.updatePartidaWhereRoomHaveCoin(partidaId, currentRoomId);
             coinService.updateCountMonedasPartida(partidaId, monedas);
 

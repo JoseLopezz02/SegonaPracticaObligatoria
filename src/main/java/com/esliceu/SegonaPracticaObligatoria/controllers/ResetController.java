@@ -27,7 +27,7 @@ public class ResetController {
         resetService.resetGame(session, partidaId);
 
         String currentRoomId = (String) session.getAttribute("currentRoomId");
-        Room room = gameCanvasService.getRoom(mapId, currentRoomId); // Ahora es la habitación inicial
+        Room room = gameCanvasService.getRoom(mapId, currentRoomId);
         Partida partida = gameCanvasService.getPartidaById(partidaId);
 
         String roomData = gameCanvasService.convertDataToString(room, partida);

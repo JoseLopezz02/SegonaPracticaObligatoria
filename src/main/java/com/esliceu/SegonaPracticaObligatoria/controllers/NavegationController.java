@@ -26,7 +26,6 @@ public class NavegationController {
     KeyService keyService;
 
     @GetMapping("/nav")
-
     public String getNav(@RequestParam("direction") String direction, HttpSession session, Model model){
         String mapId = (String) session.getAttribute("mapId");
         String currentRoomId = (String) session.getAttribute("currentRoomId");
@@ -46,7 +45,6 @@ public class NavegationController {
             model.addAttribute("roomData", roomData);
             model.addAttribute("coinsCollected", partida.getCoinsCollected());
             model.addAttribute("keysCollected", llavesRecogidas);
-            //Meter en el game-Info la llave
 
             System.out.println("Habitacion actual" + roomData);
 

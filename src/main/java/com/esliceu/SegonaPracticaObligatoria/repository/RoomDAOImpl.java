@@ -144,6 +144,7 @@ public class RoomDAOImpl implements RoomDAO {
         return jdbcTemplate.queryForObject(sql, new Object[]{partidaId}, new BeanPropertyRowMapper<>(Partida.class));
     }
 
+    @Override
     public String getMapIdByName(String mapName) {
         String sql = "SELECT id FROM Mapa WHERE name = ?";
         return jdbcTemplate.queryForObject(sql, new Object[]{mapName}, String.class);
