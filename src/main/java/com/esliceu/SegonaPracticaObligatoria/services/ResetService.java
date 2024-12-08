@@ -10,14 +10,21 @@ public class ResetService {
     @Autowired
     RoomDAO roomDAO;
 
-    public void resetGame(HttpSession session, String partidaId) {
-        session.setAttribute("currentRoomId", "1");
+    public void resetGame(HttpSession session, String partidaId, String mapId) {
+        String idInitialRoom = roomDAO.getInitialRoomId(mapId);
+        session.setAttribute("currentRoomId", idInitialRoom);
         session.setAttribute("coinsCollected", 0);
         session.setAttribute("keysCollected", "");
 
+        resetIdPartida(idInitialRoom,partidaId);
         resetLlavesPartida(partidaId);
         resetMonedasPartida(partidaId);
     }
+
+    private void resetIdPartida(String idInitialRoom, String partidaId) {
+        roomDAO.updateCurrentRoom(idInitialRoom, partidaId);
+    }
+
 
     private void resetMonedasPartida(String partidaId) {
         roomDAO.resetMonedas(partidaId);
