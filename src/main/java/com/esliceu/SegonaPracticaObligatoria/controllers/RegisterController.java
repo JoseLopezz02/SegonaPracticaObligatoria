@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class RegisterController {
     @Autowired
     UserService userService;
+
     @GetMapping("/register")
-    public String getRegister(){
+    public String getRegister() {
         return "register";
     }
+
     @PostMapping("/register")
     public String postRegister(HttpSession session,
                                @RequestParam String username,

@@ -11,11 +11,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class LoginController{
+public class LoginController {
     @Autowired
     UserService userService;
+
     @GetMapping("/login")
-    public String getLogin(){
+    public String getLogin() {
         return "login";
     }
 

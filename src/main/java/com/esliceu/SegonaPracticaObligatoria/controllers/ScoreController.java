@@ -22,6 +22,6 @@ public class ScoreController {
         scoreService.aseguraImpresioPodio(scores);
 
         model.addAttribute("scores", scores);
-       return "scores";
+        return "scores";
     }
 }

@@ -25,6 +25,7 @@ public class Partida {
     public void setMapName(String mapName) {
         this.mapName = mapName;
     }
+
     public String getNombreLlaveCogida() {
         return nombreLlaveCogida;
     }

@@ -13,7 +13,7 @@ public class UserService {
     @Autowired
     UserDAO userDAO;
 
-    public String hashPassword(String password){
+    public String hashPassword(String password) {
         try {
             MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
             byte[] hashBytes = messageDigest.digest(password.getBytes());
@@ -25,25 +25,23 @@ public class UserService {
                 hexString.append(hex);
             }
             return hexString.toString();
-        }catch (NoSuchAlgorithmException e){
-           throw  new RuntimeException(e);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
         }
     }
 
-
-
     public boolean addUser(String username, String name, String password) {
         String hashPasswd = hashPassword(password);
-        if (userExists(username)){
+        if (userExists(username)) {
             return false;
-        }else {
+        } else {
             User user = new User();
             user.setUsername(username);
             user.setName(name);
             user.setPassword(hashPasswd);
 
             userDAO.save(user);
-          return true;
+            return true;
         }
     }
 
@@ -53,6 +51,6 @@ public class UserService {
 
     public User checkUser(String username, String password) {
         String hashPasswd = hashPassword(password);
-       return userDAO.checkUserInDbUsingPasswAndUserName(username,hashPasswd);
+        return userDAO.checkUserInDbUsingPasswAndUserName(username, hashPasswd);
     }
 }

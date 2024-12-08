@@ -26,7 +26,7 @@ public class NavegationController {
     KeyService keyService;
 
     @GetMapping("/nav")
-    public String getNav(@RequestParam("direction") String direction, HttpSession session, Model model){
+    public String getNav(@RequestParam("direction") String direction, HttpSession session, Model model) {
         String mapId = (String) session.getAttribute("mapId");
         String currentRoomId = (String) session.getAttribute("currentRoomId");
         String partidaId = (String) session.getAttribute("partidaId");

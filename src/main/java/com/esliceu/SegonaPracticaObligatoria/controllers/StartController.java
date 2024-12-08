@@ -48,7 +48,7 @@ public class StartController {
         String userId = String.valueOf(session.getAttribute("userId"));
         String idRoomInicial = gameCanvasService.getInitialRoomIdByMapId(mapId);
 
-        Partida partidaActiva = gameCanvasService.getActivePartidaForUser(userId,mapName);
+        Partida partidaActiva = gameCanvasService.getActivePartidaForUser(userId, mapName);
 
         if (partidaActiva != null && partidaActiva.getMapName().equals(mapName)) {
             // Cargar partida existente

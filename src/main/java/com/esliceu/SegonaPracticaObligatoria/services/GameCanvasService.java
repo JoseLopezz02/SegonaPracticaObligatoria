@@ -31,12 +31,12 @@ public class GameCanvasService {
         map.put("este", getDoorStatus(room.getEste(), room.getDoors()));
         map.put("oeste", getDoorStatus(room.getOeste(), room.getDoors()));
 
-        boolean hayMoneda = room.getCoin() > 0 && monedaNoRecogida(partida,room.getId());
+        boolean hayMoneda = room.getCoin() > 0 && monedaNoRecogida(partida, room.getId());
         map.put("coin", hayMoneda);
 
         map.put("roomName", room.getName());
 
-        boolean hayLlave = room.getKeyId() != null && llaveNoRecogida(partida,room.getId());
+        boolean hayLlave = room.getKeyId() != null && llaveNoRecogida(partida, room.getId());
         map.put("keys", hayLlave);
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -44,7 +44,7 @@ public class GameCanvasService {
     }
 
     private boolean llaveNoRecogida(Partida partida, int roomId) {
-        if (partida.getIdHabitacionLlave() == null){
+        if (partida.getIdHabitacionLlave() == null) {
             return true;
         }
         String[] habitacionesConLlaves = partida.getIdHabitacionLlave().split(",");
@@ -87,7 +87,7 @@ public class GameCanvasService {
         return true;
     }
 
-    public String  getInitialRoomIdByMapId(String mapId) {
+    public String getInitialRoomIdByMapId(String mapId) {
         return roomDAO.getInitialRoomId(mapId);
     }
 
@@ -101,11 +101,11 @@ public class GameCanvasService {
     }
 
     public String createNewPartida(String userId, String mapName) {
-        return roomDAO.createPartida(userId,mapName);
+        return roomDAO.createPartida(userId, mapName);
     }
 
     public void updateCurrentRoomPartida(String currentRoomId, String partidaId) {
-        roomDAO.updateCurrentRoom(currentRoomId,partidaId);
+        roomDAO.updateCurrentRoom(currentRoomId, partidaId);
     }
 
     public Partida getPartidaById(String partidaId) {
@@ -121,7 +121,7 @@ public class GameCanvasService {
     }
 
     public Partida getActivePartidaForUser(String userId, String mapName) {
-        return roomDAO.getPartidaExistente(userId,mapName);
+        return roomDAO.getPartidaExistente(userId, mapName);
     }
 
     public void deletePartidaAlAcabarla(String partidaId) {

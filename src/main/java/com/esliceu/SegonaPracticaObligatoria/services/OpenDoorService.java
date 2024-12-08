@@ -18,6 +18,7 @@ public class OpenDoorService {
 
         return hasKeyForDoor(partida, door);
     }
+
     public void openDoor(Room room, String direction) {
         Door door = searchDoorByDirection(direction, room);
 

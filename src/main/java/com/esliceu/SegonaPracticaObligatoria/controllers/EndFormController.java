@@ -20,19 +20,19 @@ public class EndFormController {
 
 
     @GetMapping("/endform")
-    public String getEndForm(){
+    public String getEndForm() {
         return "endform";
     }
 
     @PostMapping("/endform")
     public String postEndForm(@RequestParam("comment") String comment, HttpSession session) {
         String username = (String) session.getAttribute("username");
-       String partidaId = (String) session.getAttribute("partidaId");
-       String mapName = (String) session.getAttribute("mapName");
+        String partidaId = (String) session.getAttribute("partidaId");
+        String mapName = (String) session.getAttribute("mapName");
 
         LocalDateTime finalTime = scoreService.getFinalTimeFromPartida(partidaId);
         LocalDateTime initialTime = scoreService.getInitialTimeFromPartida(partidaId);
-        scoreService.saveScore(username, comment, finalTime, initialTime,mapName);
+        scoreService.saveScore(username, comment, finalTime, initialTime, mapName);
         gameCanvasService.deletePartidaAlAcabarla(partidaId);
 
         return "redirect:/scores";

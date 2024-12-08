@@ -20,6 +20,7 @@ public class OpenController {
     GameCanvasService gameCanvasService;
     @Autowired
     KeyService keyService;
+
     @GetMapping("/open")
     public String openDoor(HttpSession session, Model model, @RequestParam String direction) {
         String mapId = (String) session.getAttribute("mapId");

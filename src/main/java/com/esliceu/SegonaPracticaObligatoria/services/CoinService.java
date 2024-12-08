@@ -10,14 +10,14 @@ public class CoinService {
     RoomDAO roomDAO;
 
     public void updateCountMonedasPartida(String partidaId, int monedas) {
-        roomDAO.updateCountMonedas(partidaId,monedas);
+        roomDAO.updateCountMonedas(partidaId, monedas);
     }
 
     public void updatePartidaWhereRoomHaveCoin(String partidaId, String currentRoomId) {
-        roomDAO.updateCoinPartida(partidaId,currentRoomId);
+        roomDAO.updateCoinPartida(partidaId, currentRoomId);
     }
 
     public void restaCoinsCollected(String partidaId, int nuevasMonedas) {
-        roomDAO.restaCoinsCollected(partidaId,nuevasMonedas);
+        roomDAO.restaCoinsCollected(partidaId, nuevasMonedas);
     }
 }

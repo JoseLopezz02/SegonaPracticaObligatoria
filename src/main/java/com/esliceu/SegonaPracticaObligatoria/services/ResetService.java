@@ -16,7 +16,7 @@ public class ResetService {
         session.setAttribute("coinsCollected", 0);
         session.setAttribute("keysCollected", "");
 
-        resetIdPartida(idInitialRoom,partidaId);
+        resetIdPartida(idInitialRoom, partidaId);
         resetLlavesPartida(partidaId);
         resetMonedasPartida(partidaId);
     }

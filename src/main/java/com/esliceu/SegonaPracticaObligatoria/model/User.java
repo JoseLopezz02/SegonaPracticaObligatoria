@@ -7,15 +7,6 @@ public class User {
     String name;
     int id;
     String password;
-    List<Partida> partidas;
-
-    public List<Partida> getPartidas() {
-        return partidas;
-    }
-
-    public void setPartidas(List<Partida> partidas) {
-        this.partidas = partidas;
-    }
 
     public String getUsername() {
         return username;

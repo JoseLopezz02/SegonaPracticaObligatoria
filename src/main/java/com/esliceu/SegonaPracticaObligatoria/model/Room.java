@@ -61,7 +61,9 @@ public class Room {
         return sur;
     }
 
-    public void setSur(Integer sur) {this.sur = sur;}
+    public void setSur(Integer sur) {
+        this.sur = sur;
+    }
 
     public Integer getEste() {
         return este;

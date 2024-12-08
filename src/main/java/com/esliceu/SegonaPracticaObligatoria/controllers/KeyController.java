@@ -26,7 +26,7 @@ public class KeyController {
     CoinService coinService;
 
     @GetMapping("/getKey")
-    public String getKey(HttpSession session, Model model){
+    public String getKey(HttpSession session, Model model) {
         String mapId = (String) session.getAttribute("mapId");
         String currentRoomId = (String) session.getAttribute("currentRoomId");
         String partidaId = (String) session.getAttribute("partidaId");

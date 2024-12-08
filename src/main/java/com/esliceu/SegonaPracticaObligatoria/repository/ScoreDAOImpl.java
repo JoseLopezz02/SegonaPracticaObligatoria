@@ -11,10 +11,11 @@ import java.util.Collections;
 import java.util.List;
 
 @Repository
-public class ScoreDAOImpl implements ScoreDAO{
+public class ScoreDAOImpl implements ScoreDAO {
 
     @Autowired
     JdbcTemplate jdbcTemplate;
+
     @Override
     public void saveScore(String userName, String comment, LocalDateTime finalTime, LocalDateTime initialTime, String mapName) {
         String sql = "INSERT INTO Score (userName, comment, mapName, initialTime, finalTime, duration) " +

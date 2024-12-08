@@ -14,6 +14,7 @@ import java.util.List;
 public class RoomDAOImpl implements RoomDAO {
     @Autowired
     JdbcTemplate jdbcTemplate;
+
     @Override
     public Room get(String mapId, String currentRoomId) {
         String sqlRoom = "SELECT * FROM Room WHERE id = ? AND mapaId = ?";
@@ -164,7 +165,7 @@ public class RoomDAOImpl implements RoomDAO {
                 "idKeysCollected = CONCAT(COALESCE(idKeysCollected, ''), ?, ',')," +
                 "nombreLlaveCogida = CONCAT(COALESCE(nombreLlaveCogida, ''), ?, ',')" +
                 "WHERE id = ?";
-        jdbcTemplate.update(sql, currentRoomId, idKey, nombreLlave ,partidaId);
+        jdbcTemplate.update(sql, currentRoomId, idKey, nombreLlave, partidaId);
     }
 
     @Override

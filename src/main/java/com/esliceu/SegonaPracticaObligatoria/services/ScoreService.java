@@ -17,7 +17,7 @@ public class ScoreService {
     RoomDAO roomDAO;
 
     public void saveScore(String username, String comment, LocalDateTime finalTime, LocalDateTime initialTime, String mapName) {
-      scoreDAO.saveScore(username,comment,finalTime,initialTime,mapName);
+        scoreDAO.saveScore(username, comment, finalTime, initialTime, mapName);
     }
 
     public LocalDateTime getFinalTimeFromPartida(String partidaId) {

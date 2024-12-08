@@ -12,11 +12,11 @@ public class KeyService {
     RoomDAO roomDAO;
 
     public void updatePartidaWhereRoomHaveKey(String partidaId, String currentRoomId, String idKey, String nombreLlave) {
-        roomDAO.updateKeyPartida(partidaId,currentRoomId, idKey, nombreLlave);
+        roomDAO.updateKeyPartida(partidaId, currentRoomId, idKey, nombreLlave);
     }
 
     public Llave getKeyOfRoom(String currentRoomId) {
-         return roomDAO.getKey(currentRoomId);
+        return roomDAO.getKey(currentRoomId);
     }
 
     public String recogerLlavesDeLaPartida(String partidaId) {
