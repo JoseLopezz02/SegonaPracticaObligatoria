@@ -212,6 +212,11 @@ public class RoomDAOImpl implements RoomDAO {
                 .orElse(null);
     }
 
+    @Override
+    public void deletePartidaAcabada(String partidaId) {
+        String sql = "DELETE FROM Partida WHERE id = ?";
+        jdbcTemplate.update(sql, partidaId);
+    }
 
     @Override
     public Llave getKey(String currentRoomId) {

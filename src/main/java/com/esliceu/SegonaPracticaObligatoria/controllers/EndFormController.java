@@ -1,5 +1,6 @@
 package com.esliceu.SegonaPracticaObligatoria.controllers;
 
+import com.esliceu.SegonaPracticaObligatoria.services.GameCanvasService;
 import com.esliceu.SegonaPracticaObligatoria.services.ScoreService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ import java.time.LocalDateTime;
 public class EndFormController {
     @Autowired
     ScoreService scoreService;
+    @Autowired
+    GameCanvasService gameCanvasService;
 
 
     @GetMapping("/endform")
@@ -30,6 +33,7 @@ public class EndFormController {
         LocalDateTime finalTime = scoreService.getFinalTimeFromPartida(partidaId);
         LocalDateTime initialTime = scoreService.getInitialTimeFromPartida(partidaId);
         scoreService.saveScore(username, comment, finalTime, initialTime,mapName);
+        gameCanvasService.deletePartidaAlAcabarla(partidaId);
 
         return "redirect:/scores";
     }

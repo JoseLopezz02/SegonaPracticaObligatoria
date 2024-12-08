@@ -123,4 +123,8 @@ public class GameCanvasService {
     public Partida getActivePartidaForUser(String userId) {
         return roomDAO.getPartidaExistente(userId);
     }
+
+    public void deletePartidaAlAcabarla(String partidaId) {
+        roomDAO.deletePartidaAcabada(partidaId);
+    }
 }

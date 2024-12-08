@@ -44,4 +44,5 @@ public interface RoomDAO {
 
     Partida getPartidaExistente(String userId);
 
+    void deletePartidaAcabada(String partidaId);
 }
