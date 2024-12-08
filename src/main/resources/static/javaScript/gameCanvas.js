@@ -188,14 +188,13 @@ document.addEventListener('DOMContentLoaded', () => {
            return;
        }
 
-        if (isKeyClicked(x, y)) {
-               window.location.href = '/getKey';
-
-               // Actualizar la visibilidad de la llave inmediatamente
-               roomData.keys = null;  // Eliminar la llave de los datos del cliente
-               drawRoom();  // Redibujar la habitación sin la llave
-               return;
-           }
+       if (isKeyClicked(x, y)) {
+          window.location.href = '/getKey';
+         // Actualizar la visibilidad de la llave inmediatamente
+         roomData.keys = null;  // Eliminar la llave de los datos del cliente
+         drawRoom();  // Redibujar la habitación sin la llave
+         return;
+       }
    });
 
     const navigateRoom = (direction) => {
