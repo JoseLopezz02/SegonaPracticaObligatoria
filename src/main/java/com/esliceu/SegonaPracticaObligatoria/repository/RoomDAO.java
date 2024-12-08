@@ -12,7 +12,7 @@ public interface RoomDAO {
 
     Room getRoomByDirection(String map, String currentRoomId, String direction);
 
-    String createPartida(String userId);
+    String createPartida(String userId, String mapName);
 
     void updateCurrentRoom(String currentRoomId, String partidaId);
 
@@ -41,4 +41,7 @@ public interface RoomDAO {
     void resetLlaves(String partidaId);
 
     void resetMonedas(String partidaId);
+
+    Partida getPartidaExistente(String userId);
+
 }

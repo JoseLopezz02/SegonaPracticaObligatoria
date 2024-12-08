@@ -10,7 +10,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -101,8 +100,8 @@ public class GameCanvasService {
         return targetRoom;
     }
 
-    public String createNewPartida(String userId) {
-        return roomDAO.createPartida(userId);
+    public String createNewPartida(String userId, String mapName) {
+        return roomDAO.createPartida(userId,mapName);
     }
 
     public void updateCurrentRoomPartida(String currentRoomId, String partidaId) {
@@ -119,5 +118,9 @@ public class GameCanvasService {
 
     public List<Mapa> getAllMaps() {
         return roomDAO.getMaps();
+    }
+
+    public Partida getActivePartidaForUser(String userId) {
+        return roomDAO.getPartidaExistente(userId);
     }
 }

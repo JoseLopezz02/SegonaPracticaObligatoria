@@ -46,21 +46,36 @@ public class StartController {
 
         String mapId = gameCanvasService.getMapIdByName(mapName);
         String userId = String.valueOf(session.getAttribute("userId"));
-        String partidaId = gameCanvasService.createNewPartida(userId);
         String idRoomInicial = gameCanvasService.getInitialRoomIdByMapId(mapId);
 
+        Partida partidaActiva = gameCanvasService.getActivePartidaForUser(userId);
+
+        if (partidaActiva != null && partidaActiva.getMapName().equals(mapName)) {
+            // Cargar partida existente
+            Room room = gameCanvasService.getRoom(mapId, String.valueOf(partidaActiva.getCurrentRoomId()));
+            String roomData = gameCanvasService.convertDataToString(room, partidaActiva);
+
+            model.addAttribute("roomData", roomData);
+            session.setAttribute("mapName", mapName);
+            session.setAttribute("partidaId", String.valueOf(partidaActiva.getId()));
+            session.setAttribute("mapId", mapId);
+            session.setAttribute("currentRoomId", String.valueOf(partidaActiva.getCurrentRoomId()));
+            model.addAttribute("coinsCollected", partidaActiva.getCoinsCollected());
+
+            return "gameCanvas";
+        }
+        //Cargar partida nueva
+        String newPartidaId = gameCanvasService.createNewPartida(userId, mapName);
         Room room = gameCanvasService.getRoom(mapId, idRoomInicial);
-        Partida partida = gameCanvasService.getPartidaById(partidaId);
+        Partida partida = gameCanvasService.getPartidaById(newPartidaId);
         String roomData = gameCanvasService.convertDataToString(room, partida);
-        gameCanvasService.updateCurrentRoomPartida(idRoomInicial, partidaId);
+        gameCanvasService.updateCurrentRoomPartida(idRoomInicial, newPartidaId);
 
         model.addAttribute("roomData", roomData);
-
         session.setAttribute("mapName", mapName);
-        session.setAttribute("partidaId", partidaId);
+        session.setAttribute("partidaId", newPartidaId);
         session.setAttribute("mapId", mapId);
         session.setAttribute("currentRoomId", idRoomInicial);
-
         model.addAttribute("coinsCollected", partida.getCoinsCollected());
 
         return "gameCanvas";

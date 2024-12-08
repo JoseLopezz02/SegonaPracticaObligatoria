@@ -16,7 +16,15 @@ public class Partida {
     String idHabitacionLlave;
     String idPuertasAbiertas;//Puertas que pasan de cerradas a abiertas
     String nombreLlaveCogida;
+    String mapName;
 
+    public String getMapName() {
+        return mapName;
+    }
+
+    public void setMapName(String mapName) {
+        this.mapName = mapName;
+    }
     public String getNombreLlaveCogida() {
         return nombreLlaveCogida;
     }

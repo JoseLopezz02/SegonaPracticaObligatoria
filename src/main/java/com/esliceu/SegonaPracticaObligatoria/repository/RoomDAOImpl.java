@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 
 @Repository
@@ -110,10 +111,10 @@ public class RoomDAOImpl implements RoomDAO {
     }
 
     @Override
-    public String createPartida(String userId) {
-        String sql = "INSERT INTO Partida (userId, coinsCollected, createdAt, updatedAt) " +
-                "VALUES (?, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
-        jdbcTemplate.update(sql, userId);
+    public String createPartida(String userId, String mapName) {
+        String sql = "INSERT INTO Partida (userId, coinsCollected, createdAt, updatedAt,mapName) " +
+                "VALUES (?, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,?)";
+        jdbcTemplate.update(sql, userId, mapName);
 
         String getIdSql = "SELECT LAST_INSERT_ID()";
         return jdbcTemplate.queryForObject(getIdSql, String.class);
@@ -194,6 +195,21 @@ public class RoomDAOImpl implements RoomDAO {
     public void resetMonedas(String partidaId) {
         String sqlResetMonedas = "UPDATE Partida SET idHabitacionMoneda = '', coinsCollected = 0 WHERE id = ?";
         jdbcTemplate.update(sqlResetMonedas, partidaId);
+    }
+
+    @Override
+    public Partida getPartidaExistente(String userId) {
+        String sql = "SELECT * FROM Partida WHERE userId = ?";
+        List<Partida> partidas = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Partida.class), userId);
+
+        if (partidas.isEmpty()) {
+            return null; // No hay partidas para este usuario
+        }
+
+        // Devolver la partida más reciente
+        return partidas.stream()
+                .max(Comparator.comparing(Partida::getUpdatedAt))
+                .orElse(null);
     }
 
 
