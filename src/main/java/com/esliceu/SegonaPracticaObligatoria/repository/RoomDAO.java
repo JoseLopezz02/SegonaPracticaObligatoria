@@ -42,7 +42,7 @@ public interface RoomDAO {
 
     void resetMonedas(String partidaId);
 
-    Partida getPartidaExistente(String userId);
+    Partida getPartidaExistente(String userId, String mapName);
 
     void deletePartidaAcabada(String partidaId);
 }

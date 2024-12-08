@@ -198,9 +198,9 @@ public class RoomDAOImpl implements RoomDAO {
     }
 
     @Override
-    public Partida getPartidaExistente(String userId) {
-        String sql = "SELECT * FROM Partida WHERE userId = ?";
-        List<Partida> partidas = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Partida.class), userId);
+    public Partida getPartidaExistente(String userId, String mapName) {
+        String sql = "SELECT * FROM Partida WHERE userId = ? AND mapName = ?";
+        List<Partida> partidas = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Partida.class), userId, mapName);
 
         if (partidas.isEmpty()) {
             return null; // No hay partidas para este usuario

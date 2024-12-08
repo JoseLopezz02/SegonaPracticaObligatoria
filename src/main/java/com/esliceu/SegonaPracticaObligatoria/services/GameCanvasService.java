@@ -120,8 +120,8 @@ public class GameCanvasService {
         return roomDAO.getMaps();
     }
 
-    public Partida getActivePartidaForUser(String userId) {
-        return roomDAO.getPartidaExistente(userId);
+    public Partida getActivePartidaForUser(String userId, String mapName) {
+        return roomDAO.getPartidaExistente(userId,mapName);
     }
 
     public void deletePartidaAlAcabarla(String partidaId) {
